@@ -1,6 +1,5 @@
 package com.gdxjam.lifeinspace.Systems;
 
-import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
@@ -9,10 +8,8 @@ import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.gdxjam.lifeinspace.Components.CollisionComponent;
-import com.gdxjam.lifeinspace.Components.IDComponent;
+import com.gdxjam.lifeinspace.Components.TypeComponent;
 import com.gdxjam.lifeinspace.Components.PositionComponent;
-import com.gdxjam.lifeinspace.Components.RenderComponent;
-import com.gdxjam.lifeinspace.Components.VelocityComponent;
 import com.gdxjam.lifeinspace.Constants;
 import com.gdxjam.lifeinspace.EnemyFactory;
 import com.gdxjam.lifeinspace.Mappers;
@@ -53,11 +50,11 @@ public class CollisionSystem extends IteratingSystem
 
             if (rect_me.overlaps(rect_other))
             {
-                IDComponent.IDEntity type_me = Mappers.type.get(entity).type;
-                IDComponent.IDEntity type_other = Mappers.type.get(other).type;
+                TypeComponent.TypeEntity type_me = Mappers.type.get(entity).type;
+                TypeComponent.TypeEntity type_other = Mappers.type.get(other).type;
 
-                if (type_me == IDComponent.IDEntity.BULLET
-                    && type_other == IDComponent.IDEntity.ENEMY)
+                if (type_me == TypeComponent.TypeEntity.BULLET
+                    && type_other == TypeComponent.TypeEntity.ENEMY)
                 {
                     engine.removeEntity(entity);
                     engine.removeEntity(other);

@@ -5,18 +5,18 @@ import com.badlogic.ashley.core.Component;
 /**
  * Created by threpwood on 20/12/2015.
  */
-public class IDComponent implements Component
+public class TypeComponent implements Component
 {
-    public enum IDEntity
+    public enum TypeEntity
     {
         SHIP,
         ENEMY,
         BULLET
     }
 
-    public IDEntity type;
+    public TypeEntity type;
 
-    public IDComponent(IDEntity type)
+    public TypeComponent(TypeEntity type)
     {
         this.type = type;
     }

@@ -1,14 +1,9 @@
 package com.gdxjam.lifeinspace.Screens;
 
-import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.controllers.Controller;
-import com.badlogic.gdx.controllers.ControllerListener;
-import com.badlogic.gdx.controllers.Controllers;
-import com.badlogic.gdx.controllers.PovDirection;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -16,8 +11,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.gdxjam.lifeinspace.BulletFactory;
 import com.gdxjam.lifeinspace.Components.CollisionComponent;
-import com.gdxjam.lifeinspace.Components.IDComponent;
-import com.gdxjam.lifeinspace.Components.IDComponent.IDEntity;
+import com.gdxjam.lifeinspace.Components.TypeComponent;
+import com.gdxjam.lifeinspace.Components.TypeComponent.TypeEntity;
 import com.gdxjam.lifeinspace.Components.PositionComponent;
 import com.gdxjam.lifeinspace.Components.RenderComponent;
 import com.gdxjam.lifeinspace.Components.VelocityComponent;
@@ -33,9 +28,6 @@ import com.gdxjam.lifeinspace.Systems.RenderSystem;
 import com.gdxjam.lifeinspace.Systems.WeaponSystem;
 import com.gdxjam.lifeinspace.TextureManager;
 import com.gdxjam.lifeinspace.Utils;
-import com.gdxjam.lifeinspace.XBox360Pad;
-
-import javax.naming.ldap.Control;
 
 /**
  * Created by threpwood on 20/12/2015.
@@ -72,7 +64,7 @@ public class PlayScreen implements Screen {
         EnemyFactory.gaem = this.game;
 
         ship = new Entity();
-        ship.add(new IDComponent(IDEntity.SHIP));
+        ship.add(new TypeComponent(TypeEntity.SHIP));
         ship.add(new PositionComponent());
         ship.add(new VelocityComponent());
         ship.add(new RenderComponent(new Sprite(TextureManager.getTexture("ship.png")), game.batch));
