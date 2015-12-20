@@ -1,10 +1,9 @@
 package com.gdxjam.lifeinspace;
 
-import com.badlogic.ashley.core.Engine;
+
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.gdxjam.lifeinspace.Components.BulletComponent;
 import com.gdxjam.lifeinspace.Components.PositionComponent;
@@ -33,7 +32,7 @@ public class BulletFactory
         //Bullet Render Component
         RenderComponent rc = new RenderComponent();
 
-        Texture tex = new Texture ("bulletcollection.png");
+        Texture tex = TextureManager.getTexture("bulletcollection.png");
         TextureRegion texreg =  new TextureRegion();
         texreg.setRegion(tex);
         texreg.setRegion(20*0 + 0, 20*0 + 0, 20, 20);

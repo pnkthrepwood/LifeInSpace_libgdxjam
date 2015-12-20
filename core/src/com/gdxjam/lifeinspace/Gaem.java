@@ -1,28 +1,20 @@
 package com.gdxjam.lifeinspace;
 
-import com.badlogic.ashley.core.Component;
-import com.badlogic.ashley.core.ComponentMapper;
+
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.core.Family;
-import com.badlogic.ashley.systems.IteratingSystem;
-import com.badlogic.ashley.utils.ImmutableArray;
-import com.badlogic.gdx.ApplicationAdapter;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.ScalingViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.gdxjam.lifeinspace.Components.PositionComponent;
 import com.gdxjam.lifeinspace.Components.RenderComponent;
@@ -40,7 +32,6 @@ public class Gaem extends Game
 	SpriteBatch batch;
 	Engine engine;
 	Entity ship;
-    Entity bullet;
 
 	OrthographicCamera cam;
 	Viewport viewport;
@@ -57,11 +48,11 @@ public class Gaem extends Game
 		cam = new OrthographicCamera(Constants.RES_X, Constants.RES_Y);
 		viewport = new FitViewport(Constants.RES_X, Constants.RES_Y, cam);
 
-		cursor = new Sprite(new Texture("cursor.png"));
+		cursor = new Sprite(TextureManager.getTexture("cursor.png"));
 		cursor.setOriginCenter();
 
 
-		Texture tex_bg = new Texture("space_bg.png");
+		Texture tex_bg = TextureManager.getTexture("space_bg.png");
 		background = new Sprite(tex_bg);
 		background.setX(-300);
 		background.setY(-600);
@@ -75,7 +66,7 @@ public class Gaem extends Game
 		ship.add(new VelocityComponent());
 
 		RenderComponent rc = new RenderComponent();
-		rc.spr = new Sprite(new Texture("ship.png"));
+		rc.spr = new Sprite(TextureManager.getTexture("ship.png"));
 		rc.batch = batch;
 		ship.add(rc);
 
