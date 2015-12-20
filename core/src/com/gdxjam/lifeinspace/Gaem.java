@@ -28,8 +28,10 @@ import com.gdxjam.lifeinspace.Components.PositionComponent;
 import com.gdxjam.lifeinspace.Components.RenderComponent;
 import com.gdxjam.lifeinspace.Components.VelocityComponent;
 import com.gdxjam.lifeinspace.Components.WeaponComponent;
+import com.gdxjam.lifeinspace.Systems.BulletSystem;
 import com.gdxjam.lifeinspace.Systems.MovementSystem;
 import com.gdxjam.lifeinspace.Systems.RenderSystem;
+import com.gdxjam.lifeinspace.Systems.WeaponSystem;
 
 import javax.swing.text.Position;
 
@@ -76,47 +78,14 @@ public class Gaem extends Game
 
 		engine.addSystem(new RenderSystem());
 		engine.addSystem(new MovementSystem());
+        engine.addSystem(new WeaponSystem());
+        engine.addSystem(new BulletSystem(engine));
+
+        BulletFactory.gaem = this;
 	}
-
-    public void shootBullet(float posX, float posY)
-    {
-
-        //Bullet Position Parameter
-        PositionComponent pc = new PositionComponent();
-        pc.x = posX;
-        pc.y = posY;
-
-        //Bullet Velocity Component
-        VelocityComponent vc = new VelocityComponent();
-        vc.y = 100;
-
-        //Bullet Render Component
-        RenderComponent rc = new RenderComponent();
-
-        Texture tex = new Texture ("bulletcollection.png");
-        TextureRegion texreg =  new TextureRegion();
-        texreg.setRegion(tex);
-        texreg.setRegion(20*0 + 0, 20*0 + 0, 20, 20);
-
-        rc.spr = new Sprite(texreg);
-        rc.batch = batch;
-
-        //Adding components to Bullet
-        Entity bullet = new Entity();
-        bullet.add(pc);
-        bullet.add(vc);
-        bullet.add(rc);
-
-        //Adding Bullet Entity to Engine
-        engine.addEntity(bullet);
-
-    }
 
 	public void updateGame()
 	{
-        float dt = Gdx.graphics.getDeltaTime();
-
-
 		PositionComponent shipPos = ship.getComponent(PositionComponent.class);
 		VelocityComponent shipVel = ship.getComponent(VelocityComponent.class);
 		shipVel.x = 0;
@@ -144,13 +113,11 @@ public class Gaem extends Game
         WeaponComponent shipWeapon =  ship.getComponent(WeaponComponent.class);
         if (Gdx.input.isButtonPressed(Input.Buttons.LEFT))
         {
-            if (shipWeapon.timer >= shipWeapon.coolDown)
-            {
-                shootBullet(shipPos.x, shipPos.y + 20);
-                shipWeapon.timer = 0f;
+            if (shipWeapon.timer > shipWeapon.coolDown){
+                BulletFactory.createBullet(shipPos.x, shipPos.y + 20);
+                shipWeapon.timer = 0;
             }
         }
-        shipWeapon.timer += dt;
 	}
 
 	@Override
