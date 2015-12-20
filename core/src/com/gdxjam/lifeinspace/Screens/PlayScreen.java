@@ -18,6 +18,8 @@ import com.gdxjam.lifeinspace.Components.PositionComponent;
 import com.gdxjam.lifeinspace.Components.RenderComponent;
 import com.gdxjam.lifeinspace.Components.VelocityComponent;
 import com.gdxjam.lifeinspace.Components.WeaponComponent;
+import com.gdxjam.lifeinspace.Constants;
+import com.gdxjam.lifeinspace.EnemyFactory;
 import com.gdxjam.lifeinspace.Gaem;
 import com.gdxjam.lifeinspace.Mappers;
 import com.gdxjam.lifeinspace.Systems.BulletSystem;
@@ -58,7 +60,7 @@ public class PlayScreen implements Screen {
         game.engine.addSystem(new BulletSystem(game.engine));
         game.engine.addSystem(new CollisionSystem(game.engine));
         BulletFactory.gaem = this.game;
-
+        EnemyFactory.gaem = this.game;
 
         ship = new Entity();
         ship.add(new IDComponent(IDEntity.SHIP));
@@ -69,13 +71,7 @@ public class PlayScreen implements Screen {
         ship.add(new CollisionComponent(20, 20));
         game.engine.addEntity(ship);
 
-
-        Entity enemy = new Entity();
-        enemy.add(new IDComponent(IDEntity.ENEMY));
-        enemy.add(new PositionComponent(0, 100));
-        enemy.add(new RenderComponent(new Sprite(TextureManager.getTexture("ship.png")), game.batch));
-        enemy.add(new CollisionComponent(20, 20));
-        game.engine.addEntity(enemy);
+        EnemyFactory.spawnEnemy(0, 100);
 
     }
 
@@ -105,8 +101,8 @@ public class PlayScreen implements Screen {
             if (len > 2.0)
             {
                 dir = dir.nor();
-                shipVel.x = dir.x* Math.max(shipVel.minSpeed, len);
-                shipVel.y = dir.y* Math.min(shipVel.maxSpeed, len);
+                shipVel.x = dir.x* Constants.RES_X/2;// Math.max(shipVel.minSpeed, len);
+                shipVel.y = dir.y*Constants.RES_Y/2;// Math.min(shipVel.maxSpeed, len);
             }
 
         }

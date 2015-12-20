@@ -6,12 +6,15 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.ashley.utils.ImmutableArray;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.gdxjam.lifeinspace.Components.CollisionComponent;
 import com.gdxjam.lifeinspace.Components.IDComponent;
 import com.gdxjam.lifeinspace.Components.PositionComponent;
 import com.gdxjam.lifeinspace.Components.RenderComponent;
 import com.gdxjam.lifeinspace.Components.VelocityComponent;
+import com.gdxjam.lifeinspace.Constants;
+import com.gdxjam.lifeinspace.EnemyFactory;
 import com.gdxjam.lifeinspace.Mappers;
 
 /**
@@ -58,6 +61,10 @@ public class CollisionSystem extends IteratingSystem
                 {
                     engine.removeEntity(entity);
                     engine.removeEntity(other);
+
+                    EnemyFactory.spawnEnemy(
+                            MathUtils.random(-Constants.RES_X/2, Constants.RES_X/2),
+                            MathUtils.random(-Constants.RES_Y/2, Constants.RES_Y/2));
                 }
 
             }

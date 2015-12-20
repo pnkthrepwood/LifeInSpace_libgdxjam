@@ -5,6 +5,6 @@ package com.gdxjam.lifeinspace;
  */
 public class Constants
 {
-    static final float RES_X = 1200;
-    static final float RES_Y = 800;
+    public static final float RES_X = 1200;
+    public static final float RES_Y = 800;
 }
