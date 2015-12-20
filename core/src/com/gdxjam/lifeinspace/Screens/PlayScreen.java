@@ -5,6 +5,10 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.controllers.Controller;
+import com.badlogic.gdx.controllers.ControllerListener;
+import com.badlogic.gdx.controllers.Controllers;
+import com.badlogic.gdx.controllers.PovDirection;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -29,6 +33,9 @@ import com.gdxjam.lifeinspace.Systems.RenderSystem;
 import com.gdxjam.lifeinspace.Systems.WeaponSystem;
 import com.gdxjam.lifeinspace.TextureManager;
 import com.gdxjam.lifeinspace.Utils;
+import com.gdxjam.lifeinspace.XBox360Pad;
+
+import javax.naming.ldap.Control;
 
 /**
  * Created by threpwood on 20/12/2015.
@@ -41,6 +48,8 @@ public class PlayScreen implements Screen {
     Sprite background;
     Entity ship;
 
+    //Controller controller;
+
     public PlayScreen(Gaem game)
     {
         this.game = game;
@@ -49,8 +58,8 @@ public class PlayScreen implements Screen {
 
         Texture tex_bg = TextureManager.getTexture("space_bg.png");
         background = new Sprite(tex_bg);
-        background.setX(-300);
-        background.setY(-600);
+        background.setX(-tex_bg.getWidth() / 2);
+        background.setY(-tex_bg.getHeight() / 2);
         //background.setRegion(new TextureRegion(tex_bg), 0, 0, 600, 1200);
 
 
@@ -73,6 +82,8 @@ public class PlayScreen implements Screen {
 
         EnemyFactory.spawnEnemy(0, 100);
 
+        //controller = Controllers.getControllers().first();
+
     }
 
     @Override
@@ -89,6 +100,36 @@ public class PlayScreen implements Screen {
         shipVel.x = 0;
         shipVel.y = 0;
 
+/* CONTROLLER
+        if (Math.abs(controller.getAxis(XBox360Pad.AXIS_LEFT_X)) > 0.2)
+            shipVel.x = controller.getAxis(XBox360Pad.AXIS_LEFT_X)* Constants.RES_X/2;
+
+        if (Math.abs(controller.getAxis(XBox360Pad.AXIS_LEFT_Y)) > 0.2)
+            shipVel.y = -controller.getAxis(XBox360Pad.AXIS_LEFT_Y)* Constants.RES_Y/2;
+
+
+        if (Math.abs(controller.getAxis(XBox360Pad.AXIS_RIGHT_X)) > 0.2)
+        {
+            cursor.setX( cursor.getX() + controller.getAxis(XBox360Pad.AXIS_RIGHT_X)*0.1f);
+        }
+        if (Math.abs(controller.getAxis(XBox360Pad.AXIS_RIGHT_Y)) > 0.2)
+        {
+            cursor.setY( cursor.getY() - controller.getAxis(XBox360Pad.AXIS_RIGHT_Y)*0.1f);
+        }
+
+        //NEW BULLET
+        if (controller.getAxis(XBox360Pad.AXIS_RIGHT_TRIGGER) < -0.75f)
+        {
+            WeaponComponent shipWeapon =  Mappers.weapon.get(ship);
+            if (shipWeapon.timer > shipWeapon.coolDown){
+                BulletFactory.createBullet(shipPos.x, shipPos.y + 20);
+                shipWeapon.timer = 0;
+            }
+        }
+
+*/
+
+
         if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT))
         {
             Vector2 mouseWindowPos = Utils.mousePosBounded();
@@ -104,13 +145,13 @@ public class PlayScreen implements Screen {
                 shipVel.x = dir.x* Constants.RES_X/2;// Math.max(shipVel.minSpeed, len);
                 shipVel.y = dir.y*Constants.RES_Y/2;// Math.min(shipVel.maxSpeed, len);
             }
-
         }
 
+
         //NEW BULLET
-        WeaponComponent shipWeapon =  Mappers.weapon.get(ship);
         if (Gdx.input.isButtonPressed(Input.Buttons.LEFT))
         {
+            WeaponComponent shipWeapon =  Mappers.weapon.get(ship);
             if (shipWeapon.timer > shipWeapon.coolDown){
                 BulletFactory.createBullet(shipPos.x, shipPos.y + 20);
                 shipWeapon.timer = 0;
@@ -119,7 +160,8 @@ public class PlayScreen implements Screen {
     }
 
     @Override
-    public void render(float delta) {
+    public void render(float delta)
+    {
         updateGame();
 
         float dt = Gdx.graphics.getDeltaTime();
