@@ -40,11 +40,16 @@ public class Gaem extends Game
 	OrthographicCamera cam;
 	Viewport viewport;
 
+	Sprite cursor;
+
 	@Override
 	public void create ()
 	{
-		cam = new OrthographicCamera(800, 600);
-		viewport = new FitViewport(800, 600, cam);
+		cam = new OrthographicCamera(1200, 800);
+		viewport = new FitViewport(1200, 800, cam);
+
+		cursor = new Sprite(new Texture("cursor.png"));
+		cursor.setOriginCenter();
 
 		batch = new SpriteBatch();
 		engine = new Engine();
@@ -78,9 +83,14 @@ public class Gaem extends Game
 			Vector3 mouseWorldPos = cam.unproject(new Vector3(mouseWindowPos.x, mouseWindowPos.y, 0));
 
 			Vector2 dir = new Vector2(mouseWorldPos.x - shipPos.x, mouseWorldPos.y - shipPos.y );
-			dir = dir.nor();
-			shipVel.x = dir.x*50;
-			shipVel.y = dir.y*50;
+
+			if (dir.len2() > 1.0)
+			{
+				dir = dir.nor();
+				shipVel.x = dir.x;
+				shipVel.y = dir.y;
+			}
+
 		}
 	}
 
@@ -99,6 +109,14 @@ public class Gaem extends Game
 
 		batch.begin();
 		engine.update(dt);
+
+		Vector2 inputPos = Utils.inputCurrentWorldPos(cam);
+
+		cursor.setX(inputPos.x - cursor.getWidth() / 2);
+		cursor.setY(inputPos.y - cursor.getHeight() / 2);
+
+		cursor.draw(batch);
+
 		batch.end();
 
 	}
