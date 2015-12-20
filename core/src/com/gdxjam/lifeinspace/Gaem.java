@@ -125,7 +125,6 @@ public class Gaem extends Game
 	{
         float dt = Gdx.graphics.getDeltaTime();
 
-
 		PositionComponent shipPos = ship.getComponent(PositionComponent.class);
 		VelocityComponent shipVel = ship.getComponent(VelocityComponent.class);
 		shipVel.x = 0;
