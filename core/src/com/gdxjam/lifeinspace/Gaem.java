@@ -49,8 +49,6 @@ public class Gaem extends Game
 		viewport = new FitViewport(Constants.RES_X, Constants.RES_Y, cam);
 
 		cursor = new Sprite(TextureManager.getTexture("cursor.png"));
-		cursor.setOriginCenter();
-
 
 		Texture tex_bg = TextureManager.getTexture("space_bg.png");
 		background = new Sprite(tex_bg);
@@ -89,7 +87,7 @@ public class Gaem extends Game
 	{
         float dt = Gdx.graphics.getDeltaTime();
 
-		PositionComponent shipPos = ship.getComponent(PositionComponent.class);
+		PositionComponent shipPos = Mappers.position.get(ship);
 		VelocityComponent shipVel = ship.getComponent(VelocityComponent.class);
 		shipVel.x = 0;
 		shipVel.y = 0;
