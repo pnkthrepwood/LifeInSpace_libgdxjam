@@ -45,6 +45,8 @@ public class Gaem extends Game
 	@Override
 	public void create ()
 	{
+
+
 		cam = new OrthographicCamera(1200, 800);
 		viewport = new FitViewport(1200, 800, cam);
 
@@ -72,6 +74,7 @@ public class Gaem extends Game
 	public void updateGame()
 	{
 
+
 		PositionComponent shipPos = ship.getComponent(PositionComponent.class);
 		VelocityComponent shipVel = ship.getComponent(VelocityComponent.class);
 		shipVel.x = 0;
@@ -79,16 +82,18 @@ public class Gaem extends Game
 
 		if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT))
 		{
-			Vector2 mouseWindowPos = new Vector2(Gdx.input.getX(), Gdx.input.getY());
+			Vector2 mouseWindowPos = Utils.mousePosBounded();
 			Vector3 mouseWorldPos = cam.unproject(new Vector3(mouseWindowPos.x, mouseWindowPos.y, 0));
 
-			Vector2 dir = new Vector2(mouseWorldPos.x - shipPos.x, mouseWorldPos.y - shipPos.y );
+			Vector2 dir = new Vector2(mouseWorldPos.x - shipPos.x, mouseWorldPos.y - shipPos.y);
 
-			if (dir.len2() > 1.0)
+			float len = dir.len();
+
+			if (len > 2.0)
 			{
 				dir = dir.nor();
-				shipVel.x = dir.x;
-				shipVel.y = dir.y;
+				shipVel.x = dir.x* Math.max(shipVel.minSpeed, len);
+				shipVel.y = dir.y* Math.max(shipVel.maxSpeed, len);
 			}
 
 		}
@@ -98,7 +103,6 @@ public class Gaem extends Game
 	public void render ()
 	{
 		updateGame();
-
 
 		float dt = Gdx.graphics.getDeltaTime();
 
@@ -112,8 +116,8 @@ public class Gaem extends Game
 
 		Vector2 inputPos = Utils.inputCurrentWorldPos(cam);
 
-		cursor.setX(inputPos.x - cursor.getWidth() / 2);
-		cursor.setY(inputPos.y - cursor.getHeight() / 2);
+		cursor.setCenterX(inputPos.x);
+		cursor.setCenterY(inputPos.y);
 
 		cursor.draw(batch);
 

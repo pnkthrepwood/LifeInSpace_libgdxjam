@@ -25,8 +25,8 @@ public class RenderSystem extends IteratingSystem
         RenderComponent rc = rm.get(entity);
         PositionComponent pos = pm.get(entity);
 
-        rc.spr.setX(pos.x);
-        rc.spr.setY(pos.y);
+        rc.spr.setCenterX((float) Math.floor(pos.x));
+        rc.spr.setCenterY((float) Math.floor(pos.y));
         rc.spr.draw(rc.batch);
     }
 }
