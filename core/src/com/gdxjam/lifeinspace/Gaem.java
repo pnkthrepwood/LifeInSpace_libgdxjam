@@ -17,6 +17,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -26,6 +27,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.gdxjam.lifeinspace.Components.PositionComponent;
 import com.gdxjam.lifeinspace.Components.RenderComponent;
 import com.gdxjam.lifeinspace.Components.VelocityComponent;
+import com.gdxjam.lifeinspace.Components.WeaponComponent;
 import com.gdxjam.lifeinspace.Systems.MovementSystem;
 import com.gdxjam.lifeinspace.Systems.RenderSystem;
 
@@ -36,6 +38,7 @@ public class Gaem extends Game
 	SpriteBatch batch;
 	Engine engine;
 	Entity ship;
+    Entity bullet;
 
 	OrthographicCamera cam;
 	Viewport viewport;
@@ -65,14 +68,53 @@ public class Gaem extends Game
 		rc.batch = batch;
 		ship.add(rc);
 
+        //Ship Weapon Component
+        WeaponComponent wc = new WeaponComponent();
+        ship.add(wc);
+
 		engine.addEntity(ship);
 
 		engine.addSystem(new RenderSystem());
 		engine.addSystem(new MovementSystem());
 	}
 
+    public void shootBullet(float posX, float posY)
+    {
+
+        //Bullet Position Parameter
+        PositionComponent pc = new PositionComponent();
+        pc.x = posX;
+        pc.y = posY;
+
+        //Bullet Velocity Component
+        VelocityComponent vc = new VelocityComponent();
+        vc.y = 100;
+
+        //Bullet Render Component
+        RenderComponent rc = new RenderComponent();
+
+        Texture tex = new Texture ("bulletcollection.png");
+        TextureRegion texreg =  new TextureRegion();
+        texreg.setRegion(tex);
+        texreg.setRegion(20*0 + 0, 20*0 + 0, 20, 20);
+
+        rc.spr = new Sprite(texreg);
+        rc.batch = batch;
+
+        //Adding components to Bullet
+        Entity bullet = new Entity();
+        bullet.add(pc);
+        bullet.add(vc);
+        bullet.add(rc);
+
+        //Adding Bullet Entity to Engine
+        engine.addEntity(bullet);
+
+    }
+
 	public void updateGame()
 	{
+        float dt = Gdx.graphics.getDeltaTime();
 
 
 		PositionComponent shipPos = ship.getComponent(PositionComponent.class);
@@ -97,6 +139,18 @@ public class Gaem extends Game
 			}
 
 		}
+
+        //NEW BULLET
+        WeaponComponent shipWeapon =  ship.getComponent(WeaponComponent.class);
+        if (Gdx.input.isButtonPressed(Input.Buttons.LEFT))
+        {
+            if (shipWeapon.timer >= shipWeapon.coolDown)
+            {
+                shootBullet(shipPos.x, shipPos.y + 20);
+                shipWeapon.timer = 0f;
+            }
+        }
+        shipWeapon.timer += dt;
 	}
 
 	@Override

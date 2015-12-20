@@ -27,6 +27,7 @@ public class RenderSystem extends IteratingSystem
 
         rc.spr.setCenterX((float) Math.floor(pos.x));
         rc.spr.setCenterY((float) Math.floor(pos.y));
+
         rc.spr.draw(rc.batch);
     }
 }
