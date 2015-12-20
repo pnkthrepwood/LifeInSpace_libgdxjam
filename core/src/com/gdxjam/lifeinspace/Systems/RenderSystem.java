@@ -6,14 +6,13 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.gdxjam.lifeinspace.Components.PositionComponent;
 import com.gdxjam.lifeinspace.Components.RenderComponent;
+import com.gdxjam.lifeinspace.Mappers;
 
 /**
  * Created by threpwood on 20/12/2015.
  */
 public class RenderSystem extends IteratingSystem
 {
-    private ComponentMapper<RenderComponent> rm = ComponentMapper.getFor(RenderComponent.class);
-    private ComponentMapper<PositionComponent> pm = ComponentMapper.getFor(PositionComponent.class);
 
     public RenderSystem()
     {
@@ -22,8 +21,8 @@ public class RenderSystem extends IteratingSystem
 
     public void processEntity(Entity entity, float deltaTime)
     {
-        RenderComponent rc = rm.get(entity);
-        PositionComponent pos = pm.get(entity);
+        RenderComponent rc = Mappers.render.get(entity);
+        PositionComponent pos = Mappers.position.get(entity);
 
         rc.spr.setCenterX((float) Math.floor(pos.x));
         rc.spr.setCenterY((float) Math.floor(pos.y));

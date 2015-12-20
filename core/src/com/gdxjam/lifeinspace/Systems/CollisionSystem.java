@@ -11,14 +11,13 @@ import com.gdxjam.lifeinspace.Components.CollisionComponent;
 import com.gdxjam.lifeinspace.Components.PositionComponent;
 import com.gdxjam.lifeinspace.Components.RenderComponent;
 import com.gdxjam.lifeinspace.Components.VelocityComponent;
+import com.gdxjam.lifeinspace.Mappers;
 
 /**
  * Created by threpwood on 20/12/2015.
  */
 public class CollisionSystem extends IteratingSystem
 {
-    private ComponentMapper<PositionComponent> pm = ComponentMapper.getFor(PositionComponent.class);
-    private ComponentMapper<CollisionComponent> cm = ComponentMapper.getFor(CollisionComponent.class);
 
     private Engine engine;
 
@@ -34,16 +33,16 @@ public class CollisionSystem extends IteratingSystem
 
         ImmutableArray<Entity> entities = engine.getEntitiesFor(family);
 
-        PositionComponent pos_me = pm.get(entity);
-        CollisionComponent col_me = cm.get(entity);
+        PositionComponent pos_me = Mappers.position.get(entity);
+        CollisionComponent col_me = Mappers.collision.get(entity);
         Rectangle rect_me = new Rectangle(pos_me.x, pos_me.y, col_me.sizeX, col_me.sizeY);
 
         for (Entity other : entities)
         {
             if (other == entity) continue;
 
-            PositionComponent pos_other = pm.get(other);
-            CollisionComponent col_other = cm.get(other);
+            PositionComponent pos_other = Mappers.position.get(other);
+            CollisionComponent col_other = Mappers.collision.get(other);
             Rectangle rect_other = new Rectangle(pos_other.x, pos_other.y, col_other.sizeX, col_other.sizeY);
 
             if (rect_me.overlaps(rect_other))

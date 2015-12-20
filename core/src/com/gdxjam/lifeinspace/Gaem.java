@@ -88,7 +88,7 @@ public class Gaem extends Game
         float dt = Gdx.graphics.getDeltaTime();
 
 		PositionComponent shipPos = Mappers.position.get(ship);
-		VelocityComponent shipVel = ship.getComponent(VelocityComponent.class);
+		VelocityComponent shipVel = Mappers.velocity.get(ship);
 		shipVel.x = 0;
 		shipVel.y = 0;
 
@@ -111,7 +111,7 @@ public class Gaem extends Game
 		}
 
         //NEW BULLET
-        WeaponComponent shipWeapon =  ship.getComponent(WeaponComponent.class);
+        WeaponComponent shipWeapon =  Mappers.weapon.get(ship);
         if (Gdx.input.isButtonPressed(Input.Buttons.LEFT))
         {
             if (shipWeapon.timer > shipWeapon.coolDown){
