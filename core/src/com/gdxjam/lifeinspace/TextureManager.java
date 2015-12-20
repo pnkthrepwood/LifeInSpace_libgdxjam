@@ -9,19 +9,14 @@ import java.util.HashMap;
  */
 public class TextureManager
 {
-    static HashMap<String, Texture> textureMap;
+    static final HashMap<String, Texture> textureMap = new HashMap<String, Texture>();
 
-    public TextureManager()
-    {
-        textureMap = new HashMap<String, Texture>();
-    }
-
-    public void preLoadAll()
+    public static void preLoadAll()
     {
 
     }
 
-    public Texture getTexture(String name)
+    public static Texture getTexture(String name)
     {
         if (!textureMap.containsKey(name))
         {
