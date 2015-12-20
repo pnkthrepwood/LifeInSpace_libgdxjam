@@ -45,16 +45,25 @@ public class Gaem extends Game
 
 	Sprite cursor;
 
+	Sprite background;
+
 	@Override
 	public void create ()
 	{
 
 
-		cam = new OrthographicCamera(1200, 800);
-		viewport = new FitViewport(1200, 800, cam);
+		cam = new OrthographicCamera(Constants.RES_X, Constants.RES_Y);
+		viewport = new FitViewport(Constants.RES_X, Constants.RES_Y, cam);
 
 		cursor = new Sprite(new Texture("cursor.png"));
 		cursor.setOriginCenter();
+
+
+		Texture tex_bg = new Texture("space_bg.png");
+		background = new Sprite(tex_bg);
+		background.setX(-300);
+		background.setY(-600);
+		//background.setRegion(new TextureRegion(tex_bg), 0, 0, 600, 1200);
 
 		batch = new SpriteBatch();
 		engine = new Engine();
@@ -88,7 +97,7 @@ public class Gaem extends Game
 
         //Bullet Velocity Component
         VelocityComponent vc = new VelocityComponent();
-        vc.y = 100;
+        vc.y = 500;
 
         //Bullet Render Component
         RenderComponent rc = new RenderComponent();
@@ -135,7 +144,7 @@ public class Gaem extends Game
 			{
 				dir = dir.nor();
 				shipVel.x = dir.x* Math.max(shipVel.minSpeed, len);
-				shipVel.y = dir.y* Math.max(shipVel.maxSpeed, len);
+				shipVel.y = dir.y* Math.min(shipVel.maxSpeed, len);
 			}
 
 		}
@@ -166,6 +175,10 @@ public class Gaem extends Game
 		batch.setProjectionMatrix(cam.combined);
 
 		batch.begin();
+
+		background.translate(0, -dt*20);
+		background.draw(batch);
+
 		engine.update(dt);
 
 		Vector2 inputPos = Utils.inputCurrentWorldPos(cam);
