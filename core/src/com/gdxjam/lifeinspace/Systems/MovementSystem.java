@@ -8,14 +8,13 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.gdxjam.lifeinspace.Components.PositionComponent;
 import com.gdxjam.lifeinspace.Components.RenderComponent;
 import com.gdxjam.lifeinspace.Components.VelocityComponent;
+import com.gdxjam.lifeinspace.Mappers;
 
 /**
  * Created by threpwood on 20/12/2015.
  */
 public class MovementSystem extends IteratingSystem
 {
-    private ComponentMapper<PositionComponent> pm = ComponentMapper.getFor(PositionComponent.class);
-    private ComponentMapper<VelocityComponent> vm = ComponentMapper.getFor(VelocityComponent.class);
 
     public MovementSystem()
     {
@@ -24,8 +23,8 @@ public class MovementSystem extends IteratingSystem
 
     public void processEntity(Entity entity, float deltaTime)
     {
-        PositionComponent pos = pm.get(entity);
-        VelocityComponent vel = vm.get(entity);
+        PositionComponent pos = Mappers.position.get(entity);
+        VelocityComponent vel = Mappers.velocity.get(entity);
 
         pos.x += vel.x*deltaTime;
         pos.y += vel.y*deltaTime;
