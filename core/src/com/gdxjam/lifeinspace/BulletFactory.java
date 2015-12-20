@@ -30,15 +30,12 @@ public class BulletFactory
         vc.y = 500;
 
         //Bullet Render Component
-        RenderComponent rc = new RenderComponent();
-
         Texture tex = TextureManager.getTexture("bulletcollection.png");
         TextureRegion texreg =  new TextureRegion();
         texreg.setRegion(tex);
         texreg.setRegion(20*0 + 0, 20*0 + 0, 20, 20);
 
-        rc.spr = new Sprite(texreg);
-        rc.batch = gaem.batch;
+        RenderComponent rc = new RenderComponent(new Sprite(texreg), gaem.batch);
 
         //Bullet Component
         BulletComponent bc = new BulletComponent();

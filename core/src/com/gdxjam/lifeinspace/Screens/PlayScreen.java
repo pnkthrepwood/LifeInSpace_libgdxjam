@@ -11,6 +11,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.gdxjam.lifeinspace.BulletFactory;
+import com.gdxjam.lifeinspace.Components.IDComponent;
+import com.gdxjam.lifeinspace.Components.IDComponent.IDEntity;
 import com.gdxjam.lifeinspace.Components.PositionComponent;
 import com.gdxjam.lifeinspace.Components.RenderComponent;
 import com.gdxjam.lifeinspace.Components.VelocityComponent;
@@ -47,28 +49,28 @@ public class PlayScreen implements Screen {
         background.setY(-600);
         //background.setRegion(new TextureRegion(tex_bg), 0, 0, 600, 1200);
 
-        ship = new Entity();
-        ship.add(new PositionComponent());
-        ship.add(new VelocityComponent());
-
-        RenderComponent rc = new RenderComponent();
-        rc.spr = new Sprite(TextureManager.getTexture("ship.png"));
-        rc.batch = game.batch;
-        ship.add(rc);
-
-        //Ship Weapon Component
-        WeaponComponent wc = new WeaponComponent();
-        ship.add(wc);
-
-        game.engine.addEntity(ship);
 
         game.engine.addSystem(new RenderSystem());
         game.engine.addSystem(new MovementSystem());
-
         game.engine.addSystem(new WeaponSystem());
         game.engine.addSystem(new BulletSystem(game.engine));
-
         BulletFactory.gaem = this.game;
+
+
+        ship = new Entity();
+        ship.add(new IDComponent(IDEntity.SHIP));
+        ship.add(new PositionComponent());
+        ship.add(new VelocityComponent());
+        ship.add(new RenderComponent(new Sprite(TextureManager.getTexture("ship.png")), game.batch));
+        ship.add(new WeaponComponent());
+        game.engine.addEntity(ship);
+
+
+        Entity enemy = new Entity();
+        enemy.add(new IDComponent(IDEntity.ENEMY));
+        enemy.add(new PositionComponent(0, 100));
+        enemy.add(new RenderComponent(new Sprite(TextureManager.getTexture("ship.png")), game.batch));
+        game.engine.addEntity(enemy);
 
     }
 

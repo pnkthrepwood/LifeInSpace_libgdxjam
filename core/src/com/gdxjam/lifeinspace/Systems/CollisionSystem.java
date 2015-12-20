@@ -30,7 +30,6 @@ public class CollisionSystem extends IteratingSystem
     public void processEntity(Entity entity, float deltaTime)
     {
         Family family = Family.all(CollisionComponent.class).get();
-
         ImmutableArray<Entity> entities = engine.getEntitiesFor(family);
 
         PositionComponent pos_me = Mappers.position.get(entity);
@@ -47,7 +46,7 @@ public class CollisionSystem extends IteratingSystem
 
             if (rect_me.overlaps(rect_other))
             {
-                //To-Do: Collision
+
             }
         }
 

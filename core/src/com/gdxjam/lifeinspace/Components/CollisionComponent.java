@@ -10,3 +10,6 @@ public class CollisionComponent implements Component
     public float sizeX = 0.0f;
     public float sizeY = 0.0f;
 }
+
+
+

@@ -18,7 +18,9 @@ public class MovementSystem extends IteratingSystem
 
     public MovementSystem()
     {
-        super(Family.all(RenderComponent.class).get());
+        super(Family
+                .all(PositionComponent.class, VelocityComponent.class)
+                .get());
     }
 
     public void processEntity(Entity entity, float deltaTime)
