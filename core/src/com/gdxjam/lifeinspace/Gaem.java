@@ -7,6 +7,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -37,13 +38,11 @@ public class Gaem extends Game
 	Viewport viewport;
 
 	Sprite cursor;
-
 	Sprite background;
 
 	@Override
 	public void create ()
 	{
-
 
 		cam = new OrthographicCamera(Constants.RES_X, Constants.RES_Y);
 		viewport = new FitViewport(Constants.RES_X, Constants.RES_Y, cam);
@@ -81,6 +80,8 @@ public class Gaem extends Game
         engine.addSystem(new BulletSystem(engine));
 
         BulletFactory.gaem = this;
+
+		Gdx.graphics.setContinuousRendering(true);
 	}
 
 	public void updateGame()
@@ -135,7 +136,7 @@ public class Gaem extends Game
 
 		batch.begin();
 
-		background.translate(0, -dt*20);
+		background.translate(0, -dt * 20);
 		background.draw(batch);
 
 		engine.update(dt);
@@ -148,6 +149,8 @@ public class Gaem extends Game
 		cursor.draw(batch);
 
 		batch.end();
+
+		Gdx.graphics.setTitle("LifeInSpace | FPS: "+Gdx.graphics.getFramesPerSecond());
 
 	}
 }
