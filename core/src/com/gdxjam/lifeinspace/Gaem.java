@@ -14,48 +14,16 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.gdxjam.lifeinspace.Components.PositionComponent;
+import com.gdxjam.lifeinspace.Components.RenderComponent;
+import com.gdxjam.lifeinspace.Components.VelocityComponent;
+import com.gdxjam.lifeinspace.Systems.RenderSystem;
 
 public class Gaem extends ApplicationAdapter
 {
 	SpriteBatch batch;
-
 	Engine engine;
-
 	Entity ship;
-
-	public class RenderSystem extends IteratingSystem {
-		private ComponentMapper<RenderComponent> rm = ComponentMapper.getFor(RenderComponent.class);
-		private ComponentMapper<PositionComponent> pm = ComponentMapper.getFor(PositionComponent.class);
-
-		public RenderSystem() {
-			super(Family.all(RenderComponent.class).get());
-		}
-
-		public void processEntity(Entity entity, float deltaTime) {
-			RenderComponent rc = rm.get(entity);
-			PositionComponent pos = pm.get(entity);
-
-			rc.batch.draw(rc.img, pos.x, pos.y);
-		}
-	}
-
-	public class PositionComponent implements Component
-	{
-		public float x = 0.0f;
-		public float y = 0.0f;
-	}
-
-	public class VelocityComponent implements Component
-	{
-		public float x = 0.0f;
-		public float y = 0.0f;
-	}
-
-	public class RenderComponent implements Component
-	{
-		public Texture img;
-		public SpriteBatch batch;
-	}
 
 	@Override
 	public void create ()
