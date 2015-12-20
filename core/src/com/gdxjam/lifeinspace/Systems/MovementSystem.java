@@ -6,27 +6,27 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.gdxjam.lifeinspace.Components.PositionComponent;
 import com.gdxjam.lifeinspace.Components.RenderComponent;
+import com.gdxjam.lifeinspace.Components.VelocityComponent;
 
 /**
  * Created by threpwood on 20/12/2015.
  */
-public class RenderSystem extends IteratingSystem
+public class MovementSystem extends IteratingSystem
 {
-    private ComponentMapper<RenderComponent> rm = ComponentMapper.getFor(RenderComponent.class);
     private ComponentMapper<PositionComponent> pm = ComponentMapper.getFor(PositionComponent.class);
+    private ComponentMapper<VelocityComponent> vm = ComponentMapper.getFor(VelocityComponent.class);
 
-    public RenderSystem()
+    public MovementSystem()
     {
         super(Family.all(RenderComponent.class).get());
     }
 
     public void processEntity(Entity entity, float deltaTime)
     {
-        RenderComponent rc = rm.get(entity);
         PositionComponent pos = pm.get(entity);
+        VelocityComponent vel = vm.get(entity);
 
-        rc.spr.setX(pos.x - rc.spr.getWidth()/2);
-        rc.spr.setY(pos.y - rc.spr.getHeight()/2);
-        rc.spr.draw(rc.batch);
+        pos.x += vel.x*deltaTime;
+        pos.y += vel.y*deltaTime;
     }
 }

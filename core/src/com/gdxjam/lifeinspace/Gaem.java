@@ -8,49 +8,94 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScalingViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.gdxjam.lifeinspace.Components.PositionComponent;
 import com.gdxjam.lifeinspace.Components.RenderComponent;
 import com.gdxjam.lifeinspace.Components.VelocityComponent;
+import com.gdxjam.lifeinspace.Systems.MovementSystem;
 import com.gdxjam.lifeinspace.Systems.RenderSystem;
 
-public class Gaem extends ApplicationAdapter
+import javax.swing.text.Position;
+
+public class Gaem extends Game
 {
 	SpriteBatch batch;
 	Engine engine;
 	Entity ship;
 
+	OrthographicCamera cam;
+	Viewport viewport;
+
 	@Override
 	public void create ()
 	{
+		cam = new OrthographicCamera(800, 600);
+		viewport = new FitViewport(800, 600, cam);
+
 		batch = new SpriteBatch();
 		engine = new Engine();
 
 		ship = new Entity();
 		ship.add(new PositionComponent());
 		ship.add(new VelocityComponent());
+
 		RenderComponent rc = new RenderComponent();
-		rc.img = new Texture("ship.png");
+		rc.spr = new Sprite(new Texture("ship.png"));
 		rc.batch = batch;
 		ship.add(rc);
 
 		engine.addEntity(ship);
 
 		engine.addSystem(new RenderSystem());
+		engine.addSystem(new MovementSystem());
+	}
+
+	public void updateGame()
+	{
+
+		PositionComponent shipPos = ship.getComponent(PositionComponent.class);
+		VelocityComponent shipVel = ship.getComponent(VelocityComponent.class);
+		shipVel.x = 0;
+		shipVel.y = 0;
+
+		if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT))
+		{
+			Vector2 mouseWindowPos = new Vector2(Gdx.input.getX(), Gdx.input.getY());
+			Vector3 mouseWorldPos = cam.unproject(new Vector3(mouseWindowPos.x, mouseWindowPos.y, 0));
+
+			Vector2 dir = new Vector2(mouseWorldPos.x - shipPos.x, mouseWorldPos.y - shipPos.y );
+			dir = dir.nor();
+			shipVel.x = dir.x*50;
+			shipVel.y = dir.y*50;
+		}
 	}
 
 	@Override
 	public void render ()
 	{
+		updateGame();
+
+
 		float dt = Gdx.graphics.getDeltaTime();
 
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+		batch.setProjectionMatrix(cam.combined);
 
 		batch.begin();
 		engine.update(dt);

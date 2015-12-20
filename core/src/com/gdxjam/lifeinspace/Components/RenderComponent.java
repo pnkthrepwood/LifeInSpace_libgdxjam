@@ -2,6 +2,7 @@ package com.gdxjam.lifeinspace.Components;
 
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /**
@@ -10,6 +11,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class RenderComponent implements Component
 {
-    public Texture img;
     public SpriteBatch batch;
+    public Sprite spr;
 }
