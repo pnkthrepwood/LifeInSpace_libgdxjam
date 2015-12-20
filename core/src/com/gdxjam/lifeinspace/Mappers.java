@@ -3,6 +3,7 @@ package com.gdxjam.lifeinspace;
 import com.badlogic.ashley.core.ComponentMapper;
 import com.gdxjam.lifeinspace.Components.BulletComponent;
 import com.gdxjam.lifeinspace.Components.CollisionComponent;
+import com.gdxjam.lifeinspace.Components.IDComponent;
 import com.gdxjam.lifeinspace.Components.PositionComponent;
 import com.gdxjam.lifeinspace.Components.RenderComponent;
 import com.gdxjam.lifeinspace.Components.VelocityComponent;
@@ -19,4 +20,5 @@ public class Mappers
     public static ComponentMapper<WeaponComponent> weapon = ComponentMapper.getFor(WeaponComponent.class);
     public static ComponentMapper<RenderComponent> render = ComponentMapper.getFor(RenderComponent.class);
     public static ComponentMapper<BulletComponent> bullet = ComponentMapper.getFor(BulletComponent.class);
+    public static ComponentMapper<IDComponent> type = ComponentMapper.getFor(IDComponent.class);
 }

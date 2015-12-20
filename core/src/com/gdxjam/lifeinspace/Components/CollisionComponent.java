@@ -7,8 +7,15 @@ import com.badlogic.ashley.core.Component;
  */
 public class CollisionComponent implements Component
 {
-    public float sizeX = 0.0f;
-    public float sizeY = 0.0f;
+
+    public float sizeX = 1.0f;
+    public float sizeY = 1.0f;
+
+    public CollisionComponent(float sizeX, float sizeY)
+    {
+        this.sizeX = sizeX;
+        this.sizeY = sizeY;
+    }
 }
 
 

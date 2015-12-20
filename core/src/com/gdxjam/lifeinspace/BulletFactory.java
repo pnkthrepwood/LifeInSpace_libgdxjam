@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.gdxjam.lifeinspace.Components.BulletComponent;
+import com.gdxjam.lifeinspace.Components.CollisionComponent;
+import com.gdxjam.lifeinspace.Components.IDComponent;
 import com.gdxjam.lifeinspace.Components.PositionComponent;
 import com.gdxjam.lifeinspace.Components.RenderComponent;
 import com.gdxjam.lifeinspace.Components.VelocityComponent;
@@ -33,7 +35,7 @@ public class BulletFactory
         Texture tex = TextureManager.getTexture("bulletcollection.png");
         TextureRegion texreg =  new TextureRegion();
         texreg.setRegion(tex);
-        texreg.setRegion(20*0 + 0, 20*0 + 0, 20, 20);
+        texreg.setRegion(0, 0, 8, 13);
 
         RenderComponent rc = new RenderComponent(new Sprite(texreg), gaem.batch);
 
@@ -47,6 +49,10 @@ public class BulletFactory
         bullet.add(vc);
         bullet.add(rc);
         bullet.add(bc);
+
+        bullet.add(new CollisionComponent(8, 13));
+
+        bullet.add(new IDComponent(IDComponent.IDEntity.BULLET));
 
         //Adding Bullet Entity to Engine
         gaem.engine.addEntity(bullet);

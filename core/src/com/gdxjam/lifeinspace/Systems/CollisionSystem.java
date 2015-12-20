@@ -8,6 +8,7 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.math.Rectangle;
 import com.gdxjam.lifeinspace.Components.CollisionComponent;
+import com.gdxjam.lifeinspace.Components.IDComponent;
 import com.gdxjam.lifeinspace.Components.PositionComponent;
 import com.gdxjam.lifeinspace.Components.RenderComponent;
 import com.gdxjam.lifeinspace.Components.VelocityComponent;
@@ -23,7 +24,7 @@ public class CollisionSystem extends IteratingSystem
 
     public CollisionSystem(Engine engine)
     {
-        super(Family.all(RenderComponent.class).get());
+        super(Family.all(CollisionComponent.class).get());
         this.engine = engine;
     }
 
@@ -34,7 +35,10 @@ public class CollisionSystem extends IteratingSystem
 
         PositionComponent pos_me = Mappers.position.get(entity);
         CollisionComponent col_me = Mappers.collision.get(entity);
-        Rectangle rect_me = new Rectangle(pos_me.x, pos_me.y, col_me.sizeX, col_me.sizeY);
+        Rectangle rect_me = new Rectangle(pos_me.x,
+                                          pos_me.y,
+                                          col_me.sizeX,
+                                          col_me.sizeY);
 
         for (Entity other : entities)
         {
@@ -46,6 +50,15 @@ public class CollisionSystem extends IteratingSystem
 
             if (rect_me.overlaps(rect_other))
             {
+                IDComponent.IDEntity type_me = Mappers.type.get(entity).type;
+                IDComponent.IDEntity type_other = Mappers.type.get(other).type;
+
+                if (type_me == IDComponent.IDEntity.BULLET
+                    && type_other == IDComponent.IDEntity.ENEMY)
+                {
+                    engine.removeEntity(entity);
+                    engine.removeEntity(other);
+                }
 
             }
         }

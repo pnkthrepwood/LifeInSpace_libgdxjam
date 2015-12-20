@@ -10,10 +10,11 @@ public class IDComponent implements Component
     public enum IDEntity
     {
         SHIP,
-        ENEMY
+        ENEMY,
+        BULLET
     }
 
-    IDEntity type;
+    public IDEntity type;
 
     public IDComponent(IDEntity type)
     {
