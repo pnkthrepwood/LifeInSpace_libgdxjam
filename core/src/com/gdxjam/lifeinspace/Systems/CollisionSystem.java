@@ -11,7 +11,7 @@ import com.gdxjam.lifeinspace.Components.CollisionComponent;
 import com.gdxjam.lifeinspace.Components.TypeComponent;
 import com.gdxjam.lifeinspace.Components.PositionComponent;
 import com.gdxjam.lifeinspace.Constants;
-import com.gdxjam.lifeinspace.EnemyFactory;
+import com.gdxjam.lifeinspace.Factorys.EnemyFactory;
 import com.gdxjam.lifeinspace.Mappers;
 
 /**

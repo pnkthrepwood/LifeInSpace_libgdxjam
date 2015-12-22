@@ -4,12 +4,17 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.controllers.Controller;
+import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.gdxjam.lifeinspace.BulletFactory;
+import com.gdxjam.lifeinspace.Components.ShapeComponent;
+import com.gdxjam.lifeinspace.Factorys.BulletFactory;
 import com.gdxjam.lifeinspace.Components.CollisionComponent;
 import com.gdxjam.lifeinspace.Components.TypeComponent;
 import com.gdxjam.lifeinspace.Components.TypeComponent.TypeEntity;
@@ -18,9 +23,10 @@ import com.gdxjam.lifeinspace.Components.RenderComponent;
 import com.gdxjam.lifeinspace.Components.VelocityComponent;
 import com.gdxjam.lifeinspace.Components.WeaponComponent;
 import com.gdxjam.lifeinspace.Constants;
-import com.gdxjam.lifeinspace.EnemyFactory;
+import com.gdxjam.lifeinspace.Factorys.EnemyFactory;
 import com.gdxjam.lifeinspace.Gaem;
 import com.gdxjam.lifeinspace.Mappers;
+import com.gdxjam.lifeinspace.Systems.BackgroundRenderSystem;
 import com.gdxjam.lifeinspace.Systems.BulletSystem;
 import com.gdxjam.lifeinspace.Systems.CollisionSystem;
 import com.gdxjam.lifeinspace.Systems.MovementSystem;
@@ -28,6 +34,7 @@ import com.gdxjam.lifeinspace.Systems.RenderSystem;
 import com.gdxjam.lifeinspace.Systems.WeaponSystem;
 import com.gdxjam.lifeinspace.TextureManager;
 import com.gdxjam.lifeinspace.Utils;
+import com.gdxjam.lifeinspace.XBox360Pad;
 
 /**
  * Created by threpwood on 20/12/2015.
@@ -40,7 +47,7 @@ public class PlayScreen implements Screen {
     Sprite background;
     Entity ship;
 
-    //Controller controller;
+    Controller controller;
 
     public PlayScreen(Gaem game)
     {
@@ -55,13 +62,23 @@ public class PlayScreen implements Screen {
         //background.setRegion(new TextureRegion(tex_bg), 0, 0, 600, 1200);
 
 
-        game.engine.addSystem(new RenderSystem());
+        //CAREFUL: ORDER MATTERS!
         game.engine.addSystem(new MovementSystem());
+        game.engine.addSystem(new CollisionSystem(game.engine));
         game.engine.addSystem(new WeaponSystem());
         game.engine.addSystem(new BulletSystem(game.engine));
-        game.engine.addSystem(new CollisionSystem(game.engine));
+        game.engine.addSystem(new BackgroundRenderSystem(game.shapeRenderer));
+        game.engine.addSystem(new RenderSystem(game.batch, game.cam));
         BulletFactory.gaem = this.game;
         EnemyFactory.gaem = this.game;
+
+
+
+        Entity planet_bg = new Entity();
+        planet_bg.add(new PositionComponent(0, -Constants.RES_Y / 2 + TextureManager.getTexture("planet_bg.png").getHeight() / 2));
+        planet_bg.add(new VelocityComponent());
+        planet_bg.add(new RenderComponent(new Sprite(TextureManager.getTexture("planet_bg.png")), game.batch));
+        game.engine.addEntity(planet_bg);
 
         ship = new Entity();
         ship.add(new TypeComponent(TypeEntity.SHIP));
@@ -74,7 +91,25 @@ public class PlayScreen implements Screen {
 
         EnemyFactory.spawnEnemy(0, 100);
 
-        //controller = Controllers.getControllers().first();
+        controller = null;
+        if (Controllers.getControllers().size > 0)
+        {
+            controller = Controllers.getControllers().first();
+        }
+
+        for (int i = 0; i < 500; ++i)
+        {
+            Entity star = new Entity();
+            ShapeComponent shape = new ShapeComponent();
+            shape.xPos = MathUtils.random(0, Constants.RES_X);
+            shape.yPos = MathUtils.random(0, Constants.RES_Y);;
+            shape.radius = 1;
+            star.add(shape);
+            game.engine.addEntity(star);
+        }
+
+
+
 
     }
 
@@ -85,46 +120,44 @@ public class PlayScreen implements Screen {
 
     public void updateGame()
     {
-        float dt = Gdx.graphics.getDeltaTime();
-
         PositionComponent shipPos = Mappers.position.get(ship);
         VelocityComponent shipVel = Mappers.velocity.get(ship);
         shipVel.x = 0;
         shipVel.y = 0;
 
-/* CONTROLLER
-        if (Math.abs(controller.getAxis(XBox360Pad.AXIS_LEFT_X)) > 0.2)
-            shipVel.x = controller.getAxis(XBox360Pad.AXIS_LEFT_X)* Constants.RES_X/2;
-
-        if (Math.abs(controller.getAxis(XBox360Pad.AXIS_LEFT_Y)) > 0.2)
-            shipVel.y = -controller.getAxis(XBox360Pad.AXIS_LEFT_Y)* Constants.RES_Y/2;
-
-
-        if (Math.abs(controller.getAxis(XBox360Pad.AXIS_RIGHT_X)) > 0.2)
+        if (controller != null)
         {
-            cursor.setX( cursor.getX() + controller.getAxis(XBox360Pad.AXIS_RIGHT_X)*0.1f);
-        }
-        if (Math.abs(controller.getAxis(XBox360Pad.AXIS_RIGHT_Y)) > 0.2)
-        {
-            cursor.setY( cursor.getY() - controller.getAxis(XBox360Pad.AXIS_RIGHT_Y)*0.1f);
-        }
+            if (Math.abs(controller.getAxis(XBox360Pad.AXIS_LEFT_X)) > 0.2)
+                shipVel.x = controller.getAxis(XBox360Pad.AXIS_LEFT_X)* Constants.RES_X/2;
 
-        //NEW BULLET
-        if (controller.getAxis(XBox360Pad.AXIS_RIGHT_TRIGGER) < -0.75f)
-        {
-            WeaponComponent shipWeapon =  Mappers.weapon.get(ship);
-            if (shipWeapon.timer > shipWeapon.coolDown){
-                BulletFactory.createBullet(shipPos.x, shipPos.y + 20);
-                shipWeapon.timer = 0;
+            if (Math.abs(controller.getAxis(XBox360Pad.AXIS_LEFT_Y)) > 0.2)
+                shipVel.y = -controller.getAxis(XBox360Pad.AXIS_LEFT_Y)* Constants.RES_Y/2;
+
+
+            if (Math.abs(controller.getAxis(XBox360Pad.AXIS_RIGHT_X)) > 0.2)
+            {
+                cursor.setX( cursor.getX() + controller.getAxis(XBox360Pad.AXIS_RIGHT_X)*0.1f);
+            }
+            if (Math.abs(controller.getAxis(XBox360Pad.AXIS_RIGHT_Y)) > 0.2)
+            {
+                cursor.setY( cursor.getY() - controller.getAxis(XBox360Pad.AXIS_RIGHT_Y)*0.1f);
+            }
+
+            //NEW BULLET
+            if (controller.getAxis(XBox360Pad.AXIS_RIGHT_TRIGGER) < -0.75f)
+            {
+                WeaponComponent shipWeapon =  Mappers.weapon.get(ship);
+                if (shipWeapon.timer > shipWeapon.coolDown){
+                    BulletFactory.createBullet(shipPos.x, shipPos.y + 20);
+                    shipWeapon.timer = 0;
+                }
             }
         }
-
-*/
 
 
         if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT))
         {
-            Vector2 mouseWindowPos = Utils.mousePosBounded();
+            Vector2 mouseWindowPos = Utils.inputMouseWindowPosBounded();
             Vector3 mouseWorldPos = game.cam.unproject(new Vector3(mouseWindowPos.x, mouseWindowPos.y, 0));
 
             Vector2 dir = new Vector2(mouseWorldPos.x - shipPos.x, mouseWorldPos.y - shipPos.y);
@@ -151,33 +184,23 @@ public class PlayScreen implements Screen {
         }
     }
 
+
     @Override
     public void render(float delta)
     {
         updateGame();
-
-        float dt = Gdx.graphics.getDeltaTime();
+        background.translate(0, -delta * 20);
 
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        game.batch.setProjectionMatrix(game.cam.combined);
-
-        game.batch.begin();
-
-        background.translate(0, -dt * 20);
-        background.draw(game.batch);
-
-        game.engine.update(dt);
-
-        Vector2 inputPos = Utils.inputCurrentWorldPos(game.cam);
+        game.engine.update(delta); //Update inside batch: it may draw things
+        Vector2 inputPos = Utils.inputMouseWorldPos(game.cam);
 
         cursor.setCenterX(inputPos.x);
         cursor.setCenterY(inputPos.y);
+        //cursor.draw(game.batch);
 
-        cursor.draw(game.batch);
-
-        game.batch.end();
 
         Gdx.graphics.setTitle("LifeInSpace | FPS: "+Gdx.graphics.getFramesPerSecond());
     }
@@ -194,6 +217,7 @@ public class PlayScreen implements Screen {
 
     @Override
     public void resume() {
+
 
     }
 

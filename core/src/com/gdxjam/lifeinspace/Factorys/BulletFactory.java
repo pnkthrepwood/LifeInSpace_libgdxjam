@@ -1,4 +1,4 @@
-package com.gdxjam.lifeinspace;
+package com.gdxjam.lifeinspace.Factorys;
 
 
 import com.badlogic.ashley.core.Entity;
@@ -11,6 +11,8 @@ import com.gdxjam.lifeinspace.Components.TypeComponent;
 import com.gdxjam.lifeinspace.Components.PositionComponent;
 import com.gdxjam.lifeinspace.Components.RenderComponent;
 import com.gdxjam.lifeinspace.Components.VelocityComponent;
+import com.gdxjam.lifeinspace.Gaem;
+import com.gdxjam.lifeinspace.TextureManager;
 
 /**
  * Created by Jesús Atalaya on 20/12/2015.
@@ -36,7 +38,6 @@ public class BulletFactory
         TextureRegion texreg =  new TextureRegion();
         texreg.setRegion(tex);
         texreg.setRegion(0, 0, 8, 13);
-
         RenderComponent rc = new RenderComponent(new Sprite(texreg), gaem.batch);
 
         //Bullet Component

@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FillViewport;
@@ -35,6 +36,7 @@ import javax.swing.text.Position;
 public class Gaem extends Game
 {
 	public static SpriteBatch batch;
+	public static ShapeRenderer shapeRenderer;
 	public OrthographicCamera cam;
 	public Viewport viewport;
 	public Engine engine;
@@ -48,6 +50,8 @@ public class Gaem extends Game
 		viewport = new FitViewport(Constants.RES_X, Constants.RES_Y, cam);
 
 		batch = new SpriteBatch();
+		shapeRenderer = new ShapeRenderer();
+		shapeRenderer.setAutoShapeType(true);
 
 		engine = new Engine();
 

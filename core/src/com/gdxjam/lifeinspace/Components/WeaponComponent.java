@@ -20,7 +20,7 @@ public class WeaponComponent implements Component
 
     public WeaponComponent()
     {
-        setStats(WeaponType.BASIC);
+        setStats(WeaponType.FAST);
     }
 
     public WeaponComponent(WeaponType type)

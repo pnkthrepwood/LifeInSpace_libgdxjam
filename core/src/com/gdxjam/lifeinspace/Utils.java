@@ -11,14 +11,14 @@ import com.badlogic.gdx.math.Vector3;
 public class Utils
 {
 
-    public static Vector2 inputCurrentWorldPos(Camera cam)
+    public static Vector2 inputMouseWorldPos(Camera cam)
     {
-        Vector2 inputScreenPos = mousePosBounded();
+        Vector2 inputScreenPos = inputMouseWindowPosBounded();
         Vector3 pos = cam.unproject(new Vector3(inputScreenPos.x, inputScreenPos.y, 0));
         return new Vector2(pos.x, pos.y);
     }
 
-    public static Vector2 mousePosBounded()
+    public static Vector2 inputMouseWindowPosBounded()
     {
         Vector2 mousePos = new Vector2(Gdx.input.getX(), Gdx.input.getY());
 

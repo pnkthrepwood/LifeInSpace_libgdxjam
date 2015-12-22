@@ -4,9 +4,7 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
-import com.gdxjam.lifeinspace.BulletFactory;
 import com.gdxjam.lifeinspace.Components.PositionComponent;
-import com.gdxjam.lifeinspace.Components.RenderComponent;
 import com.gdxjam.lifeinspace.Components.WeaponComponent;
 
 /**

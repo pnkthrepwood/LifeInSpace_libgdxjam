@@ -1,4 +1,4 @@
-package com.gdxjam.lifeinspace;
+package com.gdxjam.lifeinspace.Factorys;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -6,6 +6,8 @@ import com.gdxjam.lifeinspace.Components.CollisionComponent;
 import com.gdxjam.lifeinspace.Components.TypeComponent;
 import com.gdxjam.lifeinspace.Components.PositionComponent;
 import com.gdxjam.lifeinspace.Components.RenderComponent;
+import com.gdxjam.lifeinspace.Gaem;
+import com.gdxjam.lifeinspace.TextureManager;
 
 /**
  * Created by threpwood on 20/12/2015.
