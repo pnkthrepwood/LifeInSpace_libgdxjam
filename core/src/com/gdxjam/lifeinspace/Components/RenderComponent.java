@@ -12,12 +12,11 @@ import com.gdxjam.lifeinspace.TextureManager;
 
 public class RenderComponent implements Component
 {
-    public SpriteBatch batch;
     public Sprite spr;
+    public float rotation;
 
-    public RenderComponent(Sprite spr, SpriteBatch batch)
+    public RenderComponent(Sprite spr)
     {
         this.spr = spr;
-        this.batch = batch;
     }
 }

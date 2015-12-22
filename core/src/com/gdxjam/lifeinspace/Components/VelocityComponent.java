@@ -10,7 +10,12 @@ public class VelocityComponent implements Component
     public float x = 0.0f;
     public float y = 0.0f;
 
-    public float minSpeed = 200;
-    public float maxSpeed = 200;
+    public VelocityComponent() {}
+
+    public VelocityComponent(float speedX, float speedY)
+    {
+        x = speedX;
+        y = speedY;
+    }
 
 }

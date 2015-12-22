@@ -1,18 +1,14 @@
 package com.gdxjam.lifeinspace.Systems;
 
-import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.Family;
-import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.gdxjam.lifeinspace.Components.PositionComponent;
 import com.gdxjam.lifeinspace.Components.RenderComponent;
-import com.gdxjam.lifeinspace.Components.ShapeComponent;
 import com.gdxjam.lifeinspace.Mappers;
 
 /**
@@ -53,10 +49,13 @@ public class RenderSystem extends EntitySystem
             RenderComponent rc = Mappers.render.get(e);
             PositionComponent pos = Mappers.position.get(e);
 
-            rc.spr.setCenterX((float) Math.floor(pos.x));
+            rc.spr.setCenterX((float) Math.floor(pos.X()));
             rc.spr.setCenterY((float) Math.floor(pos.y));
 
-            rc.spr.draw(rc.batch);
+            rc.spr.setOriginCenter();
+            rc.spr.setRotation(rc.rotation);
+
+            rc.spr.draw(batch);
         }
 
         batch.end();

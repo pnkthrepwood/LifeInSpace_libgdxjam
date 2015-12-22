@@ -5,6 +5,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.gdxjam.lifeinspace.Components.BulletComponent;
 import com.gdxjam.lifeinspace.Components.CollisionComponent;
 import com.gdxjam.lifeinspace.Components.TypeComponent;
@@ -21,41 +22,26 @@ public class BulletFactory
 {
     public static Gaem gaem;
 
-    public static void createBullet(float x, float y)
+    public static void createBullet(float x, float y, float angle)
     {
-
-        //Bullet Position Parameter
-        PositionComponent pc = new PositionComponent();
-        pc.x = x;
-        pc.y = y;
-
-        //Bullet Velocity Component
-        VelocityComponent vc = new VelocityComponent();
-        vc.y = 500;
-
-        //Bullet Render Component
         Texture tex = TextureManager.getTexture("bulletcollection.png");
         TextureRegion texreg =  new TextureRegion();
         texreg.setRegion(tex);
         texreg.setRegion(0, 0, 8, 13);
-        RenderComponent rc = new RenderComponent(new Sprite(texreg), gaem.batch);
+        RenderComponent rc = new RenderComponent(new Sprite(texreg));
+        rc.rotation = angle;
 
-        //Bullet Component
         BulletComponent bc = new BulletComponent();
         bc.lifeTime = 0.5f;
 
-        //Adding components to Bullet
         Entity bullet = new Entity();
-        bullet.add(pc);
-        bullet.add(vc);
+        bullet.add(new PositionComponent(x, y));
+        bullet.add(new VelocityComponent(500* MathUtils.cosDeg(angle+90), 500*MathUtils.sinDeg(angle+90)));
         bullet.add(rc);
         bullet.add(bc);
-
         bullet.add(new CollisionComponent(8, 13));
-
         bullet.add(new TypeComponent(TypeComponent.TypeEntity.BULLET));
 
-        //Adding Bullet Entity to Engine
         gaem.engine.addEntity(bullet);
     }
 }

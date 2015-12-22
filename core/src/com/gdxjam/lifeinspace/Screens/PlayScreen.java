@@ -9,11 +9,10 @@ import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.gdxjam.lifeinspace.Components.ShapeComponent;
+import com.gdxjam.lifeinspace.Components.CircleShapeComponent;
 import com.gdxjam.lifeinspace.Factorys.BulletFactory;
 import com.gdxjam.lifeinspace.Components.CollisionComponent;
 import com.gdxjam.lifeinspace.Components.TypeComponent;
@@ -76,20 +75,20 @@ public class PlayScreen implements Screen {
 
         Entity planet_bg = new Entity();
         planet_bg.add(new PositionComponent(0, -Constants.RES_Y / 2 + TextureManager.getTexture("planet_bg.png").getHeight() / 2));
-        planet_bg.add(new VelocityComponent());
-        planet_bg.add(new RenderComponent(new Sprite(TextureManager.getTexture("planet_bg.png")), game.batch));
+        planet_bg.add(new VelocityComponent(0, -0.5f));
+        planet_bg.add(new RenderComponent(new Sprite(TextureManager.getTexture("planet_bg.png"))));
         game.engine.addEntity(planet_bg);
 
         ship = new Entity();
         ship.add(new TypeComponent(TypeEntity.SHIP));
         ship.add(new PositionComponent());
-        ship.add(new VelocityComponent());
-        ship.add(new RenderComponent(new Sprite(TextureManager.getTexture("ship.png")), game.batch));
+        ship.add(new VelocityComponent(0, 0));
+        ship.add(new RenderComponent(new Sprite(TextureManager.getTexture("ship.png"))));
         ship.add(new WeaponComponent());
         ship.add(new CollisionComponent(20, 20));
         game.engine.addEntity(ship);
 
-        EnemyFactory.spawnEnemy(0, 100);
+        EnemyFactory.spawnEnemy(0, Constants.RES_Y/2);
 
         controller = null;
         if (Controllers.getControllers().size > 0)
@@ -97,20 +96,71 @@ public class PlayScreen implements Screen {
             controller = Controllers.getControllers().first();
         }
 
-        for (int i = 0; i < 500; ++i)
+        generateBackgroundEntities();
+
+    }
+
+    private void generateBackgroundEntities()
+    {
+        for (int i = 0; i < 750; ++i)
         {
             Entity star = new Entity();
-            ShapeComponent shape = new ShapeComponent();
-            shape.xPos = MathUtils.random(0, Constants.RES_X);
-            shape.yPos = MathUtils.random(0, Constants.RES_Y);;
+            CircleShapeComponent shape = new CircleShapeComponent();
             shape.radius = 1;
+            star.add(shape);
+            star.add(new PositionComponent(MathUtils.random(0, Constants.RES_X), MathUtils.random(0, Constants.RES_Y)));
+            star.add(new VelocityComponent(0,-MathUtils.random(0,3)));
+            game.engine.addEntity(star);
+        }
+        for (int i = 0; i < 50; ++i)
+        {
+            Entity star = new Entity();
+            CircleShapeComponent shape = new CircleShapeComponent();
+            star.add(new PositionComponent(MathUtils.random(0, Constants.RES_X), MathUtils.random(0, Constants.RES_Y)));
+            shape.radius = 1;
+            if (MathUtils.random(0.0f, 1.0f) < 0.5f)
+            {
+                shape.color.r = (MathUtils.random(0, 4))*0.25f;
+                shape.color.g = 0;
+                shape.color.b = 0;
+            }
             star.add(shape);
             game.engine.addEntity(star);
         }
+        for (int i = 0; i < 50; ++i)
+        {
+            Entity star = new Entity();
+            CircleShapeComponent shape = new CircleShapeComponent();
+            star.add(new PositionComponent(MathUtils.random(0, Constants.RES_X), MathUtils.random(0, Constants.RES_Y)));
+            shape.radius = 1;
+            if (MathUtils.random(0.0f, 1.0f) < 0.5f)
+            {
+                float y = MathUtils.random(0.0f, 1.0f);
 
+                shape.color.r = y;
+                shape.color.g = y;
+                shape.color.b = 0;
+            }
+            star.add(shape);
+            game.engine.addEntity(star);
+        }
+        for (int i = 0; i < 50; ++i)
+        {
+            Entity star = new Entity();
+            CircleShapeComponent shape = new CircleShapeComponent();
+            star.add(new PositionComponent(MathUtils.random(0, Constants.RES_X), MathUtils.random(0, Constants.RES_Y)));
+            shape.radius = 1;
+            if (MathUtils.random(0.0f, 1.0f) < 0.5f)
+            {
+                float c = MathUtils.random(0.0f, 1.0f);
 
-
-
+                shape.color.r = 0;
+                shape.color.g = 0;
+                shape.color.b = c;
+            }
+            star.add(shape);
+            game.engine.addEntity(star);
+        }
     }
 
     @Override
@@ -148,7 +198,7 @@ public class PlayScreen implements Screen {
             {
                 WeaponComponent shipWeapon =  Mappers.weapon.get(ship);
                 if (shipWeapon.timer > shipWeapon.coolDown){
-                    BulletFactory.createBullet(shipPos.x, shipPos.y + 20);
+                    BulletFactory.createBullet(shipPos.X(), shipPos.y + 20, MathUtils.random(-5, 5));
                     shipWeapon.timer = 0;
                 }
             }
@@ -160,11 +210,11 @@ public class PlayScreen implements Screen {
             Vector2 mouseWindowPos = Utils.inputMouseWindowPosBounded();
             Vector3 mouseWorldPos = game.cam.unproject(new Vector3(mouseWindowPos.x, mouseWindowPos.y, 0));
 
-            Vector2 dir = new Vector2(mouseWorldPos.x - shipPos.x, mouseWorldPos.y - shipPos.y);
+            Vector2 dir = new Vector2(mouseWorldPos.x - shipPos.X(), mouseWorldPos.y - shipPos.y);
 
             float len = dir.len();
 
-            if (len > 2.0)
+            if (len > 15.0)
             {
                 dir = dir.nor();
                 shipVel.x = dir.x* Constants.RES_X/2;// Math.max(shipVel.minSpeed, len);
@@ -178,7 +228,7 @@ public class PlayScreen implements Screen {
         {
             WeaponComponent shipWeapon =  Mappers.weapon.get(ship);
             if (shipWeapon.timer > shipWeapon.coolDown){
-                BulletFactory.createBullet(shipPos.x, shipPos.y + 20);
+                BulletFactory.createBullet(shipPos.X(), shipPos.y + 20, 0);
                 shipWeapon.timer = 0;
             }
         }

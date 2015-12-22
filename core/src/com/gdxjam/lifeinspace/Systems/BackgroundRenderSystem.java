@@ -4,11 +4,10 @@ import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.Family;
-import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.gdxjam.lifeinspace.Components.BulletComponent;
-import com.gdxjam.lifeinspace.Components.ShapeComponent;
+import com.gdxjam.lifeinspace.Components.CircleShapeComponent;
+import com.gdxjam.lifeinspace.Components.PositionComponent;
 import com.gdxjam.lifeinspace.Mappers;
 
 /**
@@ -25,7 +24,7 @@ public class BackgroundRenderSystem extends EntitySystem {
 
     @Override
     public void addedToEngine (Engine engine) {
-        entities = engine.getEntitiesFor(Family.all(ShapeComponent.class).get());
+        entities = engine.getEntitiesFor(Family.all(CircleShapeComponent.class).get());
     }
 
     @Override
@@ -40,10 +39,15 @@ public class BackgroundRenderSystem extends EntitySystem {
 
         for (int i = 0; i < entities.size(); ++i) {
             Entity e = entities.get(i);
-            ShapeComponent shape = Mappers.shape.get(e);
+            CircleShapeComponent shape = Mappers.shape.get(e);
+            PositionComponent pos = Mappers.position.get(e);
 
             shapeRenderer.setColor(shape.color);
-            shapeRenderer.circle(shape.xPos, shape.yPos, shape.radius);
+            shapeRenderer.rect(pos.X() - shape.radius/2,
+                               pos.y - shape.radius/2,
+                               shape.radius,
+                               shape.radius);
+            shapeRenderer.circle(pos.X(), pos.y, shape.radius);
         }
 
         shapeRenderer.end();

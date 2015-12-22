@@ -17,7 +17,7 @@ public class DesktopLauncher
 		config.foregroundFPS = 0;
 		config.backgroundFPS = 0;
 
-
+		config.fullscreen = false;
 
 		new LwjglApplication(new Gaem(), config);
 	}

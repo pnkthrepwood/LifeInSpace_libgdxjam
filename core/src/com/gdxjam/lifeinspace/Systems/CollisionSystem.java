@@ -35,7 +35,7 @@ public class CollisionSystem extends IteratingSystem
 
         PositionComponent pos_me = Mappers.position.get(entity);
         CollisionComponent col_me = Mappers.collision.get(entity);
-        Rectangle rect_me = new Rectangle(pos_me.x,
+        Rectangle rect_me = new Rectangle(pos_me.X(),
                                           pos_me.y,
                                           col_me.sizeX,
                                           col_me.sizeY);
@@ -46,7 +46,7 @@ public class CollisionSystem extends IteratingSystem
 
             PositionComponent pos_other = Mappers.position.get(other);
             CollisionComponent col_other = Mappers.collision.get(other);
-            Rectangle rect_other = new Rectangle(pos_other.x, pos_other.y, col_other.sizeX, col_other.sizeY);
+            Rectangle rect_other = new Rectangle(pos_other.X(), pos_other.y, col_other.sizeX, col_other.sizeY);
 
             if (rect_me.overlaps(rect_other))
             {
@@ -59,9 +59,11 @@ public class CollisionSystem extends IteratingSystem
                     engine.removeEntity(entity);
                     engine.removeEntity(other);
 
+                    /*
                     EnemyFactory.spawnEnemy(
                             MathUtils.random(-Constants.RES_X/2, Constants.RES_X/2),
                             MathUtils.random(-Constants.RES_Y/2, Constants.RES_Y/2));
+                    */
                 }
 
             }
