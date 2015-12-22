@@ -49,8 +49,11 @@ public class RenderSystem extends EntitySystem
             RenderComponent rc = Mappers.render.get(e);
             PositionComponent pos = Mappers.position.get(e);
 
-            rc.spr.setCenterX((float) Math.floor(pos.X()));
-            rc.spr.setCenterY((float) Math.floor(pos.y));
+            //rc.spr.setCenterX((float) Math.floor(pos.X()));
+            //rc.spr.setCenterY((float) Math.floor(pos.y));
+
+            rc.spr.setCenterX(pos.X());
+            rc.spr.setCenterY(pos.y);
 
             rc.spr.setOriginCenter();
             rc.spr.setRotation(rc.rotation);

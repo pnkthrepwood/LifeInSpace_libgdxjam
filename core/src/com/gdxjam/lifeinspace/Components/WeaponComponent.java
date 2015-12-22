@@ -9,6 +9,8 @@ import com.badlogic.ashley.core.Component;
 
 public class WeaponComponent implements Component
 {
+    public float timer = 0f;
+
     public enum WeaponType
     {
         BASIC,
@@ -16,7 +18,7 @@ public class WeaponComponent implements Component
     }
 
     public float coolDown = 0.5f;
-    public float timer = 0f;
+    public float accuracy = 0.0f; //0 = perfect accuracy
 
     public WeaponComponent()
     {

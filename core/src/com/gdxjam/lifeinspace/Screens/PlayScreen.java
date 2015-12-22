@@ -198,7 +198,10 @@ public class PlayScreen implements Screen {
             {
                 WeaponComponent shipWeapon =  Mappers.weapon.get(ship);
                 if (shipWeapon.timer > shipWeapon.coolDown){
-                    BulletFactory.createBullet(shipPos.X(), shipPos.y + 20, MathUtils.random(-5, 5));
+                    BulletFactory.shootTripleBullet(
+                            shipPos.X(),
+                            shipPos.y + 20,
+                            MathUtils.random(-shipWeapon.accuracy, shipWeapon.accuracy));
                     shipWeapon.timer = 0;
                 }
             }
@@ -228,7 +231,7 @@ public class PlayScreen implements Screen {
         {
             WeaponComponent shipWeapon =  Mappers.weapon.get(ship);
             if (shipWeapon.timer > shipWeapon.coolDown){
-                BulletFactory.createBullet(shipPos.X(), shipPos.y + 20, 0);
+                BulletFactory.shootBullet(shipPos.X(), shipPos.y + 20, 0);
                 shipWeapon.timer = 0;
             }
         }

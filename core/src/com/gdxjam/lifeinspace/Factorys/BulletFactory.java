@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.gdxjam.lifeinspace.Components.BulletComponent;
 import com.gdxjam.lifeinspace.Components.CollisionComponent;
+import com.gdxjam.lifeinspace.Components.SinusBehaviourComponent;
 import com.gdxjam.lifeinspace.Components.TypeComponent;
 import com.gdxjam.lifeinspace.Components.PositionComponent;
 import com.gdxjam.lifeinspace.Components.RenderComponent;
@@ -22,7 +23,14 @@ public class BulletFactory
 {
     public static Gaem gaem;
 
-    public static void createBullet(float x, float y, float angle)
+    public static void shootTripleBullet(float x, float y, float angle)
+    {
+        shootBullet(x, y, angle);
+        shootBullet(x, y, angle+45);
+        shootBullet(x, y, angle-45);
+    }
+
+    public static void shootBullet(float x, float y, float angle)
     {
         Texture tex = TextureManager.getTexture("bulletcollection.png");
         TextureRegion texreg =  new TextureRegion();
@@ -36,7 +44,7 @@ public class BulletFactory
 
         Entity bullet = new Entity();
         bullet.add(new PositionComponent(x, y));
-        bullet.add(new VelocityComponent(500* MathUtils.cosDeg(angle+90), 500*MathUtils.sinDeg(angle+90)));
+        bullet.add(new VelocityComponent(500* MathUtils.cosDeg(angle + 90), 500*MathUtils.sinDeg(angle + 90)));
         bullet.add(rc);
         bullet.add(bc);
         bullet.add(new CollisionComponent(8, 13));
