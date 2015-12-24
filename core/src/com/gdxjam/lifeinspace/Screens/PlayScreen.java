@@ -50,6 +50,8 @@ public class PlayScreen implements Screen {
 
     Controller controller;
 
+    float time_since_last_enemy = 0;
+
     public PlayScreen(Gaem game)
     {
         this.game = game;
@@ -95,7 +97,7 @@ public class PlayScreen implements Screen {
         ship.add(new CollisionComponent(20, 20));
         game.engine.addEntity(ship);
 
-        EnemyFactory.spawnEnemy(0, Constants.RES_Y/2);
+        EnemyFactory.spawnSnakeEnemy(0, Constants.RES_Y / 2);
 
         controller = null;
         if (Controllers.getControllers().size > 0)
@@ -205,7 +207,7 @@ public class PlayScreen implements Screen {
             {
                 WeaponComponent shipWeapon =  Mappers.weapon.get(ship);
                 if (shipWeapon.timer > shipWeapon.coolDown){
-                    BulletFactory.shootTripleBullet(
+                    BulletFactory.shootBullet(
                             shipPos.X(),
                             shipPos.y + 20,
                             MathUtils.random(-shipWeapon.accuracy, shipWeapon.accuracy));
@@ -248,8 +250,18 @@ public class PlayScreen implements Screen {
     @Override
     public void render(float delta)
     {
+
+        if (time_since_last_enemy > 10.0f)
+        {
+            EnemyFactory.spawnSnakeEnemy(
+                    MathUtils.random(-Constants.RES_X*0.25f, Constants.RES_X*0.25f),
+                    Constants.RES_Y / 2);
+            time_since_last_enemy = 0.0f;
+        }
+        time_since_last_enemy += delta;
+
         updateGame();
-       // background.translate(0, -delta * 20);
+        //background.translate(0, -delta * 20);
         //float planet_scale = planet_spr.getScaleX() - delta*(5.0f/30.0f);
         //planet_spr.setScale(planet_scale, planet_scale);
 

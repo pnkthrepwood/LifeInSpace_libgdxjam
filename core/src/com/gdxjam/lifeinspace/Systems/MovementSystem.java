@@ -12,6 +12,7 @@ import com.gdxjam.lifeinspace.Components.RenderComponent;
 import com.gdxjam.lifeinspace.Components.SinusBehaviourComponent;
 import com.gdxjam.lifeinspace.Components.TypeComponent;
 import com.gdxjam.lifeinspace.Components.VelocityComponent;
+import com.gdxjam.lifeinspace.Constants;
 import com.gdxjam.lifeinspace.Mappers;
 
 /**
@@ -40,7 +41,7 @@ public class MovementSystem extends IteratingSystem
             SinusBehaviourComponent sc = Mappers.sinus_behaviour.get(entity);
             sc.timer += deltaTime;
 
-            pos.x_offset = MathUtils.cos((float) (pos.y*2.0f*Math.PI/(sc.freq)))*sc.amp;
+            pos.x_offset = MathUtils.cos((float) (pos.y * 2.0f * Math.PI / (sc.freq)))*sc.amp;
         }
 
         pos.x_real += vel.x*deltaTime;
@@ -51,7 +52,7 @@ public class MovementSystem extends IteratingSystem
         {
             if (Mappers.type.get(entity).type == TypeComponent.TypeEntity.ENEMY)
             {
-                if (pos.y < 0) engine.removeEntity(entity);
+                if (pos.y < -Constants.RES_Y) engine.removeEntity(entity);
             }
         }
 

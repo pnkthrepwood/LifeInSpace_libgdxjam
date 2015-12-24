@@ -5,6 +5,7 @@ import com.gdxjam.lifeinspace.Components.BulletComponent;
 import com.gdxjam.lifeinspace.Components.CollisionComponent;
 import com.gdxjam.lifeinspace.Components.CircleShapeComponent;
 import com.gdxjam.lifeinspace.Components.SinusBehaviourComponent;
+import com.gdxjam.lifeinspace.Components.SquadComponent;
 import com.gdxjam.lifeinspace.Components.TypeComponent;
 import com.gdxjam.lifeinspace.Components.PositionComponent;
 import com.gdxjam.lifeinspace.Components.RenderComponent;
@@ -25,4 +26,5 @@ public class Mappers
     public static ComponentMapper<TypeComponent> type = ComponentMapper.getFor(TypeComponent.class);
     public static ComponentMapper<CircleShapeComponent> shape = ComponentMapper.getFor(CircleShapeComponent.class);
     public static ComponentMapper<SinusBehaviourComponent> sinus_behaviour = ComponentMapper.getFor(SinusBehaviourComponent.class);
+    public static ComponentMapper<SquadComponent> squad = ComponentMapper.getFor(SquadComponent.class);
 }

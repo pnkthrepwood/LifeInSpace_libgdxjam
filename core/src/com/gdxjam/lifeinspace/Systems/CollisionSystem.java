@@ -5,14 +5,12 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.ashley.utils.ImmutableArray;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.gdxjam.lifeinspace.Components.CollisionComponent;
 import com.gdxjam.lifeinspace.Components.TypeComponent;
 import com.gdxjam.lifeinspace.Components.PositionComponent;
-import com.gdxjam.lifeinspace.Constants;
-import com.gdxjam.lifeinspace.Factorys.EnemyFactory;
 import com.gdxjam.lifeinspace.Mappers;
+import com.gdxjam.lifeinspace.SquadManager;
 
 /**
  * Created by threpwood on 20/12/2015.
@@ -57,10 +55,16 @@ public class CollisionSystem extends IteratingSystem
                     && type_other == TypeComponent.TypeEntity.ENEMY)
                 {
                     engine.removeEntity(entity);
+
+                    if (Mappers.squad.has(other))
+                    {
+                        int squad = Mappers.squad.get(other).squad;
+                        SquadManager.enemyFromSquadKilled(squad);
+                    }
                     engine.removeEntity(other);
 
                     /*
-                    EnemyFactory.spawnEnemy(
+                    EnemyFactory.spawnSnakeEnemy(
                             MathUtils.random(-Constants.RES_X/2, Constants.RES_X/2),
                             MathUtils.random(-Constants.RES_Y/2, Constants.RES_Y/2));
                     */
