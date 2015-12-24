@@ -11,6 +11,17 @@ import com.badlogic.gdx.math.Vector3;
 public class Utils
 {
 
+    public static String textScoreNice(int score)
+    {
+        String pre_score = "";
+        if (score < 10000) pre_score += "0";
+        if (score < 1000) pre_score += "0";
+        if (score < 100) pre_score += "0";
+        if (score < 10) pre_score += "0";
+
+        return pre_score+score;
+    }
+
     public static Vector2 inputMouseWorldPos(Camera cam)
     {
         Vector2 inputScreenPos = inputMouseWindowPosBounded();

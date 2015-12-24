@@ -28,6 +28,7 @@ import com.gdxjam.lifeinspace.Constants;
 import com.gdxjam.lifeinspace.Factorys.EnemyFactory;
 import com.gdxjam.lifeinspace.Gaem;
 import com.gdxjam.lifeinspace.Mappers;
+import com.gdxjam.lifeinspace.PlayerManager;
 import com.gdxjam.lifeinspace.Systems.BackgroundRenderSystem;
 import com.gdxjam.lifeinspace.Systems.BulletSystem;
 import com.gdxjam.lifeinspace.Systems.CollisionSystem;
@@ -56,14 +57,8 @@ public class PlayScreen implements Screen {
 
     float time_since_last_enemy = 0;
 
-    //BitmapFont
     BitmapFont font;
-    FreeTypeFontGenerator generator;
-    FreeTypeFontGenerator.FreeTypeFontParameter parameter;
-    Integer score;
-    String scoreText;
-    float fontPosX = (-Constants.RES_X / 2 ) + Constants.RES_X * 0.01f ;
-    float fontPosY = (Constants.RES_Y / 2 ) - Constants.RES_Y * 0.02f;
+
 
     public PlayScreen(Gaem game)
     {
@@ -120,19 +115,14 @@ public class PlayScreen implements Screen {
 
         generateBackgroundEntities();
 
-
-        //Font instantation & configuration (through FreeTypeFontGenerator parameters)
         font = new BitmapFont();
-        generator = new FreeTypeFontGenerator(Gdx.files.internal("bitDarling.ttf"));
-        parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("bitDarling.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = 20;
         parameter.color = Color.WHITE;
         parameter.borderWidth = 2;
         parameter.borderColor = Color.BLACK;
         font = generator.generateFont(parameter);
-
-        score = 0;
-        scoreText = score.toString();
     }
 
     private void generateBackgroundEntities()
@@ -302,9 +292,11 @@ public class PlayScreen implements Screen {
         //cursor.draw(game.batch);
 
         Gdx.graphics.setTitle("LifeInSpace | FPS: " + Gdx.graphics.getFramesPerSecond());
-        
+
+        float fontPosX = (-Constants.RES_X / 2 ) + Constants.RES_X * 0.01f ;
+        float fontPosY = (Constants.RES_Y / 2 ) - Constants.RES_Y * 0.02f;
         Gaem.batch.begin();
-        font.draw(Gaem.batch, "SCORE\n" + score, fontPosX , fontPosY);
+        font.draw(Gaem.batch, "SCORE\n" + Utils.textScoreNice(PlayerManager.score), fontPosX, fontPosY);
         Gaem.batch.end();
 
     }

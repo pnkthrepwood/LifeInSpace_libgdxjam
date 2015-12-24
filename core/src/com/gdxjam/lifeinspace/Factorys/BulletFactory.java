@@ -32,7 +32,7 @@ public class BulletFactory
 
     public static void shootBullet(float x, float y, float angle)
     {
-        Texture tex = TextureManager.getTexture("bulletcollection.png");
+        Texture tex = TextureManager.getTexture("BulletCollection.png");
         TextureRegion texreg =  new TextureRegion();
         texreg.setRegion(tex);
         texreg.setRegion(0, 0, 8, 13);

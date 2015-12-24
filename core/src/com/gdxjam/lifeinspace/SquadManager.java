@@ -25,7 +25,7 @@ public class SquadManager
         if (ct == 0)
         {
             //To-do: Squad just lost the last guy! Do things
-            System.out.println("Squad killed: "+squad);
+            PlayerManager.score += 100;
 
             squadCounter.remove(ct);
         }

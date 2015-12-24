@@ -10,6 +10,7 @@ import com.gdxjam.lifeinspace.Components.CollisionComponent;
 import com.gdxjam.lifeinspace.Components.TypeComponent;
 import com.gdxjam.lifeinspace.Components.PositionComponent;
 import com.gdxjam.lifeinspace.Mappers;
+import com.gdxjam.lifeinspace.PlayerManager;
 import com.gdxjam.lifeinspace.SquadManager;
 
 /**
@@ -62,6 +63,8 @@ public class CollisionSystem extends IteratingSystem
                         SquadManager.enemyFromSquadKilled(squad);
                     }
                     engine.removeEntity(other);
+
+                    PlayerManager.score += 10;
 
                     /*
                     EnemyFactory.spawnSnakeEnemy(
