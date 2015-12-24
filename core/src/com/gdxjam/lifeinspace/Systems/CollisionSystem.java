@@ -7,6 +7,7 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.math.Rectangle;
 import com.gdxjam.lifeinspace.Components.CollisionComponent;
+import com.gdxjam.lifeinspace.Components.LifeComponent;
 import com.gdxjam.lifeinspace.Components.TypeComponent;
 import com.gdxjam.lifeinspace.Components.PositionComponent;
 import com.gdxjam.lifeinspace.Mappers;
@@ -34,8 +35,8 @@ public class CollisionSystem extends IteratingSystem
 
         PositionComponent pos_me = Mappers.position.get(entity);
         CollisionComponent col_me = Mappers.collision.get(entity);
-        Rectangle rect_me = new Rectangle(pos_me.X(),
-                                          pos_me.y,
+        Rectangle rect_me = new Rectangle(pos_me.X() - col_me.sizeX*0.5f,
+                                          pos_me.y - col_me.sizeY*0.5f,
                                           col_me.sizeX,
                                           col_me.sizeY);
 
@@ -45,7 +46,11 @@ public class CollisionSystem extends IteratingSystem
 
             PositionComponent pos_other = Mappers.position.get(other);
             CollisionComponent col_other = Mappers.collision.get(other);
-            Rectangle rect_other = new Rectangle(pos_other.X(), pos_other.y, col_other.sizeX, col_other.sizeY);
+            Rectangle rect_other = new Rectangle(
+                    pos_other.X() - col_other.sizeX*0.5f,
+                    pos_other.y - col_other.sizeY*0.5f,
+                    col_other.sizeX,
+                    col_other.sizeY);
 
             if (rect_me.overlaps(rect_other))
             {
@@ -57,20 +62,28 @@ public class CollisionSystem extends IteratingSystem
                 {
                     engine.removeEntity(entity);
 
-                    if (Mappers.squad.has(other))
+                    boolean is_killed = false;
+                    if (Mappers.lifes.has(other))
                     {
-                        int squad = Mappers.squad.get(other).squad;
-                        SquadManager.enemyFromSquadKilled(squad);
+                        LifeComponent lc = Mappers.lifes.get(other);
+                        if (--lc.lifes == 0)
+                        {
+                           is_killed = true;
+                        }
                     }
-                    engine.removeEntity(other);
+                    else is_killed = true;
 
-                    PlayerManager.score += 10;
+                    if (is_killed)
+                    {
+                        if (Mappers.squad.has(other))
+                        {
+                            int squad = Mappers.squad.get(other).squad;
+                            SquadManager.enemyFromSquadKilled(squad);
+                        }
+                        engine.removeEntity(other);
 
-                    /*
-                    EnemyFactory.spawnSnakeEnemy(
-                            MathUtils.random(-Constants.RES_X/2, Constants.RES_X/2),
-                            MathUtils.random(-Constants.RES_Y/2, Constants.RES_Y/2));
-                    */
+                        PlayerManager.score += 10;
+                    }
                 }
 
             }

@@ -4,6 +4,8 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.gdxjam.lifeinspace.Components.CollisionComponent;
+import com.gdxjam.lifeinspace.Components.LifeComponent;
+import com.gdxjam.lifeinspace.Components.ShooterBehaviourComponent;
 import com.gdxjam.lifeinspace.Components.SinusBehaviourComponent;
 import com.gdxjam.lifeinspace.Components.SquadComponent;
 import com.gdxjam.lifeinspace.Components.TypeComponent;
@@ -42,6 +44,21 @@ public class EnemyFactory
             enemy.add(new SquadComponent(squad));
             gaem.engine.addEntity(enemy);
         }
+    }
+
+    public static void spawnShooterEnemy(float x, float y)
+    {
+        Entity enemy = new Entity();
+        enemy.add(new TypeComponent(TypeComponent.TypeEntity.ENEMY));
+        enemy.add(new PositionComponent(x, y));
+        enemy.add(new VelocityComponent(0, -30));
+        enemy.add(new RenderComponent(new Sprite(TextureManager.getTexture("monster.png"))));
+        enemy.add(new SinusBehaviourComponent(10, 1));
+        enemy.add(new CollisionComponent(32, 32));
+        enemy.add(new LifeComponent(3));
+        enemy.add(new ShooterBehaviourComponent(2));
+        gaem.engine.addEntity(enemy);
+
     }
 
 }

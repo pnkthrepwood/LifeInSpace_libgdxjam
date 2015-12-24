@@ -1,6 +1,8 @@
 package com.gdxjam.lifeinspace.Screens;
 
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.ashley.core.Family;
+import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -12,7 +14,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.gdxjam.lifeinspace.Components.CircleShapeComponent;
@@ -32,6 +36,7 @@ import com.gdxjam.lifeinspace.PlayerManager;
 import com.gdxjam.lifeinspace.Systems.BackgroundRenderSystem;
 import com.gdxjam.lifeinspace.Systems.BulletSystem;
 import com.gdxjam.lifeinspace.Systems.CollisionSystem;
+import com.gdxjam.lifeinspace.Systems.EnemyBehaviourSystem;
 import com.gdxjam.lifeinspace.Systems.MovementSystem;
 import com.gdxjam.lifeinspace.Systems.RenderSystem;
 import com.gdxjam.lifeinspace.Systems.WeaponSystem;
@@ -39,6 +44,8 @@ import com.gdxjam.lifeinspace.TextureManager;
 import com.gdxjam.lifeinspace.Utils;
 import com.gdxjam.lifeinspace.XBox360Pad;
 import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
+
+import java.util.Map;
 
 /**
  * Created by threpwood on 20/12/2015.
@@ -79,6 +86,7 @@ public class PlayScreen implements Screen {
         game.engine.addSystem(new CollisionSystem(game.engine));
         game.engine.addSystem(new WeaponSystem());
         game.engine.addSystem(new BulletSystem(game.engine));
+        game.engine.addSystem(new EnemyBehaviourSystem());
         game.engine.addSystem(new BackgroundRenderSystem(game.shapeRenderer));
         game.engine.addSystem(new RenderSystem(game.batch, game.cam));
         BulletFactory.gaem = this.game;
@@ -106,6 +114,9 @@ public class PlayScreen implements Screen {
         game.engine.addEntity(ship);
 
         EnemyFactory.spawnSnakeEnemy(0, Constants.RES_Y / 2);
+        EnemyFactory.spawnShooterEnemy(
+                MathUtils.random(-Constants.RES_X * 0.25f, Constants.RES_X * 0.25f),
+                Constants.RES_Y / 2);
 
         controller = null;
         if (Controllers.getControllers().size > 0)
@@ -133,7 +144,9 @@ public class PlayScreen implements Screen {
             CircleShapeComponent shape = new CircleShapeComponent();
             shape.radius = 1;
             star.add(shape);
-            star.add(new PositionComponent(MathUtils.random(0, Constants.RES_X), MathUtils.random(0, Constants.RES_Y)));
+            star.add(new PositionComponent(
+                    MathUtils.random(-Constants.RES_X/2, Constants.RES_X/2),
+                    MathUtils.random(-Constants.RES_Y/2, Constants.RES_Y/2)));
             star.add(new VelocityComponent(0,-MathUtils.random(0,3)));
             game.engine.addEntity(star);
         }
@@ -141,7 +154,9 @@ public class PlayScreen implements Screen {
         {
             Entity star = new Entity();
             CircleShapeComponent shape = new CircleShapeComponent();
-            star.add(new PositionComponent(MathUtils.random(0, Constants.RES_X), MathUtils.random(0, Constants.RES_Y)));
+            star.add(new PositionComponent(
+                    MathUtils.random(-Constants.RES_X/2, Constants.RES_X/2),
+                    MathUtils.random(-Constants.RES_Y/2, Constants.RES_Y/2)));
             shape.radius = MathUtils.random(1,1.5f);
             if (MathUtils.random(0.0f, 1.0f) < 0.5f)
             {
@@ -156,7 +171,9 @@ public class PlayScreen implements Screen {
         {
             Entity star = new Entity();
             CircleShapeComponent shape = new CircleShapeComponent();
-            star.add(new PositionComponent(MathUtils.random(0, Constants.RES_X), MathUtils.random(0, Constants.RES_Y)));
+            star.add(new PositionComponent(
+                    MathUtils.random(-Constants.RES_X/2, Constants.RES_X/2),
+                    MathUtils.random(-Constants.RES_Y/2, Constants.RES_Y/2)));
             shape.radius = MathUtils.random(1,1.5f);
             if (MathUtils.random(0.0f, 1.0f) < 0.5f)
             {
@@ -173,7 +190,9 @@ public class PlayScreen implements Screen {
         {
             Entity star = new Entity();
             CircleShapeComponent shape = new CircleShapeComponent();
-            star.add(new PositionComponent(MathUtils.random(0, Constants.RES_X), MathUtils.random(0, Constants.RES_Y)));
+            star.add(new PositionComponent(
+                    MathUtils.random(-Constants.RES_X/2, Constants.RES_X/2),
+                    MathUtils.random(-Constants.RES_Y/2, Constants.RES_Y/2)));
             shape.radius = MathUtils.random(1,1.5f);
             if (MathUtils.random(0.0f, 1.0f) < 0.5f)
             {
@@ -203,10 +222,10 @@ public class PlayScreen implements Screen {
         if (controller != null)
         {
             if (Math.abs(controller.getAxis(XBox360Pad.AXIS_LEFT_X)) > 0.2)
-                shipVel.x = controller.getAxis(XBox360Pad.AXIS_LEFT_X)* Constants.RES_X/2;
+                shipVel.x = controller.getAxis(XBox360Pad.AXIS_LEFT_X)* Constants.RES_X/8 * PlayerManager.ship_speed;
 
             if (Math.abs(controller.getAxis(XBox360Pad.AXIS_LEFT_Y)) > 0.2)
-                shipVel.y = -controller.getAxis(XBox360Pad.AXIS_LEFT_Y)* Constants.RES_Y/2;
+                shipVel.y = -controller.getAxis(XBox360Pad.AXIS_LEFT_Y)* Constants.RES_Y/8 * PlayerManager.ship_speed;
 
 
             if (Math.abs(controller.getAxis(XBox360Pad.AXIS_RIGHT_X)) > 0.2)
@@ -245,8 +264,8 @@ public class PlayScreen implements Screen {
             if (len > 15.0)
             {
                 dir = dir.nor();
-                shipVel.x = dir.x* Constants.RES_X/2;// Math.max(shipVel.minSpeed, len);
-                shipVel.y = dir.y*Constants.RES_Y/2;// Math.min(shipVel.maxSpeed, len);
+                shipVel.x = dir.x* Constants.RES_X/8 * PlayerManager.ship_speed;// Math.max(shipVel.minSpeed, len);
+                shipVel.y = dir.y* Constants.RES_Y/8 * PlayerManager.ship_speed;// Math.min(shipVel.maxSpeed, len);
             }
         }
 
@@ -273,6 +292,10 @@ public class PlayScreen implements Screen {
                     MathUtils.random(-Constants.RES_X*0.25f, Constants.RES_X*0.25f),
                     Constants.RES_Y / 2);
             time_since_last_enemy = 0.0f;
+
+            EnemyFactory.spawnShooterEnemy(
+                    MathUtils.random(-Constants.RES_X * 0.25f, Constants.RES_X * 0.25f),
+                    Constants.RES_Y / 2);
         }
         time_since_last_enemy += delta;
 
@@ -298,6 +321,26 @@ public class PlayScreen implements Screen {
         Gaem.batch.begin();
         font.draw(Gaem.batch, "SCORE\n" + Utils.textScoreNice(PlayerManager.score), fontPosX, fontPosY);
         Gaem.batch.end();
+
+
+        Family debug_family = Family.all(CollisionComponent.class, PositionComponent.class, RenderComponent.class).get();
+        ImmutableArray<Entity> debug_entities = game.engine.getEntitiesFor(debug_family);
+
+        for (Entity e : debug_entities)
+        {
+            PositionComponent pos = Mappers.position.get(e);
+            CollisionComponent col = Mappers.collision.get(e);
+
+            game.shapeRenderer.setProjectionMatrix(game.cam.combined);
+            game.shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+            game.shapeRenderer.rect(pos.X() - col.sizeX*0.5f,
+                    pos.y - col.sizeY*0.5f,
+                    col.sizeX,
+                    col.sizeY);
+            game.shapeRenderer.end();
+        }
+
+
 
     }
 

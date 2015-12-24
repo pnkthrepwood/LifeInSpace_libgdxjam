@@ -6,6 +6,7 @@ import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.gdxjam.lifeinspace.Components.CircleShapeComponent;
 import com.gdxjam.lifeinspace.Components.PositionComponent;
 import com.gdxjam.lifeinspace.Mappers;
@@ -51,5 +52,9 @@ public class BackgroundRenderSystem extends EntitySystem {
         }
 
         shapeRenderer.end();
+
+
+
+
     }
 }

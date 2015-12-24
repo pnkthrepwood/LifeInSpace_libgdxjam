@@ -6,5 +6,13 @@ package com.gdxjam.lifeinspace;
 public class PlayerManager
 {
     public static int score = 0;
+    public static float ship_speed = 2;
+
+
+    public static void reset()
+    {
+        score = 0;
+        ship_speed = 2;
+    }
 
 }

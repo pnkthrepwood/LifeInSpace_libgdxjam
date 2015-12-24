@@ -9,4 +9,6 @@ public class BulletComponent implements Component
 {
     public float lifeTime = 0f;
     public float timer = 0f;
+
+    public boolean friendly = true;
 }

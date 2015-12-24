@@ -4,6 +4,8 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.gdxjam.lifeinspace.Components.BulletComponent;
 import com.gdxjam.lifeinspace.Components.CollisionComponent;
 import com.gdxjam.lifeinspace.Components.CircleShapeComponent;
+import com.gdxjam.lifeinspace.Components.LifeComponent;
+import com.gdxjam.lifeinspace.Components.ShooterBehaviourComponent;
 import com.gdxjam.lifeinspace.Components.SinusBehaviourComponent;
 import com.gdxjam.lifeinspace.Components.SquadComponent;
 import com.gdxjam.lifeinspace.Components.TypeComponent;
@@ -27,4 +29,6 @@ public class Mappers
     public static ComponentMapper<CircleShapeComponent> shape = ComponentMapper.getFor(CircleShapeComponent.class);
     public static ComponentMapper<SinusBehaviourComponent> sinus_behaviour = ComponentMapper.getFor(SinusBehaviourComponent.class);
     public static ComponentMapper<SquadComponent> squad = ComponentMapper.getFor(SquadComponent.class);
+    public static ComponentMapper<ShooterBehaviourComponent> shoot_behaviour = ComponentMapper.getFor(ShooterBehaviourComponent.class);
+    public static ComponentMapper<LifeComponent> lifes = ComponentMapper.getFor(LifeComponent.class);
 }

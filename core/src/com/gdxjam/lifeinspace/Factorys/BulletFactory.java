@@ -32,21 +32,29 @@ public class BulletFactory
 
     public static void shootBullet(float x, float y, float angle)
     {
+        shootBullet(x,y,angle,true);
+    }
+
+    public static void shootBullet(float x, float y, float angle, boolean friendly)
+    {
+        Entity bullet = new Entity();
+
         Texture tex = TextureManager.getTexture("BulletCollection.png");
         TextureRegion texreg =  new TextureRegion();
         texreg.setRegion(tex);
-        texreg.setRegion(0, 0, 8, 13);
+        texreg.setRegion(0 + ((friendly)?0:8), 0, 8, 13);
         RenderComponent rc = new RenderComponent(new Sprite(texreg));
         rc.rotation = angle;
 
         BulletComponent bc = new BulletComponent();
         bc.lifeTime = 0.20f;
+        bc.friendly = friendly;
+        bullet.add(bc);
 
-        Entity bullet = new Entity();
         bullet.add(new PositionComponent(x, y));
         bullet.add(new VelocityComponent(700* MathUtils.cosDeg(angle + 90), 700*MathUtils.sinDeg(angle + 90)));
         bullet.add(rc);
-        bullet.add(bc);
+
         bullet.add(new CollisionComponent(8, 13));
         bullet.add(new TypeComponent(TypeComponent.TypeEntity.BULLET));
 
