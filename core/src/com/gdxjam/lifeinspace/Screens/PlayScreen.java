@@ -37,6 +37,7 @@ import com.gdxjam.lifeinspace.Systems.WeaponSystem;
 import com.gdxjam.lifeinspace.TextureManager;
 import com.gdxjam.lifeinspace.Utils;
 import com.gdxjam.lifeinspace.XBox360Pad;
+import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 
 /**
  * Created by threpwood on 20/12/2015.
@@ -54,6 +55,15 @@ public class PlayScreen implements Screen {
     Controller controller;
 
     float time_since_last_enemy = 0;
+
+    //BitmapFont
+    BitmapFont font;
+    FreeTypeFontGenerator generator;
+    FreeTypeFontGenerator.FreeTypeFontParameter parameter;
+    Integer score;
+    String scoreText;
+    float fontPosX = (-Constants.RES_X / 2 ) + Constants.RES_X * 0.01f ;
+    float fontPosY = (Constants.RES_Y / 2 ) - Constants.RES_Y * 0.02f;
 
     public PlayScreen(Gaem game)
     {
@@ -110,6 +120,19 @@ public class PlayScreen implements Screen {
 
         generateBackgroundEntities();
 
+
+        //Font instantation & configuration (through FreeTypeFontGenerator parameters)
+        font = new BitmapFont();
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("bitDarling.ttf"));
+        parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = 20;
+        parameter.color = Color.WHITE;
+        parameter.borderWidth = 2;
+        parameter.borderColor = Color.BLACK;
+        font = generator.generateFont(parameter);
+
+        score = 0;
+        scoreText = score.toString();
     }
 
     private void generateBackgroundEntities()
@@ -279,6 +302,10 @@ public class PlayScreen implements Screen {
         //cursor.draw(game.batch);
 
         Gdx.graphics.setTitle("LifeInSpace | FPS: " + Gdx.graphics.getFramesPerSecond());
+        
+        Gaem.batch.begin();
+        font.draw(Gaem.batch, "SCORE\n" + score, fontPosX , fontPosY);
+        Gaem.batch.end();
 
     }
 

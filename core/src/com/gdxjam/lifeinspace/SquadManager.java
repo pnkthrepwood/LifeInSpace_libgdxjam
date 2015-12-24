@@ -8,7 +8,7 @@ import java.util.HashMap;
 public class SquadManager
 {
 
-    static HashMap<Integer, Integer> squadCounter = new HashMap<>();
+    static HashMap<Integer, Integer> squadCounter = new HashMap<Integer, Integer>();
 
     static int squad_number_generator = 0;
 
