@@ -40,7 +40,7 @@ public class BulletFactory
         rc.rotation = angle;
 
         BulletComponent bc = new BulletComponent();
-        bc.lifeTime = 0.5f;
+        bc.lifeTime = 0.20f;
 
         Entity bullet = new Entity();
         bullet.add(new PositionComponent(x, y));
