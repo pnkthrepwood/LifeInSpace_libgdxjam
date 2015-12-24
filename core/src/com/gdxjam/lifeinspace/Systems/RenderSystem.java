@@ -5,10 +5,15 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.utils.ImmutableArray;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.gdxjam.lifeinspace.Components.PositionComponent;
 import com.gdxjam.lifeinspace.Components.RenderComponent;
+import com.gdxjam.lifeinspace.Constants;
 import com.gdxjam.lifeinspace.Mappers;
 
 /**
@@ -20,10 +25,29 @@ public class RenderSystem extends EntitySystem
     SpriteBatch batch;
     Camera cam;
 
+    //BitmapFont
+    BitmapFont font;
+    FreeTypeFontGenerator generator;
+    FreeTypeFontGenerator.FreeTypeFontParameter parameter;
+    int score;
+
+
     public RenderSystem(SpriteBatch batch, Camera cam)
     {
         this.batch = batch;
         this.cam = cam;
+
+        //Font instantation & configuration (through FreeTypeFontGenerator parameters)
+        font = new BitmapFont();
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("IMMORTAL.ttf"));
+        parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = 40;
+        parameter.color = Color.WHITE;
+        parameter.borderWidth = 2;
+        parameter.borderColor = Color.BLACK;
+        font = generator.generateFont(parameter);
+
+        score = 0;
     }
 
     @Override
@@ -60,6 +84,8 @@ public class RenderSystem extends EntitySystem
 
             rc.spr.draw(batch);
         }
+
+        font.draw(batch, "Score: " + score, -Constants.RES_X/2, Constants.RES_Y/ 2);
 
         batch.end();
 
