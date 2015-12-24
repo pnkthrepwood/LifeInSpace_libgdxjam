@@ -45,7 +45,6 @@ public class Gaem extends Game
 	@Override
 	public void create ()
 	{
-
 		cam = new OrthographicCamera(Constants.RES_X, Constants.RES_Y);
 		viewport = new FitViewport(Constants.RES_X, Constants.RES_Y, cam);
 
@@ -57,7 +56,6 @@ public class Gaem extends Game
 
 		Gdx.graphics.setContinuousRendering(true);
 		setScreen(new PlayScreen(this));
-
 	}
 
 
