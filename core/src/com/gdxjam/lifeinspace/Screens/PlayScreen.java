@@ -45,6 +45,8 @@ public class PlayScreen implements Screen {
     Sprite cursor;
     Sprite background;
     Entity ship;
+    Sprite planet_spr;
+    Sprite ship_spr;
 
     Controller controller;
 
@@ -58,11 +60,12 @@ public class PlayScreen implements Screen {
         background = new Sprite(tex_bg);
         background.setX(-tex_bg.getWidth() / 2);
         background.setY(-tex_bg.getHeight() / 2);
+        background.setScale(10, 10);
         //background.setRegion(new TextureRegion(tex_bg), 0, 0, 600, 1200);
 
 
         //CAREFUL: ORDER MATTERS!
-        game.engine.addSystem(new MovementSystem());
+        game.engine.addSystem(new MovementSystem(game.engine));
         game.engine.addSystem(new CollisionSystem(game.engine));
         game.engine.addSystem(new WeaponSystem());
         game.engine.addSystem(new BulletSystem(game.engine));
@@ -76,14 +79,18 @@ public class PlayScreen implements Screen {
         Entity planet_bg = new Entity();
         planet_bg.add(new PositionComponent(0, -Constants.RES_Y / 2 + TextureManager.getTexture("planet_bg.png").getHeight() / 2));
         planet_bg.add(new VelocityComponent(0, -0.5f));
-        planet_bg.add(new RenderComponent(new Sprite(TextureManager.getTexture("planet_bg.png"))));
+        planet_spr = new Sprite(TextureManager.getTexture("planet_bg.png"));
+        //planet_spr.setScale(5, 5);
+        planet_bg.add(new RenderComponent(planet_spr));
         game.engine.addEntity(planet_bg);
 
         ship = new Entity();
         ship.add(new TypeComponent(TypeEntity.SHIP));
         ship.add(new PositionComponent());
         ship.add(new VelocityComponent(0, 0));
-        ship.add(new RenderComponent(new Sprite(TextureManager.getTexture("ship.png"))));
+        ship_spr = new Sprite(TextureManager.getTexture("ship.png"));
+        //ship_spr.setScale(2,2);
+        ship.add(new RenderComponent(ship_spr));
         ship.add(new WeaponComponent());
         ship.add(new CollisionComponent(20, 20));
         game.engine.addEntity(ship);
@@ -102,7 +109,7 @@ public class PlayScreen implements Screen {
 
     private void generateBackgroundEntities()
     {
-        for (int i = 0; i < 750; ++i)
+        for (int i = 0; i < 1000; ++i)
         {
             Entity star = new Entity();
             CircleShapeComponent shape = new CircleShapeComponent();
@@ -117,7 +124,7 @@ public class PlayScreen implements Screen {
             Entity star = new Entity();
             CircleShapeComponent shape = new CircleShapeComponent();
             star.add(new PositionComponent(MathUtils.random(0, Constants.RES_X), MathUtils.random(0, Constants.RES_Y)));
-            shape.radius = 1;
+            shape.radius = MathUtils.random(1,1.5f);
             if (MathUtils.random(0.0f, 1.0f) < 0.5f)
             {
                 shape.color.r = (MathUtils.random(0, 4))*0.25f;
@@ -132,7 +139,7 @@ public class PlayScreen implements Screen {
             Entity star = new Entity();
             CircleShapeComponent shape = new CircleShapeComponent();
             star.add(new PositionComponent(MathUtils.random(0, Constants.RES_X), MathUtils.random(0, Constants.RES_Y)));
-            shape.radius = 1;
+            shape.radius = MathUtils.random(1,1.5f);
             if (MathUtils.random(0.0f, 1.0f) < 0.5f)
             {
                 float y = MathUtils.random(0.0f, 1.0f);
@@ -149,7 +156,7 @@ public class PlayScreen implements Screen {
             Entity star = new Entity();
             CircleShapeComponent shape = new CircleShapeComponent();
             star.add(new PositionComponent(MathUtils.random(0, Constants.RES_X), MathUtils.random(0, Constants.RES_Y)));
-            shape.radius = 1;
+            shape.radius = MathUtils.random(1,1.5f);
             if (MathUtils.random(0.0f, 1.0f) < 0.5f)
             {
                 float c = MathUtils.random(0.0f, 1.0f);
@@ -242,7 +249,9 @@ public class PlayScreen implements Screen {
     public void render(float delta)
     {
         updateGame();
-        background.translate(0, -delta * 20);
+       // background.translate(0, -delta * 20);
+        //float planet_scale = planet_spr.getScaleX() - delta*(5.0f/30.0f);
+        //planet_spr.setScale(planet_scale, planet_scale);
 
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);

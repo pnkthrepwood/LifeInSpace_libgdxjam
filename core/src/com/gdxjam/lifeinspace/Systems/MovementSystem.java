@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.TimeUtils;
 import com.gdxjam.lifeinspace.Components.PositionComponent;
 import com.gdxjam.lifeinspace.Components.RenderComponent;
 import com.gdxjam.lifeinspace.Components.SinusBehaviourComponent;
+import com.gdxjam.lifeinspace.Components.TypeComponent;
 import com.gdxjam.lifeinspace.Components.VelocityComponent;
 import com.gdxjam.lifeinspace.Mappers;
 
@@ -18,12 +19,15 @@ import com.gdxjam.lifeinspace.Mappers;
  */
 public class MovementSystem extends IteratingSystem
 {
+    Engine engine;
 
-    public MovementSystem()
+    public MovementSystem(Engine engine)
     {
         super(Family
                 .all(PositionComponent.class, VelocityComponent.class)
                 .get());
+
+        this.engine = engine;
     }
 
     public void processEntity(Entity entity, float deltaTime)
@@ -43,7 +47,13 @@ public class MovementSystem extends IteratingSystem
         pos.y += vel.y*deltaTime;
 
 
-
+        if (Mappers.type.has(entity))
+        {
+            if (Mappers.type.get(entity).type == TypeComponent.TypeEntity.ENEMY)
+            {
+                if (pos.y < 0) engine.removeEntity(entity);
+            }
+        }
 
 
     }

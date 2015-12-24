@@ -44,7 +44,7 @@ public class BulletFactory
 
         Entity bullet = new Entity();
         bullet.add(new PositionComponent(x, y));
-        bullet.add(new VelocityComponent(500* MathUtils.cosDeg(angle + 90), 500*MathUtils.sinDeg(angle + 90)));
+        bullet.add(new VelocityComponent(700* MathUtils.cosDeg(angle + 90), 700*MathUtils.sinDeg(angle + 90)));
         bullet.add(rc);
         bullet.add(bc);
         bullet.add(new CollisionComponent(8, 13));

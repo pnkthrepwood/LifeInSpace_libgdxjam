@@ -8,8 +8,8 @@ import com.badlogic.gdx.math.MathUtils;
  */
 public class SinusBehaviourComponent implements Component
 {
-    public float freq = MathUtils.random(2, 2)*20.0f;
-    public float amp = MathUtils.random(1, 1)*5*20.0f;
+    public float freq = 1;
+    public float amp = 1;
 
     public SinusBehaviourComponent()
     {
@@ -17,8 +17,8 @@ public class SinusBehaviourComponent implements Component
 
     public SinusBehaviourComponent(float freq, float amp)
     {
-        this.freq = freq;
-        this.amp = amp;
+        this.freq = freq*20.0f;
+        this.amp = amp*20.0f;
     }
 
     public float timer = 0;
