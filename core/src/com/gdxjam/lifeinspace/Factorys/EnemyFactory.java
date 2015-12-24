@@ -53,7 +53,7 @@ public class EnemyFactory
         enemy.add(new PositionComponent(x, y));
         enemy.add(new VelocityComponent(0, -30));
         enemy.add(new RenderComponent(new Sprite(TextureManager.getTexture("monster.png"))));
-        enemy.add(new SinusBehaviourComponent(10, 1));
+        enemy.add(new SinusBehaviourComponent(MathUtils.random(5,15), MathUtils.random(1,3)));
         enemy.add(new CollisionComponent(32, 32));
         enemy.add(new LifeComponent(3));
         enemy.add(new ShooterBehaviourComponent(2));

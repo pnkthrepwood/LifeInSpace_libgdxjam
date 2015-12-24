@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
+import com.badlogic.gdx.math.MathUtils;
 import com.gdxjam.lifeinspace.Components.BulletComponent;
 import com.gdxjam.lifeinspace.Components.PositionComponent;
 import com.gdxjam.lifeinspace.Components.ShooterBehaviourComponent;
@@ -31,7 +32,7 @@ public class EnemyBehaviourSystem extends IteratingSystem
         {
             PositionComponent pos = Mappers.position.get(entity);
             BulletFactory.shootBullet(pos.X(), pos.y - 32, 180, false);
-            behaviour.timer = behaviour.shoot_time;
+            behaviour.timer = MathUtils.random(5, behaviour.shoot_time);
         }
 
     }

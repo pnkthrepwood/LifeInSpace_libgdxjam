@@ -58,7 +58,8 @@ public class CollisionSystem extends IteratingSystem
                 TypeComponent.TypeEntity type_other = Mappers.type.get(other).type;
 
                 if (type_me == TypeComponent.TypeEntity.BULLET
-                    && type_other == TypeComponent.TypeEntity.ENEMY)
+                    && type_other == TypeComponent.TypeEntity.ENEMY
+                    && Mappers.bullet.get(entity).friendly )
                 {
                     engine.removeEntity(entity);
 
@@ -84,6 +85,16 @@ public class CollisionSystem extends IteratingSystem
 
                         PlayerManager.score += 10;
                     }
+                }
+
+
+
+                if (type_me == TypeComponent.TypeEntity.BULLET
+                        && type_other == TypeComponent.TypeEntity.SHIP
+                        && !Mappers.bullet.get(entity).friendly )
+                {
+                    engine.removeEntity(entity);
+                    System.out.println("HURT!");
                 }
 
             }
