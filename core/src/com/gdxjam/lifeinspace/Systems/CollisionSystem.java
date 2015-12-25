@@ -73,6 +73,7 @@ public class CollisionSystem extends IteratingSystem
                         && !Mappers.bullet.get(entity).friendly )
                 {
                     engine.removeEntity(entity);
+                    FXFactory.makeExplosion(pos_other.X(), pos_other.y);
                     System.out.println("HURT!");
                 }
 
@@ -85,6 +86,9 @@ public class CollisionSystem extends IteratingSystem
     void doFriendlyBulletHitsEnemy(Entity bullet, Entity enemy)
     {
         engine.removeEntity(bullet);
+
+        PositionComponent pos_bullet = Mappers.position.get(bullet);
+        PositionComponent pos_enemy = Mappers.position.get(enemy);
 
         boolean is_killed = false;
         if (Mappers.lifes.has(enemy))
@@ -99,21 +103,23 @@ public class CollisionSystem extends IteratingSystem
 
         if (is_killed)
         {
-            PositionComponent pos = Mappers.position.get(enemy);
-
             if (Mappers.squad.has(enemy))
             {
                 int squad = Mappers.squad.get(enemy).squad;
 
                 SquadManager.enemyFromSquadKilled(squad,
-                        pos.X(),
-                        pos.y);
+                        pos_enemy.X(),
+                        pos_enemy.y);
             }
             engine.removeEntity(enemy);
 
-            FXFactory.makeExplosion(pos.X(), pos.y);
+            FXFactory.makeExplosion(pos_enemy.X(), pos_enemy.y);
 
             PlayerManager.score += 10;
+        }
+        else
+        {
+            FXFactory.makeExplosion(pos_bullet.X(), pos_bullet.y);
         }
     }
 
