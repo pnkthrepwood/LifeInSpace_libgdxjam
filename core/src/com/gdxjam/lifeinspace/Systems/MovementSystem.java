@@ -54,6 +54,10 @@ public class MovementSystem extends IteratingSystem
             {
                 if (pos.y < -Constants.RES_Y) engine.removeEntity(entity);
             }
+            if (Mappers.type.get(entity).type == TypeComponent.TypeEntity.POWERUP)
+            {
+                if (pos.y > Constants.RES_Y) engine.removeEntity(entity);
+            }
         }
 
 

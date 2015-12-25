@@ -10,6 +10,7 @@ import com.gdxjam.lifeinspace.Components.CollisionComponent;
 import com.gdxjam.lifeinspace.Components.LifeComponent;
 import com.gdxjam.lifeinspace.Components.TypeComponent;
 import com.gdxjam.lifeinspace.Components.PositionComponent;
+import com.gdxjam.lifeinspace.Factorys.PowerupFactory;
 import com.gdxjam.lifeinspace.Mappers;
 import com.gdxjam.lifeinspace.PlayerManager;
 import com.gdxjam.lifeinspace.SquadManager;
@@ -82,6 +83,8 @@ public class CollisionSystem extends IteratingSystem
                             SquadManager.enemyFromSquadKilled(squad);
                         }
                         engine.removeEntity(other);
+
+                        PowerupFactory.spawnPowerup(pos_other.X(), pos_other.y);
 
                         PlayerManager.score += 10;
                     }

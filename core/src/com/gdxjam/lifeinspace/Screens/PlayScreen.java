@@ -30,6 +30,7 @@ import com.gdxjam.lifeinspace.Components.VelocityComponent;
 import com.gdxjam.lifeinspace.Components.WeaponComponent;
 import com.gdxjam.lifeinspace.Constants;
 import com.gdxjam.lifeinspace.Factorys.EnemyFactory;
+import com.gdxjam.lifeinspace.Factorys.PowerupFactory;
 import com.gdxjam.lifeinspace.Gaem;
 import com.gdxjam.lifeinspace.Mappers;
 import com.gdxjam.lifeinspace.PlayerManager;
@@ -55,7 +56,6 @@ public class PlayScreen implements Screen {
     Gaem game;
 
     Sprite cursor;
-    Sprite background;
     Entity ship;
     Sprite planet_spr;
     Sprite ship_spr;
@@ -73,14 +73,6 @@ public class PlayScreen implements Screen {
 
         cursor = new Sprite(TextureManager.getTexture("cursor.png"));
 
-        Texture tex_bg = TextureManager.getTexture("space_bg.png");
-        background = new Sprite(tex_bg);
-        background.setX(-tex_bg.getWidth() / 2);
-        background.setY(-tex_bg.getHeight() / 2);
-        background.setScale(10, 10);
-        //background.setRegion(new TextureRegion(tex_bg), 0, 0, 600, 1200);
-
-
         //CAREFUL: ORDER MATTERS!
         game.engine.addSystem(new MovementSystem(game.engine));
         game.engine.addSystem(new CollisionSystem(game.engine));
@@ -91,7 +83,7 @@ public class PlayScreen implements Screen {
         game.engine.addSystem(new RenderSystem(game.batch, game.cam));
         BulletFactory.gaem = this.game;
         EnemyFactory.gaem = this.game;
-
+        PowerupFactory.gaem = this.game;
 
 
         Entity planet_bg = new Entity();
@@ -300,7 +292,6 @@ public class PlayScreen implements Screen {
         time_since_last_enemy += delta;
 
         updateGame();
-        //background.translate(0, -delta * 20);
         //float planet_scale = planet_spr.getScaleX() - delta*(5.0f/30.0f);
         //planet_spr.setScale(planet_scale, planet_scale);
 

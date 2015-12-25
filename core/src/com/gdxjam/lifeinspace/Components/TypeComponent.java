@@ -11,7 +11,8 @@ public class TypeComponent implements Component
     {
         SHIP,
         ENEMY,
-        BULLET
+        BULLET,
+        POWERUP
     }
 
     public TypeEntity type;
