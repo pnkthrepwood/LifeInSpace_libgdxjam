@@ -62,30 +62,7 @@ public class CollisionSystem extends IteratingSystem
                     && type_other == TypeComponent.TypeEntity.ENEMY
                     && Mappers.bullet.get(entity).friendly )
                 {
-                    engine.removeEntity(entity);
-
-                    boolean is_killed = false;
-                    if (Mappers.lifes.has(other))
-                    {
-                        LifeComponent lc = Mappers.lifes.get(other);
-                        if (--lc.lifes == 0)
-                        {
-                           is_killed = true;
-                        }
-                    }
-                    else is_killed = true;
-
-                    if (is_killed)
-                    {
-                        if (Mappers.squad.has(other))
-                        {
-                            int squad = Mappers.squad.get(other).squad;
-                            SquadManager.enemyFromSquadKilled(squad, pos_other.X(), pos_other.y);
-                        }
-                        engine.removeEntity(other);
-
-                        PlayerManager.score += 10;
-                    }
+                    doFriendlyBulletHitsEnemy(entity, other);
                 }
 
 
@@ -102,4 +79,37 @@ public class CollisionSystem extends IteratingSystem
         }
 
     }
+
+
+    void doFriendlyBulletHitsEnemy(Entity bullet, Entity enemy)
+    {
+        engine.removeEntity(bullet);
+
+        boolean is_killed = false;
+        if (Mappers.lifes.has(enemy))
+        {
+            LifeComponent lc = Mappers.lifes.get(enemy);
+            if (--lc.lifes == 0)
+            {
+                is_killed = true;
+            }
+        }
+        else is_killed = true;
+
+        if (is_killed)
+        {
+            if (Mappers.squad.has(enemy))
+            {
+                int squad = Mappers.squad.get(enemy).squad;
+                PositionComponent pos = Mappers.position.get(enemy);
+                SquadManager.enemyFromSquadKilled(squad,
+                        pos.X(),
+                        pos.y);
+            }
+            engine.removeEntity(enemy);
+
+            PlayerManager.score += 10;
+        }
+    }
+
 }

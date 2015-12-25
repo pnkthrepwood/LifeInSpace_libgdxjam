@@ -58,6 +58,15 @@ public class MovementSystem extends IteratingSystem
             {
                 if (pos.y > Constants.RES_Y) engine.removeEntity(entity);
             }
+
+            if (Mappers.type.get(entity).type == TypeComponent.TypeEntity.SHIP)
+            {
+                pos.y = Math.max(pos.y, -Constants.RES_Y/2);
+                pos.y = Math.min(pos.y, Constants.RES_Y/2);
+                pos.y = pos.y;
+                //if (pos.y > Constants.RES_Y) engine.removeEntity(entity);
+            }
+
         }
 
 

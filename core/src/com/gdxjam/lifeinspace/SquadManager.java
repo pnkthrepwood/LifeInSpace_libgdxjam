@@ -25,7 +25,6 @@ public class SquadManager
         ct--;
         if (ct == 0)
         {
-            //To-do: Squad just lost the last guy! Do things
             PlayerManager.score += 100;
 
             PowerupFactory.spawnPowerup(x, y);

@@ -18,7 +18,7 @@ public class WeaponComponent implements Component
     }
 
     public float coolDown = 0.5f;
-    public float accuracy = 5.0f; // accuracy%: 0 = perfect
+    public float accuracy = 10.0f; // accuracy%: 0 = perfect
 
     public WeaponComponent()
     {
@@ -35,7 +35,7 @@ public class WeaponComponent implements Component
         switch (type)
         {
             case BASIC:
-                coolDown = 1.0f;
+                coolDown = 0.9f;
                 break;
 
             case FAST:

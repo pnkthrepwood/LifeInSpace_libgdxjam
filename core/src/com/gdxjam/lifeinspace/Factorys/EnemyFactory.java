@@ -47,6 +47,8 @@ public class EnemyFactory
 
     public static void spawnShooterEnemy(float x, float y)
     {
+        int squad = SquadManager.registerNewSquad(1);
+
         Entity enemy = new Entity();
         enemy.add(new TypeComponent(TypeComponent.TypeEntity.ENEMY));
         enemy.add(new PositionComponent(x, y));
@@ -56,6 +58,7 @@ public class EnemyFactory
         enemy.add(new CollisionComponent(32, 32));
         enemy.add(new LifeComponent(3));
         enemy.add(new ShooterBehaviourComponent(2));
+        enemy.add(new SquadComponent(squad));
         gaem.engine.addEntity(enemy);
 
     }

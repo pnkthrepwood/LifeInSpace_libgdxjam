@@ -1,5 +1,6 @@
 package com.gdxjam.lifeinspace.Screens;
 
+import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.utils.ImmutableArray;
@@ -17,10 +18,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.gdxjam.lifeinspace.Components.CircleShapeComponent;
 import com.gdxjam.lifeinspace.Factorys.BulletFactory;
 import com.gdxjam.lifeinspace.Components.CollisionComponent;
 import com.gdxjam.lifeinspace.Components.TypeComponent;
@@ -45,9 +44,6 @@ import com.gdxjam.lifeinspace.Systems.WeaponSystem;
 import com.gdxjam.lifeinspace.TextureManager;
 import com.gdxjam.lifeinspace.Utils;
 import com.gdxjam.lifeinspace.XBox360Pad;
-import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
-
-import java.util.Map;
 
 /**
  * Created by threpwood on 20/12/2015.
@@ -73,6 +69,9 @@ public class PlayScreen implements Screen {
     public PlayScreen(Gaem game)
     {
         this.game = game;
+
+        if (game.engine != null) game.engine = null;
+        game.engine = new Engine();
 
         cursor = new Sprite(TextureManager.getTexture("cursor.png"));
 
@@ -119,7 +118,7 @@ public class PlayScreen implements Screen {
             controller = Controllers.getControllers().first();
         }
 
-        generateBackgroundEntities();
+        generateBackgroundScene();
 
         font = new BitmapFont();
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("bitDarling.ttf"));
@@ -131,96 +130,22 @@ public class PlayScreen implements Screen {
         font = generator.generateFont(parameter);
     }
 
-    private void generateBackgroundEntities()
+    private void generateBackgroundScene()
     {
-        //Texture background_texture = new Texture((int)Constants.RES_X, (int)Constants.RES_Y, Pixmap.Format.RGB888);
-
         Pixmap pixmap = new Pixmap((int)Constants.RES_X, (int)Constants.RES_Y, Pixmap.Format.RGB888);
 
         for (int i = 0; i < 1000; ++i)
         {
             pixmap.setColor(Color.WHITE);
+
             pixmap.drawCircle(
                     (int)MathUtils.random(0, Constants.RES_X),
                     (int)MathUtils.random(0, Constants.RES_Y),
                     1
             );
-
-            //Entity star = new Entity();
-            //CircleShapeComponent shape = new CircleShapeComponent();
-            //shape.radius = 1;
-            //star.add(shape);
-            //star.add(new PositionComponent(
-            //        MathUtils.random(-Constants.RES_X/2, Constants.RES_X/2),
-            //        MathUtils.random(-Constants.RES_Y/2, Constants.RES_Y/2)));
-            //star.add(new VelocityComponent(0,-MathUtils.random(0,3)));
-            //game.engine.addEntity(star);
         }
 
         background_spr = new Sprite(new Texture(pixmap));
-
-        /*
-        for (int i = 0; i < 50; ++i)
-        {
-            Entity star = new Entity();
-            CircleShapeComponent shape = new CircleShapeComponent();
-            star.add(new PositionComponent(
-                    MathUtils.random(-Constants.RES_X/2, Constants.RES_X/2),
-                    MathUtils.random(-Constants.RES_Y/2, Constants.RES_Y/2)));
-            shape.radius = MathUtils.random(1,1.5f);
-            if (MathUtils.random(0.0f, 1.0f) < 0.5f)
-            {
-                shape.color.r = (MathUtils.random(0, 4))*0.25f;
-                shape.color.g = 0;
-                shape.color.b = 0;
-            }
-            star.add(shape);
-            game.engine.addEntity(star);
-        }
-        for (int i = 0; i < 50; ++i)
-        {
-            Entity star = new Entity();
-            CircleShapeComponent shape = new CircleShapeComponent();
-            star.add(new PositionComponent(
-                    MathUtils.random(-Constants.RES_X/2, Constants.RES_X/2),
-                    MathUtils.random(-Constants.RES_Y/2, Constants.RES_Y/2)));
-            shape.radius = MathUtils.random(1,1.5f);
-            if (MathUtils.random(0.0f, 1.0f) < 0.5f)
-            {
-                float y = MathUtils.random(0.0f, 1.0f);
-
-                shape.color.r = y;
-                shape.color.g = y;
-                shape.color.b = 0;
-            }
-            star.add(shape);
-            game.engine.addEntity(star);
-        }
-        for (int i = 0; i < 50; ++i)
-        {
-            Entity star = new Entity();
-            CircleShapeComponent shape = new CircleShapeComponent();
-            star.add(new PositionComponent(
-                    MathUtils.random(-Constants.RES_X/2, Constants.RES_X/2),
-                    MathUtils.random(-Constants.RES_Y/2, Constants.RES_Y/2)));
-            shape.radius = MathUtils.random(1,1.5f);
-            if (MathUtils.random(0.0f, 1.0f) < 0.5f)
-            {
-                float c = MathUtils.random(0.0f, 1.0f);
-
-                shape.color.r = 0;
-                shape.color.g = 0;
-                shape.color.b = c;
-            }
-            star.add(shape);
-            game.engine.addEntity(star);
-        }
-        */
-    }
-
-    @Override
-    public void show() {
-
     }
 
     public void updateGame()
@@ -292,6 +217,11 @@ public class PlayScreen implements Screen {
         }
     }
 
+
+    @Override
+    public void show() {
+
+    }
 
     @Override
     public void render(float delta)
