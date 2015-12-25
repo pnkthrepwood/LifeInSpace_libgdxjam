@@ -80,11 +80,9 @@ public class CollisionSystem extends IteratingSystem
                         if (Mappers.squad.has(other))
                         {
                             int squad = Mappers.squad.get(other).squad;
-                            SquadManager.enemyFromSquadKilled(squad);
+                            SquadManager.enemyFromSquadKilled(squad, pos_other.X(), pos_other.y);
                         }
                         engine.removeEntity(other);
-
-                        PowerupFactory.spawnPowerup(pos_other.X(), pos_other.y);
 
                         PlayerManager.score += 10;
                     }

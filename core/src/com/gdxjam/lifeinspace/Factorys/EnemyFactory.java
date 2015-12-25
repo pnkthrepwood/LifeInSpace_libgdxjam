@@ -23,13 +23,12 @@ public class EnemyFactory
 {
     public static Gaem gaem;
 
-    public static void spawnSnakeEnemy(float x, float y)
+    public static void spawnSnakeEnemy(float x, float y, int squad_size)
     {
         float A = MathUtils.random(2,4);
         float F = MathUtils.random(4,8);
         float V = MathUtils.random(40,60);
 
-        int squad_size = 7;
         int squad = SquadManager.registerNewSquad(squad_size);
 
         for (int i = 0; i < squad_size; ++i)

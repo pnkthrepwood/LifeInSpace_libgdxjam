@@ -1,5 +1,7 @@
 package com.gdxjam.lifeinspace;
 
+import com.gdxjam.lifeinspace.Factorys.PowerupFactory;
+
 import java.util.HashMap;
 
 /**
@@ -17,7 +19,7 @@ public class SquadManager
         return squad_number_generator;
     }
 
-    public static void enemyFromSquadKilled(int squad)
+    public static void enemyFromSquadKilled(int squad, float x, float y)
     {
         Integer ct = squadCounter.get(squad);
         ct--;
@@ -25,6 +27,8 @@ public class SquadManager
         {
             //To-do: Squad just lost the last guy! Do things
             PlayerManager.score += 100;
+
+            PowerupFactory.spawnPowerup(x, y);
 
             squadCounter.remove(ct);
         }

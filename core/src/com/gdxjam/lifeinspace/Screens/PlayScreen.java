@@ -10,6 +10,7 @@ import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -60,6 +61,8 @@ public class PlayScreen implements Screen {
     Sprite planet_spr;
     Sprite ship_spr;
 
+    Sprite background_spr;
+
     Controller controller;
 
     float time_since_last_enemy = 0;
@@ -101,11 +104,11 @@ public class PlayScreen implements Screen {
         ship_spr = new Sprite(TextureManager.getTexture("ship.png"));
         //ship_spr.setScale(2,2);
         ship.add(new RenderComponent(ship_spr));
-        ship.add(new WeaponComponent());
+        ship.add(new WeaponComponent(WeaponComponent.WeaponType.BASIC));
         ship.add(new CollisionComponent(20, 20));
         game.engine.addEntity(ship);
 
-        EnemyFactory.spawnSnakeEnemy(0, Constants.RES_Y / 2);
+        EnemyFactory.spawnSnakeEnemy(0, Constants.RES_Y / 2, 7);
         EnemyFactory.spawnShooterEnemy(
                 MathUtils.random(-Constants.RES_X * 0.25f, Constants.RES_X * 0.25f),
                 Constants.RES_Y / 2);
@@ -130,18 +133,33 @@ public class PlayScreen implements Screen {
 
     private void generateBackgroundEntities()
     {
+        //Texture background_texture = new Texture((int)Constants.RES_X, (int)Constants.RES_Y, Pixmap.Format.RGB888);
+
+        Pixmap pixmap = new Pixmap((int)Constants.RES_X, (int)Constants.RES_Y, Pixmap.Format.RGB888);
+
         for (int i = 0; i < 1000; ++i)
         {
-            Entity star = new Entity();
-            CircleShapeComponent shape = new CircleShapeComponent();
-            shape.radius = 1;
-            star.add(shape);
-            star.add(new PositionComponent(
-                    MathUtils.random(-Constants.RES_X/2, Constants.RES_X/2),
-                    MathUtils.random(-Constants.RES_Y/2, Constants.RES_Y/2)));
-            star.add(new VelocityComponent(0,-MathUtils.random(0,3)));
-            game.engine.addEntity(star);
+            pixmap.setColor(Color.WHITE);
+            pixmap.drawCircle(
+                    (int)MathUtils.random(0, Constants.RES_X),
+                    (int)MathUtils.random(0, Constants.RES_Y),
+                    1
+            );
+
+            //Entity star = new Entity();
+            //CircleShapeComponent shape = new CircleShapeComponent();
+            //shape.radius = 1;
+            //star.add(shape);
+            //star.add(new PositionComponent(
+            //        MathUtils.random(-Constants.RES_X/2, Constants.RES_X/2),
+            //        MathUtils.random(-Constants.RES_Y/2, Constants.RES_Y/2)));
+            //star.add(new VelocityComponent(0,-MathUtils.random(0,3)));
+            //game.engine.addEntity(star);
         }
+
+        background_spr = new Sprite(new Texture(pixmap));
+
+        /*
         for (int i = 0; i < 50; ++i)
         {
             Entity star = new Entity();
@@ -197,6 +215,7 @@ public class PlayScreen implements Screen {
             star.add(shape);
             game.engine.addEntity(star);
         }
+        */
     }
 
     @Override
@@ -282,7 +301,8 @@ public class PlayScreen implements Screen {
         {
             EnemyFactory.spawnSnakeEnemy(
                     MathUtils.random(-Constants.RES_X*0.25f, Constants.RES_X*0.25f),
-                    Constants.RES_Y / 2);
+                    Constants.RES_Y / 2,
+                    7);
             time_since_last_enemy = 0.0f;
 
             EnemyFactory.spawnShooterEnemy(
@@ -297,6 +317,12 @@ public class PlayScreen implements Screen {
 
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        Gaem.batch.begin();
+        background_spr.setCenterX(0);
+        background_spr.setCenterY(0);
+        background_spr.draw(Gaem.batch);
+        Gaem.batch.end();
 
         game.engine.update(delta); //Update inside batch: it may draw things
         Vector2 inputPos = Utils.inputMouseWorldPos(game.cam);
