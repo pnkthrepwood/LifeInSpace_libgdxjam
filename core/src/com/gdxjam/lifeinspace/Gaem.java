@@ -40,7 +40,7 @@ public class Gaem extends Game
 	public static ShapeRenderer shapeRenderer;
 	public OrthographicCamera cam;
 	public Viewport viewport;
-	public Engine engine;
+	public static Engine engine;
 
 
 	@Override

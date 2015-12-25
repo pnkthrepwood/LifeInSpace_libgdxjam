@@ -40,8 +40,7 @@ public class BulletFactory
         Entity bullet = new Entity();
 
         Texture tex = TextureManager.getTexture("BulletCollection.png");
-        TextureRegion texreg =  new TextureRegion();
-        texreg.setRegion(tex);
+        TextureRegion texreg =  new TextureRegion(tex);
         texreg.setRegion(0 + (friendly?0:8), 0, 8, 13);
         RenderComponent rc = new RenderComponent(new Sprite(texreg));
         rc.rotation = angle;

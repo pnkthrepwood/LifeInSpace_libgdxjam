@@ -70,6 +70,8 @@ public class PlayScreen implements Screen {
     {
         this.game = game;
 
+        PlayerManager.reset();
+
         if (game.engine != null) game.engine = null;
         game.engine = new Engine();
 

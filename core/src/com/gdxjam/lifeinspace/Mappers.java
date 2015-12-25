@@ -1,6 +1,7 @@
 package com.gdxjam.lifeinspace;
 
 import com.badlogic.ashley.core.ComponentMapper;
+import com.gdxjam.lifeinspace.Components.AnimationComponent;
 import com.gdxjam.lifeinspace.Components.BulletComponent;
 import com.gdxjam.lifeinspace.Components.CollisionComponent;
 import com.gdxjam.lifeinspace.Components.CircleShapeComponent;
@@ -19,16 +20,18 @@ import com.gdxjam.lifeinspace.Components.WeaponComponent;
  */
 public class Mappers
 {
-    public static ComponentMapper<PositionComponent> position = ComponentMapper.getFor(PositionComponent.class);
-    public static ComponentMapper<CollisionComponent> collision = ComponentMapper.getFor(CollisionComponent.class);
-    public static ComponentMapper<VelocityComponent> velocity = ComponentMapper.getFor(VelocityComponent.class);
-    public static ComponentMapper<WeaponComponent> weapon = ComponentMapper.getFor(WeaponComponent.class);
-    public static ComponentMapper<RenderComponent> render = ComponentMapper.getFor(RenderComponent.class);
+    public static ComponentMapper<AnimationComponent> animation = ComponentMapper.getFor(AnimationComponent.class);
     public static ComponentMapper<BulletComponent> bullet = ComponentMapper.getFor(BulletComponent.class);
-    public static ComponentMapper<TypeComponent> type = ComponentMapper.getFor(TypeComponent.class);
     public static ComponentMapper<CircleShapeComponent> shape = ComponentMapper.getFor(CircleShapeComponent.class);
+    public static ComponentMapper<CollisionComponent> collision = ComponentMapper.getFor(CollisionComponent.class);
+    public static ComponentMapper<LifeComponent> lifes = ComponentMapper.getFor(LifeComponent.class);
+    public static ComponentMapper<PositionComponent> position = ComponentMapper.getFor(PositionComponent.class);
+    public static ComponentMapper<RenderComponent> render = ComponentMapper.getFor(RenderComponent.class);
+    public static ComponentMapper<ShooterBehaviourComponent> shoot_behaviour = ComponentMapper.getFor(ShooterBehaviourComponent.class);
     public static ComponentMapper<SinusBehaviourComponent> sinus_behaviour = ComponentMapper.getFor(SinusBehaviourComponent.class);
     public static ComponentMapper<SquadComponent> squad = ComponentMapper.getFor(SquadComponent.class);
-    public static ComponentMapper<ShooterBehaviourComponent> shoot_behaviour = ComponentMapper.getFor(ShooterBehaviourComponent.class);
-    public static ComponentMapper<LifeComponent> lifes = ComponentMapper.getFor(LifeComponent.class);
+    public static ComponentMapper<TypeComponent> type = ComponentMapper.getFor(TypeComponent.class);
+    public static ComponentMapper<VelocityComponent> velocity = ComponentMapper.getFor(VelocityComponent.class);
+    public static ComponentMapper<WeaponComponent> weapon = ComponentMapper.getFor(WeaponComponent.class);
+
 }

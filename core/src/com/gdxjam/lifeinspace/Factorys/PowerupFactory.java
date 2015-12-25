@@ -29,7 +29,7 @@ public class PowerupFactory
         powerup.add(new PositionComponent(x, y));
         powerup.add(new VelocityComponent(0, 15));
         powerup.add(new RenderComponent(new Sprite(TextureManager.getTexture("powerup.png"))));
-        //powerup.add(new SinusBehaviourComponent(MathUtils.random(5, 15), MathUtils.random(1,3)));
+        powerup.add(new SinusBehaviourComponent(MathUtils.random(10, 15), MathUtils.random(1.0f,2.0f)));
         powerup.add(new CollisionComponent(16, 16));
         gaem.engine.addEntity(powerup);
     }

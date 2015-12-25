@@ -10,6 +10,7 @@ import com.gdxjam.lifeinspace.Components.CollisionComponent;
 import com.gdxjam.lifeinspace.Components.LifeComponent;
 import com.gdxjam.lifeinspace.Components.TypeComponent;
 import com.gdxjam.lifeinspace.Components.PositionComponent;
+import com.gdxjam.lifeinspace.Factorys.FXFactory;
 import com.gdxjam.lifeinspace.Factorys.PowerupFactory;
 import com.gdxjam.lifeinspace.Mappers;
 import com.gdxjam.lifeinspace.PlayerManager;
@@ -98,15 +99,19 @@ public class CollisionSystem extends IteratingSystem
 
         if (is_killed)
         {
+            PositionComponent pos = Mappers.position.get(enemy);
+
             if (Mappers.squad.has(enemy))
             {
                 int squad = Mappers.squad.get(enemy).squad;
-                PositionComponent pos = Mappers.position.get(enemy);
+
                 SquadManager.enemyFromSquadKilled(squad,
                         pos.X(),
                         pos.y);
             }
             engine.removeEntity(enemy);
+
+            FXFactory.makeExplosion(pos.X(), pos.y);
 
             PlayerManager.score += 10;
         }

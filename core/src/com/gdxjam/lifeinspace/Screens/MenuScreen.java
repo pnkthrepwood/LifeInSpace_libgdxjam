@@ -53,10 +53,9 @@ public class MenuScreen implements Screen
 
 
         Label.LabelStyle style_title = new Label.LabelStyle(menu_font, Color.WHITE);
-        Label label_title = new Label("PRESS THE [RED]INTRO[]", style_title);
+        Label label_title = new Label("PRESS THE [ORANGE]INTRO[]", style_title);
         label_title.setAlignment(Align.left);
         label_title.setAlignment(Align.left, Align.left);
-
         label_title.setX(Constants.RES_X / 2);
         label_title.setY(Constants.RES_Y / 2);
         stage.addActor(label_title);
@@ -91,7 +90,7 @@ public class MenuScreen implements Screen
                 Constants.RES_X/2 -100,
                 Constants.RES_Y/2);
         Gaem.batch.end();
-        */
+*/
     }
 
     @Override
