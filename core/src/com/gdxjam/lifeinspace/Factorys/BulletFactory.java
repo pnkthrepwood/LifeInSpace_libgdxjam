@@ -46,26 +46,29 @@ public class BulletFactory
 
         BulletComponent bc = new BulletComponent();
 
-        switch (type){
-            case PLAYER:
-                texreg.setRegion(0, 0, 8, 13);
-                bc.lifeTime = 0.20f;
-                bc.friendly = true;
-                break;
-            case ENEMY:
-                texreg.setRegion(8, 0, 8, 13);
-                bc.lifeTime = 2.0f;
-                bc.friendly = false;
-                break;
+
+
+
+        bc.lifeTime = weapon.bulletLifetime;
+        bc.friendly = weapon.friendly;
+
+        if (bc.friendly)
+        {
+            texreg.setRegion(0, 0, 8, 13);
+        }
+        else if (!bc.friendly)
+        {
+            texreg.setRegion(8, 0, 8, 13);
         }
 
         RenderComponent rc = new RenderComponent(new Sprite(texreg));
         rc.rotation = angle;
+        bullet.add(rc);
 
         bullet.add(bc);
         bullet.add(new PositionComponent(x, y));
         bullet.add(new VelocityComponent(700* MathUtils.cosDeg(angle + 90), 700*MathUtils.sinDeg(angle + 90)));
-        bullet.add(rc);
+
         bullet.add(new CollisionComponent(8, 13));
         bullet.add(new TypeComponent(TypeComponent.TypeEntity.BULLET));
 
