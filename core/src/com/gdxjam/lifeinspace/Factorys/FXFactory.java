@@ -29,7 +29,7 @@ public class FXFactory {
                 new TextureRegion(tex, 720, 58, 16 ,16),
                 new TextureRegion(tex, 740, 58, 16 ,16)
         );
-        anim.setPlayMode(Animation.PlayMode.LOOP);
+        anim.setPlayMode(Animation.PlayMode.NORMAL);
 
         Entity entity = new Entity();
         entity.add(new PositionComponent(x, y));

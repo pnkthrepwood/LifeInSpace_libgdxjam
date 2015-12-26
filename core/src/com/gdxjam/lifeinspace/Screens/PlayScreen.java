@@ -20,6 +20,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.gdxjam.lifeinspace.Components.FlashingComponent;
 import com.gdxjam.lifeinspace.Factorys.BulletFactory;
 import com.gdxjam.lifeinspace.Components.CollisionComponent;
 import com.gdxjam.lifeinspace.Components.TypeComponent;
@@ -30,6 +31,7 @@ import com.gdxjam.lifeinspace.Components.VelocityComponent;
 import com.gdxjam.lifeinspace.Components.WeaponComponent;
 import com.gdxjam.lifeinspace.Constants;
 import com.gdxjam.lifeinspace.Factorys.EnemyFactory;
+import com.gdxjam.lifeinspace.Factorys.FXFactory;
 import com.gdxjam.lifeinspace.Factorys.PowerupFactory;
 import com.gdxjam.lifeinspace.Gaem;
 import com.gdxjam.lifeinspace.Mappers;
@@ -107,6 +109,7 @@ public class PlayScreen implements Screen {
         ship.add(new RenderComponent(ship_spr));
         ship.add(new WeaponComponent(WeaponComponent.WeaponType.BASIC));
         ship.add(new CollisionComponent(20, 20));
+        //ship.add(new FlashingComponent());
         game.engine.addEntity(ship);
 
         EnemyFactory.spawnSnakeEnemy(0, Constants.RES_Y / 2, 7);
@@ -272,9 +275,9 @@ public class PlayScreen implements Screen {
         Gaem.batch.end();
 
 
+        /* DRAW DEBUG
         Family debug_family = Family.all(CollisionComponent.class, PositionComponent.class, RenderComponent.class).get();
         ImmutableArray<Entity> debug_entities = game.engine.getEntitiesFor(debug_family);
-
         for (Entity e : debug_entities)
         {
             PositionComponent pos = Mappers.position.get(e);
@@ -288,7 +291,7 @@ public class PlayScreen implements Screen {
                     col.sizeY);
             game.shapeRenderer.end();
         }
-
+        */
 
 
     }

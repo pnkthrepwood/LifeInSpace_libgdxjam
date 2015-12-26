@@ -18,7 +18,8 @@ public class WeaponComponent implements Component
     }
 
     public float coolDown = 0.5f;
-    public float accuracy = 10.0f; // accuracy%: 0 = perfect
+    public float accuracy = 7.5f; // accuracy%: 0 = perfect
+    public float bulletLifetime = 0.2f;
 
     public WeaponComponent()
     {
@@ -36,6 +37,8 @@ public class WeaponComponent implements Component
         {
             case BASIC:
                 coolDown = 0.9f;
+                accuracy = 7.5f;
+                bulletLifetime = 0.2f;
                 break;
 
             case FAST:

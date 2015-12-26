@@ -1,5 +1,6 @@
 package com.gdxjam.lifeinspace;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.gdxjam.lifeinspace.Factorys.PowerupFactory;
 
 import java.util.HashMap;
@@ -27,7 +28,20 @@ public class SquadManager
         {
             PlayerManager.score += 100;
 
-            PowerupFactory.spawnPowerup(x, y);
+            float r  = MathUtils.random(0.0f, 3.0f);
+
+            if (r < 1.0f)
+            {
+                PowerupFactory.spawnPowerup(x, y, PowerupFactory.PowerUpType.FIRE_RANGE);
+            }
+            else if (r < 2.0f)
+            {
+                PowerupFactory.spawnPowerup(x, y, PowerupFactory.PowerUpType.FIRE_SPEED);
+            }
+            else
+            {
+                PowerupFactory.spawnPowerup(x, y, PowerupFactory.PowerUpType.FLY_SPEED);
+            }
 
             squadCounter.remove(ct);
         }

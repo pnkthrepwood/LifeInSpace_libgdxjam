@@ -10,6 +10,7 @@ import com.gdxjam.lifeinspace.Components.CollisionComponent;
 import com.gdxjam.lifeinspace.Components.LifeComponent;
 import com.gdxjam.lifeinspace.Components.TypeComponent;
 import com.gdxjam.lifeinspace.Components.PositionComponent;
+import com.gdxjam.lifeinspace.Components.WeaponComponent;
 import com.gdxjam.lifeinspace.Factorys.FXFactory;
 import com.gdxjam.lifeinspace.Factorys.PowerupFactory;
 import com.gdxjam.lifeinspace.Mappers;
@@ -66,8 +67,6 @@ public class CollisionSystem extends IteratingSystem
                     doFriendlyBulletHitsEnemy(entity, other);
                 }
 
-
-
                 if (type_me == TypeComponent.TypeEntity.BULLET
                         && type_other == TypeComponent.TypeEntity.SHIP
                         && !Mappers.bullet.get(entity).friendly )
@@ -75,6 +74,31 @@ public class CollisionSystem extends IteratingSystem
                     engine.removeEntity(entity);
                     FXFactory.makeExplosion(pos_other.X(), pos_other.y);
                     System.out.println("HURT!");
+                }
+
+                if (type_me == TypeComponent.TypeEntity.SHIP
+                        && type_other == TypeComponent.TypeEntity.POWERUP )
+                {
+                    PowerupFactory.PowerUpType type = Mappers.powerup.get(other).type;
+                    switch (type)
+                    {
+                        case FIRE_RANGE:
+                        {
+                            WeaponComponent wc = Mappers.weapon.get(entity);
+                            wc.bulletLifetime += 0.05f;
+                        } break;
+                        case FIRE_SPEED:
+                        {
+                            WeaponComponent wc = Mappers.weapon.get(entity);
+                            wc.coolDown -= 0.05f;
+                            if (wc.coolDown < 0.5f) wc.coolDown = 0.5f;
+                        } break;
+                        case FLY_SPEED:
+                        {
+                            PlayerManager.ship_speed += 0.1f;
+                        } break;
+                    }
+                    engine.removeEntity(other);
                 }
 
             }
