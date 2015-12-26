@@ -12,6 +12,7 @@ import com.gdxjam.lifeinspace.Components.TypeComponent;
 import com.gdxjam.lifeinspace.Components.PositionComponent;
 import com.gdxjam.lifeinspace.Components.RenderComponent;
 import com.gdxjam.lifeinspace.Components.VelocityComponent;
+import com.gdxjam.lifeinspace.Components.WeaponComponent;
 import com.gdxjam.lifeinspace.Gaem;
 import com.gdxjam.lifeinspace.SquadManager;
 import com.gdxjam.lifeinspace.TextureManager;
@@ -59,6 +60,7 @@ public class EnemyFactory
         enemy.add(new LifeComponent(3));
         enemy.add(new ShooterBehaviourComponent(2));
         enemy.add(new SquadComponent(squad));
+        enemy.add(new WeaponComponent(WeaponComponent.WeaponType.ENEMY_WEAPON));
         gaem.engine.addEntity(enemy);
 
     }

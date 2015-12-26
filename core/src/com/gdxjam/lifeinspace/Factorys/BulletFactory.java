@@ -13,6 +13,7 @@ import com.gdxjam.lifeinspace.Components.TypeComponent;
 import com.gdxjam.lifeinspace.Components.PositionComponent;
 import com.gdxjam.lifeinspace.Components.RenderComponent;
 import com.gdxjam.lifeinspace.Components.VelocityComponent;
+import com.gdxjam.lifeinspace.Components.WeaponComponent;
 import com.gdxjam.lifeinspace.Gaem;
 import com.gdxjam.lifeinspace.TextureManager;
 
@@ -23,19 +24,21 @@ public class BulletFactory
 {
     public static Gaem gaem;
 
+    /*
     public static void shootTripleBullet(float x, float y, float angle, BulletType type)
     {
         shootBullet(x, y, angle, type);
         shootBullet(x, y, angle+45, type);
         shootBullet(x, y, angle-45, type);
     }
+    */
 
     public enum BulletType{
         PLAYER,
         ENEMY
     }
 
-    public static void shootBullet(float x, float y, float angle, BulletType type)
+    public static void shootBullet(float x, float y, float angle, WeaponComponent weapon)
     {
         Entity bullet = new Entity();
         Texture tex = TextureManager.getTexture("BulletCollection.png");

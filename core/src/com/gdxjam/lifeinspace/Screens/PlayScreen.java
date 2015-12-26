@@ -107,7 +107,7 @@ public class PlayScreen implements Screen {
         ship_spr = new Sprite(TextureManager.getTexture("ship.png"));
         //ship_spr.setScale(2,2);
         ship.add(new RenderComponent(ship_spr));
-        ship.add(new WeaponComponent(WeaponComponent.WeaponType.BASIC));
+        ship.add(new WeaponComponent(WeaponComponent.WeaponType.PLAYER_WEAPON));
         ship.add(new CollisionComponent(20, 20));
         //ship.add(new FlashingComponent());
         game.engine.addEntity(ship);
@@ -187,7 +187,7 @@ public class PlayScreen implements Screen {
                             shipPos.X(),
                             shipPos.y + 20,
                             MathUtils.random(-shipWeapon.accuracy, shipWeapon.accuracy),
-                            BulletFactory.BulletType.PLAYER);
+                            shipWeapon);
                     shipWeapon.timer = 0;
                 }
             }
@@ -217,7 +217,7 @@ public class PlayScreen implements Screen {
         {
             WeaponComponent shipWeapon =  Mappers.weapon.get(ship);
             if (shipWeapon.timer > shipWeapon.coolDown){
-                BulletFactory.shootBullet(shipPos.X(), shipPos.y + 20, 0, BulletFactory.BulletType.PLAYER);
+                BulletFactory.shootBullet(shipPos.X(), shipPos.y + 20, 0, shipWeapon);
                 shipWeapon.timer = 0;
             }
         }
