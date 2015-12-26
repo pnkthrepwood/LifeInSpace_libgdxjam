@@ -23,37 +23,46 @@ public class BulletFactory
 {
     public static Gaem gaem;
 
-    public static void shootTripleBullet(float x, float y, float angle)
+    public static void shootTripleBullet(float x, float y, float angle, BulletType type)
     {
-        shootBullet(x, y, angle);
-        shootBullet(x, y, angle+45);
-        shootBullet(x, y, angle-45);
+        shootBullet(x, y, angle, type);
+        shootBullet(x, y, angle+45, type);
+        shootBullet(x, y, angle-45, type);
     }
 
-    public static void shootBullet(float x, float y, float angle)
-    {
-        shootBullet(x,y,angle,true);
+    public enum BulletType{
+        PLAYER,
+        ENEMY
     }
 
-    public static void shootBullet(float x, float y, float angle, boolean friendly)
+    public static void shootBullet(float x, float y, float angle, BulletType type)
     {
         Entity bullet = new Entity();
-
         Texture tex = TextureManager.getTexture("BulletCollection.png");
         TextureRegion texreg =  new TextureRegion(tex);
-        texreg.setRegion(0 + (friendly?0:8), 0, 8, 13);
+
+        BulletComponent bc = new BulletComponent();
+
+        switch (type){
+            case PLAYER:
+                texreg.setRegion(0, 0, 8, 13);
+                bc.lifeTime = 0.20f;
+                bc.friendly = true;
+                break;
+            case ENEMY:
+                texreg.setRegion(8, 0, 8, 13);
+                bc.lifeTime = 2.0f;
+                bc.friendly = false;
+                break;
+        }
+
         RenderComponent rc = new RenderComponent(new Sprite(texreg));
         rc.rotation = angle;
 
-        BulletComponent bc = new BulletComponent();
-        bc.lifeTime = 0.20f;
-        bc.friendly = friendly;
         bullet.add(bc);
-
         bullet.add(new PositionComponent(x, y));
         bullet.add(new VelocityComponent(700* MathUtils.cosDeg(angle + 90), 700*MathUtils.sinDeg(angle + 90)));
         bullet.add(rc);
-
         bullet.add(new CollisionComponent(8, 13));
         bullet.add(new TypeComponent(TypeComponent.TypeEntity.BULLET));
 

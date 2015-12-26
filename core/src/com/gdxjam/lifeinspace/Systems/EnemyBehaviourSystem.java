@@ -31,7 +31,7 @@ public class EnemyBehaviourSystem extends IteratingSystem
         if (behaviour.timer < 0.0f)
         {
             PositionComponent pos = Mappers.position.get(entity);
-            BulletFactory.shootBullet(pos.X(), pos.y - 32, 180, false);
+            BulletFactory.shootBullet(pos.X(), pos.y - 32, 180, BulletFactory.BulletType.ENEMY);
             behaviour.timer = MathUtils.random(5, behaviour.shoot_time);
         }
 

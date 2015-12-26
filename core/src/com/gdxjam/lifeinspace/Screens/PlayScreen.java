@@ -141,8 +141,8 @@ public class PlayScreen implements Screen {
             pixmap.setColor(Color.WHITE);
 
             pixmap.drawCircle(
-                    (int)MathUtils.random(0, Constants.RES_X),
-                    (int)MathUtils.random(0, Constants.RES_Y),
+                    (int) MathUtils.random(0, Constants.RES_X),
+                    (int) MathUtils.random(0, Constants.RES_Y),
                     1
             );
         }
@@ -183,7 +183,8 @@ public class PlayScreen implements Screen {
                     BulletFactory.shootBullet(
                             shipPos.X(),
                             shipPos.y + 20,
-                            MathUtils.random(-shipWeapon.accuracy, shipWeapon.accuracy));
+                            MathUtils.random(-shipWeapon.accuracy, shipWeapon.accuracy),
+                            BulletFactory.BulletType.PLAYER);
                     shipWeapon.timer = 0;
                 }
             }
@@ -213,7 +214,7 @@ public class PlayScreen implements Screen {
         {
             WeaponComponent shipWeapon =  Mappers.weapon.get(ship);
             if (shipWeapon.timer > shipWeapon.coolDown){
-                BulletFactory.shootBullet(shipPos.X(), shipPos.y + 20, 0);
+                BulletFactory.shootBullet(shipPos.X(), shipPos.y + 20, 0, BulletFactory.BulletType.PLAYER);
                 shipWeapon.timer = 0;
             }
         }
