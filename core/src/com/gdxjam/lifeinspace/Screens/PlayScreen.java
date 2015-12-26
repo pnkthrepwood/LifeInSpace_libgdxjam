@@ -269,10 +269,18 @@ public class PlayScreen implements Screen {
 
         Gdx.graphics.setTitle("LifeInSpace | FPS: " + Gdx.graphics.getFramesPerSecond());
 
-        float fontPosX = (-Constants.RES_X / 2 ) + Constants.RES_X * 0.01f ;
-        float fontPosY = (Constants.RES_Y / 2 ) - Constants.RES_Y * 0.02f;
         Gaem.batch.begin();
-        font.draw(Gaem.batch, "SCORE\n" + Utils.textScoreNice(PlayerManager.score), fontPosX, fontPosY);
+        font.draw(Gaem.batch,
+                "SCORE\n" + Utils.textScoreNice(PlayerManager.score),
+                -(Constants.RES_X / 2) + Constants.RES_X * 0.1f,
+                (Constants.RES_Y / 2) - Constants.RES_Y * 0.1f);
+
+        font.draw(Gaem.batch,
+                "RED ORBS\n" + Utils.textScoreNice(PlayerManager.red_orbs),
+                -(Constants.RES_X / 2) + Constants.RES_X * 0.1f,
+                (Constants.RES_Y / 2 ) - Constants.RES_Y * 0.2f);
+
+
         Gaem.batch.end();
 
 

@@ -7,12 +7,14 @@ public class PlayerManager
 {
     public static int score = 0;
     public static float ship_speed = 2;
+    public static int red_orbs = 0;
 
 
     public static void reset()
     {
         score = 0;
         ship_speed = 2;
+        red_orbs = 0;
     }
 
 }
