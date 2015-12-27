@@ -15,11 +15,13 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Rectangle;
 import com.gdxjam.lifeinspace.Components.AnimationComponent;
 import com.gdxjam.lifeinspace.Components.FlashingComponent;
 import com.gdxjam.lifeinspace.Components.PositionComponent;
 import com.gdxjam.lifeinspace.Components.RenderComponent;
+import com.gdxjam.lifeinspace.Components.RenderEffectComponent;
 import com.gdxjam.lifeinspace.Constants;
 import com.gdxjam.lifeinspace.Gaem;
 import com.gdxjam.lifeinspace.Mappers;
@@ -91,7 +93,8 @@ public class RenderSystem extends EntitySystem
                 AnimationComponent anim = Mappers.animation.get(e);
                 anim.timer += deltaTime;
                 rc.spr.setRegion(anim.animation.getKeyFrame(anim.timer));
-                if (anim.timer > anim.animation.getAnimationDuration())
+                if (anim.animation.getPlayMode() == Animation.PlayMode.NORMAL
+                    && anim.timer > anim.animation.getAnimationDuration())
                 {
                     Gaem.engine.removeEntity(e);
                 }
@@ -101,6 +104,29 @@ public class RenderSystem extends EntitySystem
             rc.spr.setCenterY(pos.y);
 
             rc.spr.setRotation(rc.rotation);
+
+            if (Mappers.render_effect.has(e))
+            {
+                RenderEffectComponent effect = Mappers.render_effect.get(e);
+                effect.timer += deltaTime;
+
+                float sc = Interpolation.pow2In.apply(
+                        effect.scale_start, effect.scale_end,
+                        effect.timer / effect.timer_total);
+                rc.spr.setScale(sc, sc);
+
+                float a = Interpolation.pow2In.apply(
+                        effect.alpha_start, effect.alpha_end,
+                        effect.timer / effect.timer_total
+                );
+                rc.spr.setAlpha(a);
+
+                if (effect.timer > effect.timer_total)
+                {
+                    e.remove(RenderEffectComponent.class);
+                }
+            }
+
 
             rc.spr.draw(batch);
         }

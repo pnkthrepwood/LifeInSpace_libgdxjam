@@ -45,10 +45,6 @@ public class BulletFactory
         TextureRegion texreg =  new TextureRegion(tex);
 
         BulletComponent bc = new BulletComponent();
-
-
-
-
         bc.lifeTime = weapon.bulletLifetime;
         bc.friendly = weapon.friendly;
 
@@ -56,7 +52,7 @@ public class BulletFactory
         {
             texreg.setRegion(0, 0, 8, 13);
         }
-        else if (!bc.friendly)
+        else
         {
             texreg.setRegion(8, 0, 8, 13);
         }

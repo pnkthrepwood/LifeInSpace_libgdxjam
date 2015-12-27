@@ -86,18 +86,24 @@ public class CollisionSystem extends IteratingSystem
                         {
                             WeaponComponent wc = Mappers.weapon.get(entity);
                             wc.bulletLifetime += 0.05f;
+                            PlayerManager.red_orbs++;
                         } break;
                         case FIRE_SPEED:
                         {
                             WeaponComponent wc = Mappers.weapon.get(entity);
                             wc.coolDown -= 0.05f;
                             if (wc.coolDown < 0.5f) wc.coolDown = 0.5f;
+                            PlayerManager.green_orbs++;
                         } break;
                         case FLY_SPEED:
                         {
                             PlayerManager.ship_speed += 0.1f;
+                            PlayerManager.blue_orbs++;
                         } break;
                     }
+
+                    FXFactory.makeCatchpowerup(pos_other.X(), pos_other.y, type);
+
                     engine.removeEntity(other);
                 }
 

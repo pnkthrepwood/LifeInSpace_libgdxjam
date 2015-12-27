@@ -14,6 +14,7 @@ import com.gdxjam.lifeinspace.Components.SinusBehaviourComponent;
 import com.gdxjam.lifeinspace.Components.TypeComponent;
 import com.gdxjam.lifeinspace.Components.VelocityComponent;
 import com.gdxjam.lifeinspace.Gaem;
+import com.gdxjam.lifeinspace.PlayerManager;
 import com.gdxjam.lifeinspace.TextureManager;
 
 /**
@@ -40,36 +41,42 @@ public class PowerupFactory
         powerup.add(new SinusBehaviourComponent(MathUtils.random(10, 15), MathUtils.random(1.0f,2.0f)));
         powerup.add(new CollisionComponent(16, 16));
 
-        Sprite spr = new Sprite(new TextureRegion(
-                TextureManager.getTexture("powerup.png"),
-                0, 0, 16, 16));
-
-        switch (type)
-        {
-            case FIRE_RANGE:
-            {
-                spr.setRegion(new TextureRegion(
-                        TextureManager.getTexture("powerup.png"),
-                        0, 0, 16, 16));
-            } break;
-            case FIRE_SPEED:
-            {
-                spr.setRegion(new TextureRegion(
-                        TextureManager.getTexture("powerup.png"),
-                        16, 0, 16, 16));
-            } break;
-            case FLY_SPEED:
-            {
-                spr.setRegion(new TextureRegion(
-                        TextureManager.getTexture("powerup.png"),
-                        32, 0, 16, 16));
-            } break;
-        }
+        Sprite spr = new Sprite(getPowerTexture(type));
         powerup.add(new RenderComponent(spr));
         powerup.add(new PowerUpComponent(type));
 
         gaem.engine.addEntity(powerup);
     }
 
+
+    public static TextureRegion getPowerTexture(PowerUpType type)
+    {
+        switch (type)
+        {
+            case FIRE_RANGE:
+            {
+                return new TextureRegion(
+                        TextureManager.getTexture("powerup.png"),
+                        0, 0, 16, 16);
+            }
+            case FIRE_SPEED:
+            {
+                return new TextureRegion(
+                        TextureManager.getTexture("powerup.png"),
+                        16, 0, 16, 16);
+            }
+            case FLY_SPEED:
+            {
+                return new TextureRegion(
+                        TextureManager.getTexture("powerup.png"),
+                        32, 0, 16, 16);
+            }
+        }
+
+        //Todo(Mario): Error?
+        return new TextureRegion(
+                TextureManager.getTexture("powerup.png"),
+                0, 0, 16, 16);
+    }
 
 }

@@ -67,6 +67,7 @@ public class PlayScreen implements Screen {
 
     BitmapFont font;
 
+    Sprite orbs_spr;
 
     public PlayScreen(Gaem game)
     {
@@ -133,6 +134,9 @@ public class PlayScreen implements Screen {
         parameter.borderWidth = 2;
         parameter.borderColor = Color.BLACK;
         font = generator.generateFont(parameter);
+
+        orbs_spr = new Sprite(TextureManager.getTexture("powerup.png"));
+        orbs_spr.setSize(16,16);
     }
 
     private void generateBackgroundScene()
@@ -153,7 +157,7 @@ public class PlayScreen implements Screen {
         background_spr = new Sprite(new Texture(pixmap));
     }
 
-    public void updateGame()
+    public void updateInput()
     {
         PositionComponent shipPos = Mappers.position.get(ship);
         VelocityComponent shipVel = Mappers.velocity.get(ship);
@@ -247,7 +251,7 @@ public class PlayScreen implements Screen {
         }
         time_since_last_enemy += delta;
 
-        updateGame();
+        updateInput();
         //float planet_scale = planet_spr.getScaleX() - delta*(5.0f/30.0f);
         //planet_spr.setScale(planet_scale, planet_scale);
 
@@ -260,9 +264,9 @@ public class PlayScreen implements Screen {
         background_spr.draw(Gaem.batch);
         Gaem.batch.end();
 
-        game.engine.update(delta); //Update inside batch: it may draw things
-        Vector2 inputPos = Utils.inputMouseWorldPos(game.cam);
+        game.engine.update(delta);
 
+        Vector2 inputPos = Utils.inputMouseWorldPos(game.cam);
         cursor.setCenterX(inputPos.x);
         cursor.setCenterY(inputPos.y);
         //cursor.draw(game.batch);
@@ -272,13 +276,44 @@ public class PlayScreen implements Screen {
         Gaem.batch.begin();
         font.draw(Gaem.batch,
                 "SCORE\n" + Utils.textScoreNice(PlayerManager.score),
-                -(Constants.RES_X / 2) + Constants.RES_X * 0.1f,
-                (Constants.RES_Y / 2) - Constants.RES_Y * 0.1f);
+                -(Constants.RES_X / 2) + Constants.RES_X * 0.02f,
+                (Constants.RES_Y / 2) - Constants.RES_Y * 0.02f);
 
+        //Red orbs
+        orbs_spr.setRegion(0, 0, 16, 16);
+        orbs_spr.setOrigin(8, 8);
+        orbs_spr.setScale(2, 2);
+        orbs_spr.setCenterX(-(Constants.RES_X / 2) + Constants.RES_X * 0.03f);
+        orbs_spr.setCenterY((Constants.RES_Y / 2) - Constants.RES_Y * 0.2f);
+        orbs_spr.draw(Gaem.batch);
         font.draw(Gaem.batch,
-                "RED ORBS\n" + Utils.textScoreNice(PlayerManager.red_orbs),
-                -(Constants.RES_X / 2) + Constants.RES_X * 0.1f,
-                (Constants.RES_Y / 2 ) - Constants.RES_Y * 0.2f);
+                "x" + PlayerManager.red_orbs,
+                -(Constants.RES_X / 2) + Constants.RES_X * 0.05f,
+                (Constants.RES_Y / 2) - Constants.RES_Y * 0.2f);
+
+        //Green orbs
+        orbs_spr.setRegion(16, 0, 16, 16);
+        orbs_spr.setOrigin(8, 8);
+        orbs_spr.setScale(2, 2);
+        orbs_spr.setCenterX(-(Constants.RES_X / 2) + Constants.RES_X * 0.03f);
+        orbs_spr.setCenterY((Constants.RES_Y / 2) - Constants.RES_Y * 0.25f);
+        orbs_spr.draw(Gaem.batch);
+        font.draw(Gaem.batch,
+                "x" + PlayerManager.green_orbs,
+                -(Constants.RES_X / 2) + Constants.RES_X * 0.05f,
+                (Constants.RES_Y / 2) - Constants.RES_Y * 0.25f);
+
+        //Blue orbs
+        orbs_spr.setRegion(32, 0, 16, 16);
+        orbs_spr.setOrigin(8, 8);
+        orbs_spr.setScale(2, 2);
+        orbs_spr.setCenterX(-(Constants.RES_X / 2) + Constants.RES_X * 0.03f);
+        orbs_spr.setCenterY((Constants.RES_Y / 2) - Constants.RES_Y * 0.3f);
+        orbs_spr.draw(Gaem.batch);
+        font.draw(Gaem.batch,
+                "x" + PlayerManager.blue_orbs,
+                -(Constants.RES_X / 2) + Constants.RES_X * 0.05f,
+                (Constants.RES_Y / 2 ) - Constants.RES_Y * 0.3f);
 
 
         Gaem.batch.end();

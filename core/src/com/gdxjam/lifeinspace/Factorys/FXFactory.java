@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.gdxjam.lifeinspace.Components.AnimationComponent;
 import com.gdxjam.lifeinspace.Components.PositionComponent;
 import com.gdxjam.lifeinspace.Components.RenderComponent;
+import com.gdxjam.lifeinspace.Components.RenderEffectComponent;
 import com.gdxjam.lifeinspace.Gaem;
 import com.gdxjam.lifeinspace.TextureManager;
 
@@ -20,7 +21,6 @@ public class FXFactory {
     {
 
         Texture tex = TextureManager.getTexture("explosions.png");
-
         Animation anim = new Animation(0.2f/6,
                 new TextureRegion(tex, 640, 58, 16 ,16),
                 new TextureRegion(tex, 660, 58, 16 ,16),
@@ -35,6 +35,22 @@ public class FXFactory {
         entity.add(new PositionComponent(x, y));
         entity.add(new AnimationComponent(anim));
         entity.add(new RenderComponent(new Sprite(new TextureRegion(tex, 640, 58, 16 ,16))));
+        Gaem.engine.addEntity(entity);
+
+    }
+
+    public static void makeCatchpowerup(float x, float y, PowerupFactory.PowerUpType type)
+    {
+
+        TextureRegion texreg = PowerupFactory.getPowerTexture(type);
+        Animation anim = new Animation(0.3f, PowerupFactory.getPowerTexture(type));
+        anim.setPlayMode(Animation.PlayMode.NORMAL);
+
+        Entity entity = new Entity();
+        entity.add(new PositionComponent(x, y));
+        entity.add(new AnimationComponent(anim));
+        entity.add(new RenderComponent(new Sprite(texreg)));
+        entity.add(new RenderEffectComponent(0.3f, 1, 3.0f, 1, 0));
         Gaem.engine.addEntity(entity);
 
     }

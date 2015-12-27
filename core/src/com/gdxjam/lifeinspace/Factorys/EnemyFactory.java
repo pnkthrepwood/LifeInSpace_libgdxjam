@@ -1,8 +1,12 @@
 package com.gdxjam.lifeinspace.Factorys;
 
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
+import com.gdxjam.lifeinspace.Components.AnimationComponent;
 import com.gdxjam.lifeinspace.Components.CollisionComponent;
 import com.gdxjam.lifeinspace.Components.LifeComponent;
 import com.gdxjam.lifeinspace.Components.ShooterBehaviourComponent;
@@ -39,6 +43,15 @@ public class EnemyFactory
             enemy.add(new PositionComponent(x, y + 20.f*i*(A*0.5f)));
             enemy.add(new VelocityComponent(0, -V));
             enemy.add(new RenderComponent(new Sprite(TextureManager.getTexture("enemy2.png"))));
+
+            Texture tex = TextureManager.getTexture("enemy_disk.png");
+            Animation anim = new Animation(0.3f/2,
+                    new TextureRegion(tex, 0, 0, 16 ,16),
+                    new TextureRegion(tex, 16, 0, 16 ,16)
+            );
+            anim.setPlayMode(Animation.PlayMode.LOOP);
+            enemy.add(new AnimationComponent(anim));
+
             enemy.add(new CollisionComponent(20, 20));
             enemy.add(new SinusBehaviourComponent(F, A));
             enemy.add(new SquadComponent(squad));
@@ -54,7 +67,18 @@ public class EnemyFactory
         enemy.add(new TypeComponent(TypeComponent.TypeEntity.ENEMY));
         enemy.add(new PositionComponent(x, y));
         enemy.add(new VelocityComponent(0, -30));
-        enemy.add(new RenderComponent(new Sprite(TextureManager.getTexture("monster.png"))));
+
+        Texture tex = TextureManager.getTexture("monster.png");
+        enemy.add(new RenderComponent(new Sprite(new TextureRegion(tex, 0, 0, 32 ,32))));
+        Animation anim = new Animation(0.3f/2,
+                new TextureRegion(tex, 0, 0, 32 ,32),
+                new TextureRegion(tex, 32, 0, 32 ,32),
+                new TextureRegion(tex, 0, 0, 32 ,32),
+                new TextureRegion(tex, 0, 32, 32 ,32)
+        );
+        anim.setPlayMode(Animation.PlayMode.LOOP);
+        enemy.add(new AnimationComponent(anim));
+
         enemy.add(new SinusBehaviourComponent(MathUtils.random(5,15), MathUtils.random(1,3)));
         enemy.add(new CollisionComponent(32, 32));
         enemy.add(new LifeComponent(3));
