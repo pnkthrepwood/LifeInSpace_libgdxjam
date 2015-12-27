@@ -60,6 +60,8 @@ public class CollisionSystem extends IteratingSystem
                 TypeComponent.TypeEntity type_me = Mappers.type.get(entity).type;
                 TypeComponent.TypeEntity type_other = Mappers.type.get(other).type;
 
+
+                //// BULLET -> ENEMY ////
                 if (type_me == TypeComponent.TypeEntity.BULLET
                     && type_other == TypeComponent.TypeEntity.ENEMY
                     && Mappers.bullet.get(entity).friendly )
@@ -67,15 +69,19 @@ public class CollisionSystem extends IteratingSystem
                     doFriendlyBulletHitsEnemy(entity, other);
                 }
 
+
+                //// BULLET -> PLAYER ////
                 if (type_me == TypeComponent.TypeEntity.BULLET
                         && type_other == TypeComponent.TypeEntity.SHIP
                         && !Mappers.bullet.get(entity).friendly )
                 {
                     engine.removeEntity(entity);
                     FXFactory.makeExplosion(pos_other.X(), pos_other.y);
-                    System.out.println("HURT!");
+
+                    doShipGetHurt(other);
                 }
 
+                //// PLAYER -> POWERUP ////
                 if (type_me == TypeComponent.TypeEntity.SHIP
                         && type_other == TypeComponent.TypeEntity.POWERUP )
                 {
@@ -106,6 +112,16 @@ public class CollisionSystem extends IteratingSystem
 
                     engine.removeEntity(other);
                 }
+
+                // PLAYER -> ENEMY //
+                if (type_me == TypeComponent.TypeEntity.SHIP
+                    && type_other == TypeComponent.TypeEntity.ENEMY )
+                {
+                    doShipGetHurt(entity);
+
+                }
+
+
 
             }
         }
@@ -151,6 +167,12 @@ public class CollisionSystem extends IteratingSystem
         {
             FXFactory.makeExplosion(pos_bullet.X(), pos_bullet.y);
         }
+    }
+
+
+    public void doShipGetHurt(Entity ship)
+    {
+        System.out.println("HURT!");
     }
 
 }

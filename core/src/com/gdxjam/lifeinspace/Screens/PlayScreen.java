@@ -21,6 +21,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.gdxjam.lifeinspace.Components.FlashingComponent;
+import com.gdxjam.lifeinspace.Components.RenderEffectComponent;
 import com.gdxjam.lifeinspace.Factorys.BulletFactory;
 import com.gdxjam.lifeinspace.Components.CollisionComponent;
 import com.gdxjam.lifeinspace.Components.TypeComponent;
@@ -95,10 +96,11 @@ public class PlayScreen implements Screen {
 
         Entity planet_bg = new Entity();
         planet_bg.add(new PositionComponent(0, -Constants.RES_Y / 2 + TextureManager.getTexture("planet_bg.png").getHeight() / 2));
-        planet_bg.add(new VelocityComponent(0, -0.5f));
+        planet_bg.add(new VelocityComponent(0, -1.5f));
         planet_spr = new Sprite(TextureManager.getTexture("planet_bg.png"));
         //planet_spr.setScale(5, 5);
         planet_bg.add(new RenderComponent(planet_spr));
+        planet_bg.add(new RenderEffectComponent(120, 5, 0.5f, 1, 1));
         game.engine.addEntity(planet_bg);
 
         ship = new Entity();
@@ -146,6 +148,16 @@ public class PlayScreen implements Screen {
         for (int i = 0; i < 1000; ++i)
         {
             pixmap.setColor(Color.WHITE);
+            float rnd = MathUtils.random(0.0f, 1.0f);
+            if (rnd < 0.05f)
+            {
+                if (rnd < 0.02f)
+                    pixmap.setColor(Color.YELLOW);
+                else if (rnd < 0.04f)
+                    pixmap.setColor(Color.ORANGE);
+                else
+                    pixmap.setColor(Color.RED);
+            }
 
             pixmap.drawCircle(
                     (int) MathUtils.random(0, Constants.RES_X),
@@ -228,15 +240,8 @@ public class PlayScreen implements Screen {
     }
 
 
-    @Override
-    public void show() {
-
-    }
-
-    @Override
-    public void render(float delta)
+    void updateEnemySpawner(float delta)
     {
-
         if (time_since_last_enemy > 10.0f)
         {
             EnemyFactory.spawnSnakeEnemy(
@@ -251,7 +256,20 @@ public class PlayScreen implements Screen {
         }
         time_since_last_enemy += delta;
 
+    }
+
+    @Override
+    public void show() {
+
+    }
+
+
+    @Override
+    public void render(float delta)
+    {
+        updateEnemySpawner(delta);
         updateInput();
+
         //float planet_scale = planet_spr.getScaleX() - delta*(5.0f/30.0f);
         //planet_spr.setScale(planet_scale, planet_scale);
 
@@ -266,10 +284,12 @@ public class PlayScreen implements Screen {
 
         game.engine.update(delta);
 
+        /*
         Vector2 inputPos = Utils.inputMouseWorldPos(game.cam);
         cursor.setCenterX(inputPos.x);
         cursor.setCenterY(inputPos.y);
-        //cursor.draw(game.batch);
+        cursor.draw(game.batch);
+        */
 
         Gdx.graphics.setTitle("LifeInSpace | FPS: " + Gdx.graphics.getFramesPerSecond());
 
@@ -314,9 +334,10 @@ public class PlayScreen implements Screen {
                 "x" + PlayerManager.blue_orbs,
                 -(Constants.RES_X / 2) + Constants.RES_X * 0.05f,
                 (Constants.RES_Y / 2 ) - Constants.RES_Y * 0.3f);
-
-
         Gaem.batch.end();
+
+
+
 
 
         /* DRAW DEBUG

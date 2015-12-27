@@ -15,7 +15,9 @@ public class RenderEffectComponent implements Component {
     public float alpha_start = 1;
     public float alpha_end = 1;
 
-    public RenderEffectComponent(float t, float sc0, float sc1, float a0, float a1)
+    public RenderEffectComponent(float t,
+                                 float sc0, float sc1,
+                                 float a0, float a1)
     {
         scale_start = sc0;
         scale_end = sc1;

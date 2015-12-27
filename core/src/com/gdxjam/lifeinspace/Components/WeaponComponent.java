@@ -34,7 +34,7 @@ public class WeaponComponent implements Component
         {
             case PLAYER_WEAPON:
                 coolDown = 0.9f;
-                accuracy = 7.5f;
+                accuracy = 0.0f;
                 bulletLifetime = 0.2f;
                 friendly = true;
                 bulletSpeed = 700;
@@ -42,7 +42,7 @@ public class WeaponComponent implements Component
 
             case ENEMY_WEAPON:
                 coolDown = -1.0f;
-                accuracy = 15.0f;
+                accuracy = 25.0f;
                 bulletLifetime = 3.0f;
                 friendly = false;
                 bulletSpeed = 500;
