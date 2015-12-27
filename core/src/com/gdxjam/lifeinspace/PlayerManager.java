@@ -10,7 +10,7 @@ public class PlayerManager
     public static int red_orbs = 0;
     public static int blue_orbs = 0;
     public static int green_orbs = 0;
-
+    public static boolean is_game_over = false;
 
     public static void reset()
     {
@@ -19,6 +19,7 @@ public class PlayerManager
         red_orbs = 0;
         blue_orbs = 0;
         green_orbs = 0;
+        is_game_over = false;
     }
 
 }

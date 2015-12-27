@@ -67,6 +67,7 @@ public class PlayScreen implements Screen {
     float time_since_last_enemy = 0;
 
     BitmapFont font;
+    BitmapFont font_big;
 
     Sprite orbs_spr;
 
@@ -136,6 +137,16 @@ public class PlayScreen implements Screen {
         parameter.borderWidth = 2;
         parameter.borderColor = Color.BLACK;
         font = generator.generateFont(parameter);
+
+        font_big = new BitmapFont();
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("bitDarling.ttf"));
+        parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = 40;
+        parameter.color = Color.WHITE;
+        parameter.borderWidth = 2;
+        parameter.borderColor = Color.BLACK;
+        font_big = generator.generateFont(parameter);
+        font_big.getData().markupEnabled = true;
 
         orbs_spr = new Sprite(TextureManager.getTexture("powerup.png"));
         orbs_spr.setSize(16,16);
@@ -267,11 +278,7 @@ public class PlayScreen implements Screen {
     @Override
     public void render(float delta)
     {
-        updateEnemySpawner(delta);
-        updateInput();
 
-        //float planet_scale = planet_spr.getScaleX() - delta*(5.0f/30.0f);
-        //planet_spr.setScale(planet_scale, planet_scale);
 
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -282,6 +289,22 @@ public class PlayScreen implements Screen {
         background_spr.draw(Gaem.batch);
         Gaem.batch.end();
 
+
+
+        if (PlayerManager.is_game_over)
+        {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER))
+            {
+                game.setScreen(new PlayScreen(game));
+                return;
+            }
+        }
+        else
+        {
+            updateEnemySpawner(delta);
+            updateInput();
+
+        }
         game.engine.update(delta);
 
         /*
@@ -290,8 +313,6 @@ public class PlayScreen implements Screen {
         cursor.setCenterY(inputPos.y);
         cursor.draw(game.batch);
         */
-
-        Gdx.graphics.setTitle("LifeInSpace | FPS: " + Gdx.graphics.getFramesPerSecond());
 
         Gaem.batch.begin();
         font.draw(Gaem.batch,
@@ -333,11 +354,24 @@ public class PlayScreen implements Screen {
         font.draw(Gaem.batch,
                 "x" + PlayerManager.blue_orbs,
                 -(Constants.RES_X / 2) + Constants.RES_X * 0.05f,
-                (Constants.RES_Y / 2 ) - Constants.RES_Y * 0.3f);
+                (Constants.RES_Y / 2) - Constants.RES_Y * 0.3f);
+
+
+        if (PlayerManager.is_game_over)
+        {
+            font_big.draw(Gaem.batch,
+                    "SCORE\n" + Utils.textScoreNice(PlayerManager.score),
+                    -(Constants.RES_X / 2) + Constants.RES_X * 0.35f,
+                    (Constants.RES_Y / 2) - Constants.RES_Y * 0.45f);
+
+            font_big.draw(Gaem.batch,
+                    "PRESS THE [ORANGE]INTRO[]",
+                    -(Constants.RES_X / 2) + Constants.RES_X * 0.35f,
+                    (Constants.RES_Y / 2) - Constants.RES_Y * 0.6f);
+        }
+
+
         Gaem.batch.end();
-
-
-
 
 
         /* DRAW DEBUG
@@ -358,7 +392,7 @@ public class PlayScreen implements Screen {
         }
         */
 
-
+        Gdx.graphics.setTitle("LifeInSpace | FPS: " + Gdx.graphics.getFramesPerSecond());
     }
 
     @Override

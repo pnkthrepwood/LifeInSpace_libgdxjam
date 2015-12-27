@@ -36,7 +36,7 @@ public class EnemyFactory
 
         int squad = SquadManager.registerNewSquad(squad_size);
 
-        float anim_time = MathUtils.random(0.2f, 0.6f);
+        float anim_time = MathUtils.random(0.2f, 0.7f);
 
         for (int i = 0; i < squad_size; ++i)
         {
@@ -49,7 +49,9 @@ public class EnemyFactory
             Texture tex = TextureManager.getTexture("enemy_disk.png");
             Animation anim = new Animation(anim_time/2,
                     new TextureRegion(tex, 0, 0, 16 ,16),
-                    new TextureRegion(tex, 16, 0, 16 ,16)
+                    new TextureRegion(tex, 16, 0, 16 ,16),
+                    new TextureRegion(tex, 0, 16, 16 ,16),
+                    new TextureRegion(tex, 16, 16, 16 ,16)
             );
             anim.setPlayMode(Animation.PlayMode.LOOP);
             enemy.add(new AnimationComponent(anim));
@@ -72,7 +74,8 @@ public class EnemyFactory
 
         Texture tex = TextureManager.getTexture("monster.png");
         enemy.add(new RenderComponent(new Sprite(new TextureRegion(tex, 0, 0, 32 ,32))));
-        Animation anim = new Animation(0.3f/2,
+
+        Animation anim = new Animation(0.3f/4,
                 new TextureRegion(tex, 0, 0, 32 ,32),
                 new TextureRegion(tex, 32, 0, 32 ,32),
                 new TextureRegion(tex, 0, 0, 32 ,32),

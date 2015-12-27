@@ -13,6 +13,7 @@ import com.gdxjam.lifeinspace.Components.PositionComponent;
 import com.gdxjam.lifeinspace.Components.WeaponComponent;
 import com.gdxjam.lifeinspace.Factorys.FXFactory;
 import com.gdxjam.lifeinspace.Factorys.PowerupFactory;
+import com.gdxjam.lifeinspace.Gaem;
 import com.gdxjam.lifeinspace.Mappers;
 import com.gdxjam.lifeinspace.PlayerManager;
 import com.gdxjam.lifeinspace.SquadManager;
@@ -172,7 +173,10 @@ public class CollisionSystem extends IteratingSystem
 
     public void doShipGetHurt(Entity ship)
     {
-        System.out.println("HURT!");
+        PositionComponent pos = Mappers.position.get(ship);
+        FXFactory.makeExplosion(pos.X(), pos.y);
+        Gaem.engine.removeEntity(ship);
+        PlayerManager.is_game_over = true;
     }
 
 }
