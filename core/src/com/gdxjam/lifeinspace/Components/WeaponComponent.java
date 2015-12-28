@@ -1,6 +1,7 @@
 package com.gdxjam.lifeinspace.Components;
 
 import com.badlogic.ashley.core.Component;
+import com.badlogic.gdx.math.MathUtils;
 
 /**
  * Created by Jesús Atalaya on 20/12/2015.
@@ -33,19 +34,19 @@ public class WeaponComponent implements Component
         switch (type)
         {
             case PLAYER_WEAPON:
-                coolDown = 0.9f;
+                coolDown = 0.75f;
                 accuracy = 0.0f;
-                bulletLifetime = 0.2f;
+                bulletLifetime = 0.9f;
                 friendly = true;
                 bulletSpeed = 700;
                 break;
 
             case ENEMY_WEAPON:
-                coolDown = -1.0f;
+                coolDown = MathUtils.random(4.0f, 8.0f);
                 accuracy = 25.0f;
                 bulletLifetime = 3.0f;
                 friendly = false;
-                bulletSpeed = 500;
+                bulletSpeed = MathUtils.random(50, 150);
                 break;
         }
     }

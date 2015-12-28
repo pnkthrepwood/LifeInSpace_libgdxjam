@@ -41,32 +41,27 @@ public class BulletFactory
     public static void shootBullet(float x, float y, float angle, WeaponComponent weapon)
     {
         Entity bullet = new Entity();
-        Texture tex = TextureManager.getTexture("BulletCollection.png");
-        TextureRegion texreg =  new TextureRegion(tex);
+
+        angle += MathUtils.random(-weapon.accuracy/2, weapon.accuracy/2);
+
+        Texture tex = TextureManager.getTexture("bullets.png");
+        RenderComponent rc = new RenderComponent(new Sprite(new TextureRegion(tex, 2+((weapon.friendly) ?0:16), 0, 14, 16)));
+        rc.rotation = angle;
+        bullet.add(rc);
+
+        bullet.add(new PositionComponent(x, y));
+        bullet.add(new VelocityComponent(
+                weapon.bulletSpeed* MathUtils.cosDeg(angle + 90),
+                weapon.bulletSpeed* MathUtils.sinDeg(angle + 90))
+        );
+
+        bullet.add(new CollisionComponent(14, 16));
+        bullet.add(new TypeComponent(TypeComponent.TypeEntity.BULLET));
 
         BulletComponent bc = new BulletComponent();
         bc.lifeTime = weapon.bulletLifetime;
         bc.friendly = weapon.friendly;
-
-        if (bc.friendly)
-        {
-            texreg.setRegion(0, 0, 8, 13);
-        }
-        else
-        {
-            texreg.setRegion(8, 0, 8, 13);
-        }
-
-        RenderComponent rc = new RenderComponent(new Sprite(texreg));
-        rc.rotation = angle;
-        bullet.add(rc);
-
         bullet.add(bc);
-        bullet.add(new PositionComponent(x, y));
-        bullet.add(new VelocityComponent(700* MathUtils.cosDeg(angle + 90), 700*MathUtils.sinDeg(angle + 90)));
-
-        bullet.add(new CollisionComponent(8, 13));
-        bullet.add(new TypeComponent(TypeComponent.TypeEntity.BULLET));
 
         gaem.engine.addEntity(bullet);
     }

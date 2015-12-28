@@ -215,6 +215,16 @@ public class PlayScreen implements Screen {
                             shipPos.y + 20,
                             MathUtils.random(-shipWeapon.accuracy, shipWeapon.accuracy),
                             shipWeapon);
+                    BulletFactory.shootBullet(
+                            shipPos.X(),
+                            shipPos.y + 20,
+                            -45,
+                            shipWeapon);
+                    BulletFactory.shootBullet(
+                            shipPos.X(),
+                            shipPos.y + 20,
+                            45,
+                            shipWeapon);
                     shipWeapon.timer = 0;
                 }
             }
@@ -253,7 +263,7 @@ public class PlayScreen implements Screen {
 
     void updateEnemySpawner(float delta)
     {
-        if (time_since_last_enemy > 10.0f)
+        if (time_since_last_enemy > 1.0f)
         {
             EnemyFactory.spawnSnakeEnemy(
                     MathUtils.random(-Constants.RES_X*0.25f, Constants.RES_X*0.25f),

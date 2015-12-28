@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.gdxjam.lifeinspace.Components.BulletComponent;
 import com.gdxjam.lifeinspace.Components.PositionComponent;
 import com.gdxjam.lifeinspace.Components.ShooterBehaviourComponent;
+import com.gdxjam.lifeinspace.Components.WeaponComponent;
 import com.gdxjam.lifeinspace.Factorys.BulletFactory;
 import com.gdxjam.lifeinspace.Mappers;
 
@@ -31,8 +32,9 @@ public class EnemyBehaviourSystem extends IteratingSystem
         if (behaviour.timer < 0.0f)
         {
             PositionComponent pos = Mappers.position.get(entity);
-            BulletFactory.shootBullet(pos.X(), pos.y - 32, 180, Mappers.weapon.get(entity));
-            behaviour.timer = MathUtils.random(5, behaviour.shoot_time);
+            WeaponComponent weapon = Mappers.weapon.get(entity);
+            BulletFactory.shootBullet(pos.X(), pos.y - 32, 180, weapon);
+            behaviour.timer = weapon.coolDown;//MathUtils.random(5, behaviour.shoot_time);
         }
 
     }
