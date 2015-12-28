@@ -2,8 +2,6 @@ package com.gdxjam.lifeinspace.Screens;
 
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.core.Family;
-import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -16,11 +14,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.gdxjam.lifeinspace.Components.FlashingComponent;
 import com.gdxjam.lifeinspace.Components.RenderEffectComponent;
 import com.gdxjam.lifeinspace.Factorys.BulletFactory;
 import com.gdxjam.lifeinspace.Components.CollisionComponent;
@@ -32,7 +28,6 @@ import com.gdxjam.lifeinspace.Components.VelocityComponent;
 import com.gdxjam.lifeinspace.Components.WeaponComponent;
 import com.gdxjam.lifeinspace.Constants;
 import com.gdxjam.lifeinspace.Factorys.EnemyFactory;
-import com.gdxjam.lifeinspace.Factorys.FXFactory;
 import com.gdxjam.lifeinspace.Factorys.PowerupFactory;
 import com.gdxjam.lifeinspace.Gaem;
 import com.gdxjam.lifeinspace.Mappers;
@@ -64,12 +59,10 @@ public class PlayScreen implements Screen {
 
     Controller controller;
 
-    float time_since_last_enemy = 0;
-
     BitmapFont font;
     BitmapFont font_big;
 
-    Sprite orbs_spr;
+    Sprite gui_orbs_spr;
 
     public PlayScreen(Gaem game)
     {
@@ -116,16 +109,15 @@ public class PlayScreen implements Screen {
         //ship.add(new FlashingComponent());
         game.engine.addEntity(ship);
 
+        /*
         EnemyFactory.spawnSnakeEnemy(0, Constants.RES_Y / 2, 7);
         EnemyFactory.spawnShooterEnemy(
                 MathUtils.random(-Constants.RES_X * 0.25f, Constants.RES_X * 0.25f),
                 Constants.RES_Y / 2);
+        */
 
-        controller = null;
-        if (Controllers.getControllers().size > 0)
-        {
-            controller = Controllers.getControllers().first();
-        }
+        controller = (Controllers.getControllers().size > 0) ?
+             Controllers.getControllers().first() : null;
 
         generateBackgroundScene();
 
@@ -148,8 +140,8 @@ public class PlayScreen implements Screen {
         font_big = generator.generateFont(parameter);
         font_big.getData().markupEnabled = true;
 
-        orbs_spr = new Sprite(TextureManager.getTexture("powerup.png"));
-        orbs_spr.setSize(16,16);
+        gui_orbs_spr = new Sprite(TextureManager.getTexture("powerup.png"));
+        gui_orbs_spr.setSize(16, 16);
     }
 
     private void generateBackgroundScene()
@@ -215,16 +207,6 @@ public class PlayScreen implements Screen {
                             shipPos.y + 20,
                             MathUtils.random(-shipWeapon.accuracy, shipWeapon.accuracy),
                             shipWeapon);
-                    BulletFactory.shootBullet(
-                            shipPos.X(),
-                            shipPos.y + 20,
-                            -45,
-                            shipWeapon);
-                    BulletFactory.shootBullet(
-                            shipPos.X(),
-                            shipPos.y + 20,
-                            45,
-                            shipWeapon);
                     shipWeapon.timer = 0;
                 }
             }
@@ -260,20 +242,32 @@ public class PlayScreen implements Screen {
         }
     }
 
-
+    float time_since_last_enemy = 0;
     void updateEnemySpawner(float delta)
     {
         if (time_since_last_enemy > 1.0f)
         {
-            EnemyFactory.spawnSnakeEnemy(
-                    MathUtils.random(-Constants.RES_X*0.25f, Constants.RES_X*0.25f),
-                    Constants.RES_Y / 2,
-                    7);
-            time_since_last_enemy = 0.0f;
+            if (MathUtils.random(0.0f, 1.0f) < PlayerManager.chance_snake_enemy)
+            {
+                EnemyFactory.spawnSnakeEnemy(
+                        MathUtils.random(-Constants.RES_X*0.35f, Constants.RES_X*0.35f),
+                        Constants.RES_Y / 2,
+                        MathUtils.floor(PlayerManager.enemy_snake_long));
 
-            EnemyFactory.spawnShooterEnemy(
-                    MathUtils.random(-Constants.RES_X * 0.25f, Constants.RES_X * 0.25f),
-                    Constants.RES_Y / 2);
+                PlayerManager.chance_snake_enemy += 0.005f;
+
+                PlayerManager.enemy_snake_long += 0.25f;
+                Math.min(PlayerManager.enemy_snake_long, PlayerManager.enemy_snake_long_max);
+            }
+            if (MathUtils.random(0.0f, 1.0f) < PlayerManager.chance_shooter_enemy) {
+                EnemyFactory.spawnShooterEnemy(
+                        MathUtils.random(-Constants.RES_X * 0.35f, Constants.RES_X * 0.35f),
+                        Constants.RES_Y / 2);
+
+                PlayerManager.chance_shooter_enemy += 0.005f;
+            }
+
+            time_since_last_enemy = 0.0f;
         }
         time_since_last_enemy += delta;
 
@@ -331,36 +325,36 @@ public class PlayScreen implements Screen {
                 (Constants.RES_Y / 2) - Constants.RES_Y * 0.02f);
 
         //Red orbs
-        orbs_spr.setRegion(0, 0, 16, 16);
-        orbs_spr.setOrigin(8, 8);
-        orbs_spr.setScale(2, 2);
-        orbs_spr.setCenterX(-(Constants.RES_X / 2) + Constants.RES_X * 0.03f);
-        orbs_spr.setCenterY((Constants.RES_Y / 2) - Constants.RES_Y * 0.2f);
-        orbs_spr.draw(Gaem.batch);
+        gui_orbs_spr.setRegion(0, 0, 16, 16);
+        gui_orbs_spr.setOrigin(8, 8);
+        gui_orbs_spr.setScale(2, 2);
+        gui_orbs_spr.setCenterX(-(Constants.RES_X / 2) + Constants.RES_X * 0.03f);
+        gui_orbs_spr.setCenterY((Constants.RES_Y / 2) - Constants.RES_Y * 0.2f);
+        gui_orbs_spr.draw(Gaem.batch);
         font.draw(Gaem.batch,
                 "x" + PlayerManager.red_orbs,
                 -(Constants.RES_X / 2) + Constants.RES_X * 0.05f,
                 (Constants.RES_Y / 2) - Constants.RES_Y * 0.2f);
 
         //Green orbs
-        orbs_spr.setRegion(16, 0, 16, 16);
-        orbs_spr.setOrigin(8, 8);
-        orbs_spr.setScale(2, 2);
-        orbs_spr.setCenterX(-(Constants.RES_X / 2) + Constants.RES_X * 0.03f);
-        orbs_spr.setCenterY((Constants.RES_Y / 2) - Constants.RES_Y * 0.25f);
-        orbs_spr.draw(Gaem.batch);
+        gui_orbs_spr.setRegion(16, 0, 16, 16);
+        gui_orbs_spr.setOrigin(8, 8);
+        gui_orbs_spr.setScale(2, 2);
+        gui_orbs_spr.setCenterX(-(Constants.RES_X / 2) + Constants.RES_X * 0.03f);
+        gui_orbs_spr.setCenterY((Constants.RES_Y / 2) - Constants.RES_Y * 0.25f);
+        gui_orbs_spr.draw(Gaem.batch);
         font.draw(Gaem.batch,
                 "x" + PlayerManager.green_orbs,
                 -(Constants.RES_X / 2) + Constants.RES_X * 0.05f,
                 (Constants.RES_Y / 2) - Constants.RES_Y * 0.25f);
 
         //Blue orbs
-        orbs_spr.setRegion(32, 0, 16, 16);
-        orbs_spr.setOrigin(8, 8);
-        orbs_spr.setScale(2, 2);
-        orbs_spr.setCenterX(-(Constants.RES_X / 2) + Constants.RES_X * 0.03f);
-        orbs_spr.setCenterY((Constants.RES_Y / 2) - Constants.RES_Y * 0.3f);
-        orbs_spr.draw(Gaem.batch);
+        gui_orbs_spr.setRegion(32, 0, 16, 16);
+        gui_orbs_spr.setOrigin(8, 8);
+        gui_orbs_spr.setScale(2, 2);
+        gui_orbs_spr.setCenterX(-(Constants.RES_X / 2) + Constants.RES_X * 0.03f);
+        gui_orbs_spr.setCenterY((Constants.RES_Y / 2) - Constants.RES_Y * 0.3f);
+        gui_orbs_spr.draw(Gaem.batch);
         font.draw(Gaem.batch,
                 "x" + PlayerManager.blue_orbs,
                 -(Constants.RES_X / 2) + Constants.RES_X * 0.05f,

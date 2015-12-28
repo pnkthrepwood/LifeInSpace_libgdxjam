@@ -30,13 +30,13 @@ public class BulletFactory
         shootBullet(x, y, angle, type);
         shootBullet(x, y, angle+45, type);
         shootBullet(x, y, angle-45, type);
-    }
-    */
+    }*/
 
-    public enum BulletType{
-        PLAYER,
-        ENEMY
+    public static void fireWeapon(float x, float y, float angle, WeaponComponent weapon)
+    {
+        shootBullet(x,y,angle,weapon);
     }
+
 
     public static void shootBullet(float x, float y, float angle, WeaponComponent weapon)
     {

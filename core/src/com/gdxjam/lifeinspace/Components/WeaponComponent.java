@@ -34,18 +34,20 @@ public class WeaponComponent implements Component
         switch (type)
         {
             case PLAYER_WEAPON:
-                coolDown = 0.75f;
                 accuracy = 0.0f;
-                bulletLifetime = 0.9f;
                 friendly = true;
-                bulletSpeed = 700;
+
+                coolDown = 0.5f;
+                bulletLifetime = 0.25f;
+                bulletSpeed = 500;
                 break;
 
             case ENEMY_WEAPON:
-                coolDown = MathUtils.random(4.0f, 8.0f);
                 accuracy = 25.0f;
-                bulletLifetime = 3.0f;
                 friendly = false;
+
+                coolDown = MathUtils.random(4.0f, 8.0f);
+                bulletLifetime = 30.0f;
                 bulletSpeed = MathUtils.random(50, 150);
                 break;
         }
