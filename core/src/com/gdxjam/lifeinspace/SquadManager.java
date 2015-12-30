@@ -47,7 +47,8 @@ public class SquadManager
         }
         else
         {
-            squadCounter.replace(squad, ct);
+            squadCounter.remove(squad);
+            squadCounter.put(squad, ct);
         }
 
     }

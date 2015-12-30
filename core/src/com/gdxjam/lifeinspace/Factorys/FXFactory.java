@@ -5,10 +5,19 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.gdxjam.lifeinspace.Components.AnimationComponent;
+import com.gdxjam.lifeinspace.Components.CollisionComponent;
+import com.gdxjam.lifeinspace.Components.LifeComponent;
 import com.gdxjam.lifeinspace.Components.PositionComponent;
 import com.gdxjam.lifeinspace.Components.RenderComponent;
 import com.gdxjam.lifeinspace.Components.RenderEffectComponent;
+import com.gdxjam.lifeinspace.Components.ShooterBehaviourComponent;
+import com.gdxjam.lifeinspace.Components.SinusBehaviourComponent;
+import com.gdxjam.lifeinspace.Components.SquadComponent;
+import com.gdxjam.lifeinspace.Components.TypeComponent;
+import com.gdxjam.lifeinspace.Components.VelocityComponent;
+import com.gdxjam.lifeinspace.Components.WeaponComponent;
 import com.gdxjam.lifeinspace.Gaem;
 import com.gdxjam.lifeinspace.TextureManager;
 
@@ -52,6 +61,27 @@ public class FXFactory {
         entity.add(new RenderComponent(new Sprite(texreg)));
         entity.add(new RenderEffectComponent(0.3f, 1, 3.0f, 1, 0));
         Gaem.engine.addEntity(entity);
+
+    }
+
+    public static void makeDissapearSnake(float x, float y)
+    {
+        Entity enemy = new Entity();
+        enemy.add(new TypeComponent(TypeComponent.TypeEntity.ENEMY));
+        enemy.add(new PositionComponent(x, y));
+        enemy.add(new RenderComponent(new Sprite(TextureManager.getTexture("enemy2.png"))));
+
+        Texture tex = TextureManager.getTexture("enemy_disk.png");
+        Animation anim = new Animation(0.10f,
+                new TextureRegion(tex, 0, 16, 16 ,16),
+                new TextureRegion(tex, 16, 16, 16 ,16),
+                new TextureRegion(tex, 0, 16, 16 ,16)
+        );
+
+        anim.setPlayMode(Animation.PlayMode.NORMAL);
+        enemy.add(new AnimationComponent(anim));
+        enemy.add(new RenderEffectComponent(0.10f, 1, 1.0f, 1, 0));
+        Gaem.engine.addEntity(enemy);
 
     }
 

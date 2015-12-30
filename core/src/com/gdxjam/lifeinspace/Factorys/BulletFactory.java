@@ -24,13 +24,13 @@ public class BulletFactory
 {
     public static Gaem gaem;
 
-    /*
-    public static void shootTripleBullet(float x, float y, float angle, BulletType type)
+
+    public static void shootTripleBullet(float x, float y, float angle, WeaponComponent weapon)
     {
-        shootBullet(x, y, angle, type);
-        shootBullet(x, y, angle+45, type);
-        shootBullet(x, y, angle-45, type);
-    }*/
+        shootBullet(x, y, angle, weapon);
+        shootBullet(x, y, angle+45, weapon);
+        shootBullet(x, y, angle-45, weapon);
+    }
 
     public static void fireWeapon(float x, float y, float angle, WeaponComponent weapon)
     {
