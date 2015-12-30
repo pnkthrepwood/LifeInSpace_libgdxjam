@@ -36,7 +36,7 @@ public class EnemyFactory
 
         int squad = SquadManager.registerNewSquad(squad_size);
 
-        float anim_time = MathUtils.random(0.2f, 0.7f);
+        float anim_time = MathUtils.random(0.5f, 0.8f);
 
         for (int i = 0; i < squad_size; ++i)
         {
@@ -47,11 +47,11 @@ public class EnemyFactory
             enemy.add(new RenderComponent(new Sprite(TextureManager.getTexture("enemy2.png"))));
 
             Texture tex = TextureManager.getTexture("enemy_disk.png");
-            Animation anim = new Animation(anim_time/2,
+            Animation anim = new Animation(anim_time/4,
                     new TextureRegion(tex, 0, 0, 16 ,16),
                     new TextureRegion(tex, 16, 0, 16 ,16),
-                    new TextureRegion(tex, 0, 16, 16 ,16),
-                    new TextureRegion(tex, 16, 16, 16 ,16)
+                    new TextureRegion(tex, 0, 0, 16 ,16),
+                    new TextureRegion(tex, 0, 16, 16 ,16)
             );
             anim.setPlayMode(Animation.PlayMode.LOOP);
             enemy.add(new AnimationComponent(anim));
@@ -86,7 +86,7 @@ public class EnemyFactory
 
         enemy.add(new SinusBehaviourComponent(MathUtils.random(5,15), MathUtils.random(1,3)));
         enemy.add(new CollisionComponent(32, 32));
-        enemy.add(new LifeComponent(3));
+        enemy.add(new LifeComponent(MathUtils.random(7,9)));
         enemy.add(new ShooterBehaviourComponent(2));
         enemy.add(new SquadComponent(squad));
         enemy.add(new WeaponComponent(WeaponComponent.WeaponType.ENEMY_WEAPON));

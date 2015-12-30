@@ -15,7 +15,10 @@ public class PlayerManager
     public static float chance_snake_enemy = 0;
     public static float chance_shooter_enemy = 0;
     public static float enemy_snake_long = 3;
-    public static float enemy_snake_long_max = 10;
+    public static float enemy_snake_long_min = 3;
+    public static float enemy_snake_long_max = 7;
+
+    public static int stage = 0;
 
     public static void reset()
     {
@@ -26,11 +29,14 @@ public class PlayerManager
         green_orbs = 0;
         is_game_over = false;
 
-        chance_snake_enemy = 0.08f;
-        chance_shooter_enemy = 0.04f;
+        chance_snake_enemy = 0.35f;
+        chance_shooter_enemy = 0.25f;
 
         enemy_snake_long = 3;
+        enemy_snake_long_min = 3;
         enemy_snake_long_max = 10;
+
+        stage = 0;
     }
 
 }
