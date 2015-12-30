@@ -18,6 +18,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.gdxjam.lifeinspace.Components.RenderEffectComponent;
+import com.gdxjam.lifeinspace.Components.WeaponSpecialComponent;
 import com.gdxjam.lifeinspace.Factorys.BulletFactory;
 import com.gdxjam.lifeinspace.Components.CollisionComponent;
 import com.gdxjam.lifeinspace.Components.TypeComponent;
@@ -36,6 +37,7 @@ import com.gdxjam.lifeinspace.Systems.BackgroundRenderSystem;
 import com.gdxjam.lifeinspace.Systems.BulletSystem;
 import com.gdxjam.lifeinspace.Systems.CollisionSystem;
 import com.gdxjam.lifeinspace.Systems.EnemyBehaviourSystem;
+import com.gdxjam.lifeinspace.Systems.MasterSystem;
 import com.gdxjam.lifeinspace.Systems.MovementSystem;
 import com.gdxjam.lifeinspace.Systems.RenderSystem;
 import com.gdxjam.lifeinspace.Systems.WeaponSystem;
@@ -78,6 +80,7 @@ public class PlayScreen implements Screen {
         //CAREFUL: ORDER MATTERS!
         game.engine.addSystem(new MovementSystem(game.engine));
         game.engine.addSystem(new CollisionSystem(game.engine));
+        game.engine.addSystem(new MasterSystem());
         game.engine.addSystem(new WeaponSystem());
         game.engine.addSystem(new BulletSystem(game.engine));
         game.engine.addSystem(new EnemyBehaviourSystem());
@@ -104,7 +107,10 @@ public class PlayScreen implements Screen {
         ship_spr = new Sprite(TextureManager.getTexture("ship.png"));
         //ship_spr.setScale(2,2);
         ship.add(new RenderComponent(ship_spr));
+
         ship.add(new WeaponComponent(WeaponComponent.WeaponType.PLAYER_WEAPON));
+        ship.add(new WeaponSpecialComponent());
+
         ship.add(new CollisionComponent(20, 20));
         //ship.add(new FlashingComponent());
         game.engine.addEntity(ship);
@@ -202,11 +208,24 @@ public class PlayScreen implements Screen {
             {
                 WeaponComponent shipWeapon =  Mappers.weapon.get(ship);
                 if (shipWeapon.timer > shipWeapon.coolDown){
-                    BulletFactory.shootTripleBullet(
+                    BulletFactory.shootBullet(
                             shipPos.X(),
                             shipPos.y + 20,
                             MathUtils.random(-shipWeapon.accuracy, shipWeapon.accuracy),
                             shipWeapon);
+                    shipWeapon.timer = 0;
+                }
+            }
+
+
+            if (controller.getAxis(XBox360Pad.AXIS_LEFT_TRIGGER) > 0.25f
+                && Mappers.weapon_special.has(ship))
+            {
+                WeaponSpecialComponent shipWeapon =  Mappers.weapon_special.get(ship);
+                if (shipWeapon.timer > shipWeapon.coolDown){
+                    BulletFactory.dropMine(
+                            shipPos.X(),
+                            shipPos.y);
                     shipWeapon.timer = 0;
                 }
             }

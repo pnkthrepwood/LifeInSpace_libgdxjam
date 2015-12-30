@@ -3,11 +3,14 @@ package com.gdxjam.lifeinspace.Factorys;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
+import com.gdxjam.lifeinspace.Components.AnimationComponent;
 import com.gdxjam.lifeinspace.Components.BulletComponent;
 import com.gdxjam.lifeinspace.Components.CollisionComponent;
+import com.gdxjam.lifeinspace.Components.MineComponent;
 import com.gdxjam.lifeinspace.Components.SinusBehaviourComponent;
 import com.gdxjam.lifeinspace.Components.TypeComponent;
 import com.gdxjam.lifeinspace.Components.PositionComponent;
@@ -64,5 +67,33 @@ public class BulletFactory
         bullet.add(bc);
 
         gaem.engine.addEntity(bullet);
+    }
+
+    public static void dropMine(float x, float y)
+    {
+        Entity mine = new Entity();
+
+        Texture tex = TextureManager.getTexture("mine.png");
+        RenderComponent rc = new RenderComponent(
+                new Sprite(
+                        new TextureRegion(tex,0,0,16,16)
+                )
+        );
+        mine.add(rc);
+
+        Animation anim = new Animation(0.50f,
+                new TextureRegion(tex, 16, 0, 16 ,16),
+                new TextureRegion(tex, 0, 16, 16 ,16),
+                new TextureRegion(tex, 16, 0, 16 ,16),
+                new TextureRegion(tex, 0, 0, 16 ,16)
+        );
+        anim.setPlayMode(Animation.PlayMode.LOOP);
+        mine.add(new AnimationComponent(anim));
+
+        mine.add(new PositionComponent(x, y));
+
+        mine.add(new MineComponent(3));
+
+        gaem.engine.addEntity(mine);
     }
 }

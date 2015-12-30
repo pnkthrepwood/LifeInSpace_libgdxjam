@@ -48,6 +48,29 @@ public class FXFactory {
 
     }
 
+    public static void makeBigExplosion(float x, float y)
+    {
+
+        Texture tex = TextureManager.getTexture("explosions.png");
+        Animation anim = new Animation(0.4f/7,
+                new TextureRegion(tex, 375, 10, 30 ,30),
+                new TextureRegion(tex, 409, 10, 30 ,30),
+                new TextureRegion(tex, 443, 10, 30 ,30),
+                new TextureRegion(tex, 477, 10, 30 ,30),
+                new TextureRegion(tex, 511, 10, 30 ,30),
+                new TextureRegion(tex, 545, 10, 30 ,30),
+                new TextureRegion(tex, 579, 10, 30 ,30)
+        );
+        anim.setPlayMode(Animation.PlayMode.NORMAL);
+
+        Entity entity = new Entity();
+        entity.add(new PositionComponent(x, y));
+        entity.add(new AnimationComponent(anim));
+        entity.add(new RenderComponent(new Sprite(new TextureRegion(tex, 375, 10, 30 ,30))));
+        Gaem.engine.addEntity(entity);
+
+    }
+
     public static void makeCatchpowerup(float x, float y, PowerupFactory.PowerUpType type)
     {
 
@@ -77,9 +100,9 @@ public class FXFactory {
                 new TextureRegion(tex, 16, 16, 16 ,16),
                 new TextureRegion(tex, 0, 16, 16 ,16)
         );
-
         anim.setPlayMode(Animation.PlayMode.NORMAL);
         enemy.add(new AnimationComponent(anim));
+
         enemy.add(new RenderEffectComponent(0.10f, 1, 1.0f, 1, 0));
         Gaem.engine.addEntity(enemy);
 

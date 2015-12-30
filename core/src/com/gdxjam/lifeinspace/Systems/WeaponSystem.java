@@ -21,7 +21,12 @@ public class WeaponSystem extends IteratingSystem {
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
         WeaponComponent wc = Mappers.weapon.get(entity);
-
         wc.timer += deltaTime;
+
+        if (Mappers.weapon_special.has(entity))
+        {
+            Mappers.weapon_special.get(entity).timer += deltaTime;
+        }
+
     }
 }

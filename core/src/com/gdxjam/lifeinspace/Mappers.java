@@ -6,6 +6,7 @@ import com.gdxjam.lifeinspace.Components.BulletComponent;
 import com.gdxjam.lifeinspace.Components.CollisionComponent;
 import com.gdxjam.lifeinspace.Components.CircleShapeComponent;
 import com.gdxjam.lifeinspace.Components.LifeComponent;
+import com.gdxjam.lifeinspace.Components.MineComponent;
 import com.gdxjam.lifeinspace.Components.PowerUpComponent;
 import com.gdxjam.lifeinspace.Components.RenderEffectComponent;
 import com.gdxjam.lifeinspace.Components.ShooterBehaviourComponent;
@@ -16,6 +17,7 @@ import com.gdxjam.lifeinspace.Components.PositionComponent;
 import com.gdxjam.lifeinspace.Components.RenderComponent;
 import com.gdxjam.lifeinspace.Components.VelocityComponent;
 import com.gdxjam.lifeinspace.Components.WeaponComponent;
+import com.gdxjam.lifeinspace.Components.WeaponSpecialComponent;
 
 /**
  * Created by threpwood on 20/12/2015.
@@ -30,6 +32,8 @@ public class Mappers
     public static ComponentMapper<CollisionComponent> collision = ComponentMapper.getFor(CollisionComponent.class);
 
     public static ComponentMapper<LifeComponent> lifes = ComponentMapper.getFor(LifeComponent.class);
+
+    public static ComponentMapper<MineComponent> mines = ComponentMapper.getFor(MineComponent.class);
 
     public static ComponentMapper<PositionComponent> position = ComponentMapper.getFor(PositionComponent.class);
     public static ComponentMapper<PowerUpComponent> powerup = ComponentMapper.getFor(PowerUpComponent.class);
@@ -46,5 +50,6 @@ public class Mappers
     public static ComponentMapper<VelocityComponent> velocity = ComponentMapper.getFor(VelocityComponent.class);
 
     public static ComponentMapper<WeaponComponent> weapon = ComponentMapper.getFor(WeaponComponent.class);
+    public static ComponentMapper<WeaponSpecialComponent> weapon_special = ComponentMapper.getFor(WeaponSpecialComponent.class);
 
 }
