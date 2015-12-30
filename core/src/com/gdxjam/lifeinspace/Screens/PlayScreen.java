@@ -243,25 +243,36 @@ public class PlayScreen implements Screen {
     }
 
     float time_since_last_enemy = 0;
+    float timer_stage = 0;
     void updateEnemySpawner(float delta)
     {
-        if (time_since_last_enemy > 1.0f)
+        timer_stage += delta;
+        if (timer_stage > 60.0f)
+        {
+            PlayerManager.stage++;
+            timer_stage = 0;
+        }
+
+
+        if (time_since_last_enemy > 3.0f)
         {
             if (MathUtils.random(0.0f, 1.0f) < PlayerManager.chance_snake_enemy)
             {
                 EnemyFactory.spawnSnakeEnemy(
-                        MathUtils.random(-Constants.RES_X*0.35f, Constants.RES_X*0.35f),
+                        MathUtils.random(-Constants.RES_X*0.45f, Constants.RES_X*0.45f),
                         Constants.RES_Y / 2,
-                        MathUtils.floor(PlayerManager.enemy_snake_long));
+                        MathUtils.random(
+                                MathUtils.floor(PlayerManager.enemy_snake_long_min),
+                                MathUtils.floor(PlayerManager.enemy_snake_long)));
 
-                PlayerManager.chance_snake_enemy += 0.005f;
+                PlayerManager.chance_snake_enemy += 0.0005f;
 
                 PlayerManager.enemy_snake_long += 0.25f;
                 Math.min(PlayerManager.enemy_snake_long, PlayerManager.enemy_snake_long_max);
             }
             if (MathUtils.random(0.0f, 1.0f) < PlayerManager.chance_shooter_enemy) {
                 EnemyFactory.spawnShooterEnemy(
-                        MathUtils.random(-Constants.RES_X * 0.35f, Constants.RES_X * 0.35f),
+                        MathUtils.random(-Constants.RES_X * 0.45f, Constants.RES_X * 0.45f),
                         Constants.RES_Y / 2);
 
                 PlayerManager.chance_shooter_enemy += 0.005f;
