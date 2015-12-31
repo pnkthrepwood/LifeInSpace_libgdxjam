@@ -56,7 +56,7 @@ public class MenuScreen implements Screen
         Label label_title = new Label("PRESS THE [ORANGE]INTRO[]", style_title);
         label_title.setAlignment(Align.left);
         label_title.setAlignment(Align.left, Align.left);
-        label_title.setX(Constants.RES_X / 2);
+        label_title.setX(Constants.RES_X / 3);
         label_title.setY(Constants.RES_Y / 2);
         stage.addActor(label_title);
 
