@@ -163,7 +163,12 @@ public class CollisionSystem extends IteratingSystem
 
             FXFactory.makeExplosion(pos_enemy.X(), pos_enemy.y);
 
-            FXFactory.makeDissapearSnake(pos_enemy.X(), pos_enemy.y);
+            if (Mappers.monster.has(enemy))
+            {
+                FXFactory.makeDissapearEnemy(pos_enemy.X(), pos_enemy.y, Mappers.monster.get(enemy));
+            }
+
+            //FXFactory.makeDissapearSnake(pos_enemy.X(), pos_enemy.y);
 
             PlayerManager.score += 10;
         }

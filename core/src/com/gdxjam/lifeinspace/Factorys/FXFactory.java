@@ -9,6 +9,8 @@ import com.badlogic.gdx.math.MathUtils;
 import com.gdxjam.lifeinspace.Components.AnimationComponent;
 import com.gdxjam.lifeinspace.Components.CollisionComponent;
 import com.gdxjam.lifeinspace.Components.LifeComponent;
+import com.gdxjam.lifeinspace.Components.MonsterComponent;
+import com.gdxjam.lifeinspace.Components.MonsterComponent.MonsterType;
 import com.gdxjam.lifeinspace.Components.PositionComponent;
 import com.gdxjam.lifeinspace.Components.RenderComponent;
 import com.gdxjam.lifeinspace.Components.RenderEffectComponent;
@@ -20,6 +22,8 @@ import com.gdxjam.lifeinspace.Components.VelocityComponent;
 import com.gdxjam.lifeinspace.Components.WeaponComponent;
 import com.gdxjam.lifeinspace.Gaem;
 import com.gdxjam.lifeinspace.TextureManager;
+
+import static com.gdxjam.lifeinspace.Components.MonsterComponent.MonsterType.*;
 
 /**
  * Created by threpwood on 25/12/2015.
@@ -85,6 +89,45 @@ public class FXFactory {
         entity.add(new RenderComponent(new Sprite(texreg)));
         entity.add(new RenderEffectComponent(0.3f, 1.25f, 4.0f, 1, 0));
         Gaem.engine.addEntity(entity);
+
+    }
+
+    public static void makeDissapearEnemy(float x, float y, MonsterComponent monster)
+    {
+        Entity enemy = new Entity();
+        if (monster.type == SNAKE)
+        {
+            enemy.add(new RenderComponent(new Sprite(TextureManager.getTexture("enemy2.png"))));
+            Texture tex = TextureManager.getTexture("enemy_disk.png");
+            Animation anim = new Animation(0.10f,
+                    new TextureRegion(tex, 0, 16, 16 ,16),
+                    new TextureRegion(tex, 16, 16, 16 ,16)
+            );
+            anim.setPlayMode(Animation.PlayMode.NORMAL);
+            enemy.add(new AnimationComponent(anim));
+        }
+        else if (monster.type == INVADER)
+        {
+            enemy.add(new RenderComponent(new Sprite(TextureManager.getTexture("enemy_disk.png"))));
+            Texture tex = TextureManager.getTexture("monster.png");
+            Animation anim = new Animation(0.10f,
+                    new TextureRegion(tex, 0, 32, 32 ,32),
+                    new TextureRegion(tex, 32, 32, 32 ,32),
+                    new TextureRegion(tex, 0, 32, 32 ,32),
+                    new TextureRegion(tex, 32, 32, 32 ,32)
+            );
+            anim.setPlayMode(Animation.PlayMode.NORMAL);
+            enemy.add(new AnimationComponent(anim));
+        }
+        else
+        {
+            enemy = null;
+            return;
+        }
+
+        enemy.add(new PositionComponent(x, y));
+        enemy.add(new RenderEffectComponent(0.10f, 1, 1.0f, 1, 0));
+        Gaem.engine.addEntity(enemy);
 
     }
 

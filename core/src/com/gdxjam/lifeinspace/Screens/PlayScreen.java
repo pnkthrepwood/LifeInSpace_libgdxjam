@@ -55,7 +55,7 @@ public class PlayScreen implements Screen {
 
     Gaem game;
 
-    Sprite cursor;
+    //Sprite cursor;
     Entity ship;
     Sprite planet_spr;
     Sprite ship_spr;
@@ -78,7 +78,7 @@ public class PlayScreen implements Screen {
         if (game.engine != null) game.engine = null;
         game.engine = new Engine();
 
-        cursor = new Sprite(TextureManager.getTexture("cursor.png"));
+        //cursor = new Sprite(TextureManager.getTexture("cursor.png"));
 
         //CAREFUL: ORDER MATTERS!
         game.engine.addSystem(new MovementSystem(game.engine));
@@ -199,11 +199,11 @@ public class PlayScreen implements Screen {
 
             if (Math.abs(controller.getAxis(XBox360Pad.AXIS_RIGHT_X)) > 0.2)
             {
-                cursor.setX( cursor.getX() + controller.getAxis(XBox360Pad.AXIS_RIGHT_X)*0.1f);
+                //cursor.setX( cursor.getX() + controller.getAxis(XBox360Pad.AXIS_RIGHT_X)*0.1f);
             }
             if (Math.abs(controller.getAxis(XBox360Pad.AXIS_RIGHT_Y)) > 0.2)
             {
-                cursor.setY( cursor.getY() - controller.getAxis(XBox360Pad.AXIS_RIGHT_Y)*0.1f);
+                //cursor.setY( cursor.getY() - controller.getAxis(XBox360Pad.AXIS_RIGHT_Y)*0.1f);
             }
 
             //NEW BULLET
@@ -287,11 +287,17 @@ public class PlayScreen implements Screen {
                                 MathUtils.floor(PlayerManager.enemy_snake_long_min),
                                 MathUtils.floor(PlayerManager.enemy_snake_long)));
 
-                PlayerManager.chance_snake_enemy += 0.0005f;
+                PlayerManager.chance_snake_enemy += 0.01f;
+                PlayerManager.chance_snake_enemy = Math.min(
+                        PlayerManager.chance_snake_enemy,
+                        PlayerManager.chance_snake_enemy_max);
 
                 PlayerManager.enemy_snake_long += 0.25f;
-                Math.min(PlayerManager.enemy_snake_long, PlayerManager.enemy_snake_long_max);
+                PlayerManager.enemy_snake_long = Math.min(
+                        PlayerManager.enemy_snake_long,
+                        PlayerManager.enemy_snake_long_max);
             }
+
             if (MathUtils.random(0.0f, 1.0f) < PlayerManager.chance_shooter_enemy) {
                 EnemyFactory.spawnShooterEnemy(
                         MathUtils.random(-Constants.RES_X * 0.45f, Constants.RES_X * 0.45f),

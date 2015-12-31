@@ -7,6 +7,7 @@ import com.gdxjam.lifeinspace.Components.CollisionComponent;
 import com.gdxjam.lifeinspace.Components.CircleShapeComponent;
 import com.gdxjam.lifeinspace.Components.LifeComponent;
 import com.gdxjam.lifeinspace.Components.MineComponent;
+import com.gdxjam.lifeinspace.Components.MonsterComponent;
 import com.gdxjam.lifeinspace.Components.PowerUpComponent;
 import com.gdxjam.lifeinspace.Components.RenderEffectComponent;
 import com.gdxjam.lifeinspace.Components.ShooterBehaviourComponent;
@@ -34,6 +35,7 @@ public class Mappers
     public static ComponentMapper<LifeComponent> lifes = ComponentMapper.getFor(LifeComponent.class);
 
     public static ComponentMapper<MineComponent> mines = ComponentMapper.getFor(MineComponent.class);
+    public static ComponentMapper<MonsterComponent> monster = ComponentMapper.getFor(MonsterComponent.class);
 
     public static ComponentMapper<PositionComponent> position = ComponentMapper.getFor(PositionComponent.class);
     public static ComponentMapper<PowerUpComponent> powerup = ComponentMapper.getFor(PowerUpComponent.class);

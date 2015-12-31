@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.gdxjam.lifeinspace.Components.AnimationComponent;
 import com.gdxjam.lifeinspace.Components.CollisionComponent;
 import com.gdxjam.lifeinspace.Components.LifeComponent;
+import com.gdxjam.lifeinspace.Components.MonsterComponent;
 import com.gdxjam.lifeinspace.Components.ShooterBehaviourComponent;
 import com.gdxjam.lifeinspace.Components.SinusBehaviourComponent;
 import com.gdxjam.lifeinspace.Components.SquadComponent;
@@ -59,6 +60,7 @@ public class EnemyFactory
             enemy.add(new CollisionComponent(20, 20));
             enemy.add(new SinusBehaviourComponent(F, A));
             enemy.add(new SquadComponent(squad));
+            enemy.add(new MonsterComponent(MonsterComponent.MonsterType.SNAKE));
             gaem.engine.addEntity(enemy);
         }
     }
@@ -73,13 +75,11 @@ public class EnemyFactory
         enemy.add(new VelocityComponent(0, -30));
 
         Texture tex = TextureManager.getTexture("monster.png");
-        enemy.add(new RenderComponent(new Sprite(new TextureRegion(tex, 0, 0, 32 ,32))));
+        enemy.add(new RenderComponent(new Sprite(new TextureRegion(tex, 0, 0, 32, 32))));
 
-        Animation anim = new Animation(0.3f/4,
+        Animation anim = new Animation(0.5f/2,
                 new TextureRegion(tex, 0, 0, 32 ,32),
-                new TextureRegion(tex, 32, 0, 32 ,32),
-                new TextureRegion(tex, 0, 0, 32 ,32),
-                new TextureRegion(tex, 0, 32, 32 ,32)
+                new TextureRegion(tex, 32, 0, 32 ,32)
         );
         anim.setPlayMode(Animation.PlayMode.LOOP);
         enemy.add(new AnimationComponent(anim));
@@ -90,6 +90,7 @@ public class EnemyFactory
         enemy.add(new ShooterBehaviourComponent(2));
         enemy.add(new SquadComponent(squad));
         enemy.add(new WeaponComponent(WeaponComponent.WeaponType.ENEMY_WEAPON));
+        enemy.add(new MonsterComponent(MonsterComponent.MonsterType.INVADER));
         gaem.engine.addEntity(enemy);
 
     }
