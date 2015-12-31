@@ -2,6 +2,8 @@ package com.gdxjam.lifeinspace.Screens;
 
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.ashley.core.Family;
+import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -14,6 +16,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -208,7 +211,7 @@ public class PlayScreen implements Screen {
             {
                 WeaponComponent shipWeapon =  Mappers.weapon.get(ship);
                 if (shipWeapon.timer > shipWeapon.coolDown){
-                    BulletFactory.shootBullet(
+                    BulletFactory.shootTripleBullet(
                             shipPos.X(),
                             shipPos.y + 20,
                             MathUtils.random(-shipWeapon.accuracy, shipWeapon.accuracy),
@@ -424,7 +427,7 @@ public class PlayScreen implements Screen {
                     col.sizeY);
             game.shapeRenderer.end();
         }
-        */
+        /**/
 
         Gdx.graphics.setTitle("LifeInSpace | FPS: " + Gdx.graphics.getFramesPerSecond());
     }

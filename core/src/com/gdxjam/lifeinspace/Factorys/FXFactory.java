@@ -52,7 +52,7 @@ public class FXFactory {
     {
 
         Texture tex = TextureManager.getTexture("explosions.png");
-        Animation anim = new Animation(0.4f/7,
+        Animation anim = new Animation(0.8f/7,
                 new TextureRegion(tex, 375, 10, 30 ,30),
                 new TextureRegion(tex, 409, 10, 30 ,30),
                 new TextureRegion(tex, 443, 10, 30 ,30),
@@ -67,6 +67,7 @@ public class FXFactory {
         entity.add(new PositionComponent(x, y));
         entity.add(new AnimationComponent(anim));
         entity.add(new RenderComponent(new Sprite(new TextureRegion(tex, 375, 10, 30 ,30))));
+        entity.add(new RenderEffectComponent(0.8f, 2, 2, 1, 0));
         Gaem.engine.addEntity(entity);
 
     }
@@ -82,7 +83,7 @@ public class FXFactory {
         entity.add(new PositionComponent(x, y));
         entity.add(new AnimationComponent(anim));
         entity.add(new RenderComponent(new Sprite(texreg)));
-        entity.add(new RenderEffectComponent(0.3f, 1, 3.0f, 1, 0));
+        entity.add(new RenderEffectComponent(0.3f, 1.25f, 4.0f, 1, 0));
         Gaem.engine.addEntity(entity);
 
     }

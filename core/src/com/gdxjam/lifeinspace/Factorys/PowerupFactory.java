@@ -9,6 +9,7 @@ import com.gdxjam.lifeinspace.Components.LifeComponent;
 import com.gdxjam.lifeinspace.Components.PositionComponent;
 import com.gdxjam.lifeinspace.Components.PowerUpComponent;
 import com.gdxjam.lifeinspace.Components.RenderComponent;
+import com.gdxjam.lifeinspace.Components.RenderEffectComponent;
 import com.gdxjam.lifeinspace.Components.ShooterBehaviourComponent;
 import com.gdxjam.lifeinspace.Components.SinusBehaviourComponent;
 import com.gdxjam.lifeinspace.Components.TypeComponent;
@@ -43,6 +44,7 @@ public class PowerupFactory
 
         Sprite spr = new Sprite(getPowerTexture(type));
         powerup.add(new RenderComponent(spr));
+        powerup.add(new RenderEffectComponent(999, 1.25f, 1.25f, 1, 1));
         powerup.add(new PowerUpComponent(type));
 
         gaem.engine.addEntity(powerup);

@@ -11,4 +11,7 @@ public class BulletComponent implements Component
     public float timer = 0f;
 
     public boolean friendly = true;
+    public int damage = 1;
+
+    public boolean indestructible = false;
 }

@@ -132,8 +132,6 @@ public class CollisionSystem extends IteratingSystem
 
     void doFriendlyBulletHitsEnemy(Entity bullet, Entity enemy)
     {
-        engine.removeEntity(bullet);
-
         PositionComponent pos_bullet = Mappers.position.get(bullet);
         PositionComponent pos_enemy = Mappers.position.get(enemy);
 
@@ -141,7 +139,10 @@ public class CollisionSystem extends IteratingSystem
         if (Mappers.lifes.has(enemy))
         {
             LifeComponent lc = Mappers.lifes.get(enemy);
-            if (--lc.lifes == 0)
+
+            lc.lifes -= Mappers.bullet.get(bullet).damage;
+
+            if (lc.lifes <= 0)
             {
                 is_killed = true;
             }
@@ -170,6 +171,10 @@ public class CollisionSystem extends IteratingSystem
         {
             FXFactory.makeExplosion(pos_bullet.X(), pos_bullet.y);
         }
+
+
+        if (!Mappers.bullet.get(bullet).indestructible)
+            engine.removeEntity(bullet);
     }
 
 

@@ -15,6 +15,7 @@ import com.gdxjam.lifeinspace.Components.MineComponent;
 import com.gdxjam.lifeinspace.Components.PositionComponent;
 import com.gdxjam.lifeinspace.Components.RenderComponent;
 import com.gdxjam.lifeinspace.Components.RenderEffectComponent;
+import com.gdxjam.lifeinspace.Factorys.BulletFactory;
 import com.gdxjam.lifeinspace.Factorys.FXFactory;
 import com.gdxjam.lifeinspace.Gaem;
 import com.gdxjam.lifeinspace.Mappers;
@@ -71,6 +72,7 @@ public class MasterSystem extends EntitySystem
             {
                 PositionComponent pos = Mappers.position.get(mine);
                 FXFactory.makeBigExplosion(pos.X(), pos.y);
+                BulletFactory.shootExplosion(pos.X(), pos.y);
                 Gaem.engine.removeEntity(mine);
             }
 
