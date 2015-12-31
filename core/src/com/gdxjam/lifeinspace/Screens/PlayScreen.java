@@ -68,6 +68,8 @@ public class PlayScreen implements Screen {
     BitmapFont font_big;
 
     Sprite gui_orbs_spr;
+    Sprite weapon_special_item_spr;
+    Sprite weapon_special_slot_spr;
 
     public PlayScreen(Gaem game)
     {
@@ -151,6 +153,12 @@ public class PlayScreen implements Screen {
 
         gui_orbs_spr = new Sprite(TextureManager.getTexture("powerup.png"));
         gui_orbs_spr.setSize(16, 16);
+
+        weapon_special_slot_spr = new Sprite(TextureManager.getTexture("hud_slot.png"));
+        weapon_special_slot_spr.setSize(32, 32);
+
+        weapon_special_item_spr = new Sprite(TextureManager.getTexture("hud_slot.png"));
+        weapon_special_item_spr.setSize(32, 32);
     }
 
     private void generateBackgroundScene()
@@ -407,6 +415,30 @@ public class PlayScreen implements Screen {
                 "x" + PlayerManager.blue_orbs,
                 -(Constants.RES_X / 2) + Constants.RES_X * 0.05f,
                 (Constants.RES_Y / 2) - Constants.RES_Y * 0.3f);
+
+
+        if (Mappers.weapon_special.has(ship))
+        {
+
+            weapon_special_item_spr.setRegion(16, 0, 16, 16);
+            weapon_special_item_spr.setSize(16, 16);
+            weapon_special_item_spr.setTexture(TextureManager.getTexture("mine.png"));
+            weapon_special_slot_spr.setOrigin(32, 32);
+            weapon_special_item_spr.setScale(2, 2);
+            weapon_special_item_spr.setCenterX(-(Constants.RES_X / 2) + Constants.RES_X * 0.03f + 16+8);
+            weapon_special_item_spr.setCenterY((Constants.RES_Y / 2) - Constants.RES_Y * 0.1f - 8);
+            weapon_special_item_spr.draw(Gaem.batch);
+
+        }
+
+        weapon_special_slot_spr.setOrigin(0, 32);
+        weapon_special_slot_spr.setScale(2, 2);
+        weapon_special_slot_spr.setCenterX(-(Constants.RES_X / 2) + Constants.RES_X * 0.03f);
+        weapon_special_slot_spr.setCenterY((Constants.RES_Y / 2) - Constants.RES_Y * 0.1f);
+        weapon_special_slot_spr.draw(Gaem.batch);
+
+
+
 
 
         if (PlayerManager.is_game_over)

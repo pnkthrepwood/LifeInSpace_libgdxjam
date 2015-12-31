@@ -166,7 +166,7 @@ public class CollisionSystem extends IteratingSystem
 
             //*
 
-            PlayerManager.score += 10;
+            PlayerManager.score += 2;
         }
         else
         {

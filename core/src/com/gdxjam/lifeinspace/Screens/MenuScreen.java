@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -29,6 +30,7 @@ public class MenuScreen implements Screen
 {
     Gaem game;
     BitmapFont menu_font;
+    BitmapFont tip_font;
 
     Stage stage;
 
@@ -60,7 +62,50 @@ public class MenuScreen implements Screen
         label_title.setY(Constants.RES_Y / 2);
         stage.addActor(label_title);
 
+
+
+
+        tip_font = new BitmapFont();
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("bitDarling.ttf"));
+        parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = 20;
+        parameter.color = Color.WHITE;
+        parameter.borderWidth = 2;
+        parameter.borderColor = Color.BLACK;
+        tip_font = generator.generateFont(parameter);
+        tip_font.getData().markupEnabled = true;
+
+
+        Label.LabelStyle style_tip = new Label.LabelStyle(tip_font, Color.WHITE);
+        Label label_tip = new Label(getRandomTip(), style_tip);
+        label_tip.setAlignment(Align.left);
+        label_tip.setAlignment(Align.left, Align.left);
+        label_tip.setX(Constants.RES_X * 0.20f);
+        label_tip.setY(Constants.RES_Y * 0.25f);
+        stage.addActor(label_tip);
+
     }
+
+
+
+    static String[] tips = null;
+    static int tips_count = 4;
+    String getRandomTip()
+    {
+        if (tips == null)
+        {
+            tips = new String[tips_count];
+            tips[0] = "TIP: YOU LOSE YOUR [WHITE]SCORE[] WHEN YOU [RED]DIE[]";
+            tips[1] = "TIP: IF IT [YELLOW]FLASHES[] IT [RED]DIES[]";
+            tips[2] = "TIP: KEEP [BLUE]SHOOTING[] AS LONG AS YOU CAN";
+            tips[3] = "TIP: [GREEN]ORBS[] ARE NICE";
+
+        }
+
+        return tips[MathUtils.random(0, tips_count-1)];
+    }
+
+
 
     @Override
     public void show() {
