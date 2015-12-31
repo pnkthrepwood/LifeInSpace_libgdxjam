@@ -22,6 +22,8 @@ public class PlayerManager
 
     public static int stage = 0;
 
+    public static int player_level = 0;
+
     public static void reset()
     {
         score = 0;
@@ -40,6 +42,56 @@ public class PlayerManager
         enemy_snake_long_max = 10;
 
         stage = 0;
+
+        player_level = 0;
+    }
+
+    public static int exp_before()
+    {
+        return exp(player_level-1);
+    }
+
+    public static int exp_next()
+    {
+        return exp(player_level);
+    }
+
+    public static int exp(int level)
+    {
+        switch (level)
+        {
+            case -1:
+                return 0;
+            case 0:
+                return 35;
+            case 1:
+                return 100;
+            case 2:
+                return 250;
+            case 3:
+                return 575;
+            case 4:
+                return 1425;
+            case 5:
+                return 3115;
+            case 6:
+                return 7137;
+            case 7:
+            default:
+                return 15500 * (player_level-6);
+        }
+    }
+
+    public static void addScore(int plus)
+    {
+        score += plus;
+        if (score > exp_next())
+        {
+            player_level++;
+
+            //Todo: Level up stuff
+            System.out.println("LEVEL UP!");
+        }
     }
 
 }

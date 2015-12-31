@@ -71,6 +71,8 @@ public class PlayScreen implements Screen {
     Sprite weapon_special_item_spr;
     Sprite weapon_special_slot_spr;
 
+    Sprite level_bar_spr;
+
     public PlayScreen(Gaem game)
     {
         this.game = game;
@@ -159,6 +161,9 @@ public class PlayScreen implements Screen {
 
         weapon_special_item_spr = new Sprite(TextureManager.getTexture("hud_slot.png"));
         weapon_special_item_spr.setSize(32, 32);
+
+        level_bar_spr = new Sprite(TextureManager.getTexture("hud_levelbar.png"));
+        level_bar_spr.setSize(128, 32);
     }
 
     private void generateBackgroundScene()
@@ -380,6 +385,27 @@ public class PlayScreen implements Screen {
                 -(Constants.RES_X / 2) + Constants.RES_X * 0.02f,
                 (Constants.RES_Y / 2) - Constants.RES_Y * 0.02f);
 
+
+        if (Mappers.weapon_special.has(ship))
+        {
+
+            weapon_special_item_spr.setRegion(16, 0, 16, 16);
+            weapon_special_item_spr.setSize(16, 16);
+            weapon_special_item_spr.setTexture(TextureManager.getTexture("mine.png"));
+            weapon_special_slot_spr.setOrigin(32, 32);
+            weapon_special_item_spr.setScale(2, 2);
+            weapon_special_item_spr.setCenterX(-(Constants.RES_X / 2) + Constants.RES_X * 0.03f + 16+8);
+            weapon_special_item_spr.setCenterY((Constants.RES_Y / 2) - Constants.RES_Y * 0.1f - 8);
+            weapon_special_item_spr.draw(Gaem.batch);
+
+        }
+
+        weapon_special_slot_spr.setOrigin(0, 32);
+        weapon_special_slot_spr.setScale(2, 2);
+        weapon_special_slot_spr.setCenterX(-(Constants.RES_X / 2) + Constants.RES_X * 0.03f);
+        weapon_special_slot_spr.setCenterY((Constants.RES_Y / 2) - Constants.RES_Y * 0.1f);
+        weapon_special_slot_spr.draw(Gaem.batch);
+
         //Red orbs
         gui_orbs_spr.setRegion(0, 0, 16, 16);
         gui_orbs_spr.setOrigin(8, 8);
@@ -416,28 +442,26 @@ public class PlayScreen implements Screen {
                 -(Constants.RES_X / 2) + Constants.RES_X * 0.05f,
                 (Constants.RES_Y / 2) - Constants.RES_Y * 0.3f);
 
-
-        if (Mappers.weapon_special.has(ship))
-        {
-
-            weapon_special_item_spr.setRegion(16, 0, 16, 16);
-            weapon_special_item_spr.setSize(16, 16);
-            weapon_special_item_spr.setTexture(TextureManager.getTexture("mine.png"));
-            weapon_special_slot_spr.setOrigin(32, 32);
-            weapon_special_item_spr.setScale(2, 2);
-            weapon_special_item_spr.setCenterX(-(Constants.RES_X / 2) + Constants.RES_X * 0.03f + 16+8);
-            weapon_special_item_spr.setCenterY((Constants.RES_Y / 2) - Constants.RES_Y * 0.1f - 8);
-            weapon_special_item_spr.draw(Gaem.batch);
-
-        }
-
-        weapon_special_slot_spr.setOrigin(0, 32);
-        weapon_special_slot_spr.setScale(2, 2);
-        weapon_special_slot_spr.setCenterX(-(Constants.RES_X / 2) + Constants.RES_X * 0.03f);
-        weapon_special_slot_spr.setCenterY((Constants.RES_Y / 2) - Constants.RES_Y * 0.1f);
-        weapon_special_slot_spr.draw(Gaem.batch);
+        font.draw(Gaem.batch,
+                "LEVEL " + PlayerManager.player_level,
+                -(Constants.RES_X / 2) + Constants.RES_X * 0.02f,
+                (Constants.RES_Y / 2) - Constants.RES_Y * 0.90f);
 
 
+        level_bar_spr.setRegion(0, 0, 128, 32);
+        level_bar_spr.setX(-(Constants.RES_X / 2) + Constants.RES_X * 0.02f);
+        level_bar_spr.setCenterY((Constants.RES_Y / 2) - Constants.RES_Y * 0.9f - 32);
+        level_bar_spr.setSize(128, 32);
+        level_bar_spr.draw(Gaem.batch);
+
+        level_bar_spr.setRegion(0, 32, 128, 32);
+        level_bar_spr.setX(-(Constants.RES_X / 2) + Constants.RES_X * 0.02f);
+        level_bar_spr.setCenterY((Constants.RES_Y / 2) - Constants.RES_Y * 0.9f - 32);
+        level_bar_spr.setSize(
+                ((PlayerManager.score - PlayerManager.exp_before()) * 128 /
+                        (PlayerManager.exp_next() - PlayerManager.exp_before())),
+                32);
+        level_bar_spr.draw(Gaem.batch);
 
 
 
