@@ -81,11 +81,12 @@ public class BulletFactory
         );
         mine.add(rc);
 
-        Animation anim = new Animation(0.50f,
+        Animation anim = new Animation(3.0f/5,
+                new TextureRegion(tex, 0, 0, 16 ,16),
                 new TextureRegion(tex, 16, 0, 16 ,16),
-                new TextureRegion(tex, 0, 16, 16 ,16),
+                new TextureRegion(tex, 16, 16, 16 ,16),
                 new TextureRegion(tex, 16, 0, 16 ,16),
-                new TextureRegion(tex, 0, 0, 16 ,16)
+                new TextureRegion(tex, 0, 16, 16 ,16)
         );
         anim.setPlayMode(Animation.PlayMode.LOOP);
         mine.add(new AnimationComponent(anim));
@@ -101,10 +102,10 @@ public class BulletFactory
     {
         Entity bullet = new Entity();
         bullet.add(new PositionComponent(x, y));
-        bullet.add(new CollisionComponent(64, 64));
+        bullet.add(new CollisionComponent(128, 128));
         bullet.add(new TypeComponent(TypeComponent.TypeEntity.BULLET));
         BulletComponent bc = new BulletComponent();
-        bc.lifeTime = 0.8f;
+        bc.lifeTime = 0.6f;
         bc.friendly = true;
         bc.damage = 10;
         bc.indestructible = true;

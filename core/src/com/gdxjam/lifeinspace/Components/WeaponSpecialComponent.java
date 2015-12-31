@@ -8,5 +8,5 @@ import com.badlogic.ashley.core.Component;
 public class WeaponSpecialComponent implements Component {
 
     public float coolDown = 1.0f;
-    public float timer = 0;
+    public float timer = 99.0f;
 }

@@ -146,6 +146,7 @@ public class CollisionSystem extends IteratingSystem
             {
                 is_killed = true;
             }
+
         }
         else is_killed = true;
 
@@ -163,12 +164,7 @@ public class CollisionSystem extends IteratingSystem
 
             FXFactory.makeExplosion(pos_enemy.X(), pos_enemy.y);
 
-            if (Mappers.monster.has(enemy))
-            {
-                FXFactory.makeDissapearEnemy(pos_enemy.X(), pos_enemy.y, Mappers.monster.get(enemy));
-            }
-
-            //FXFactory.makeDissapearSnake(pos_enemy.X(), pos_enemy.y);
+            //*
 
             PlayerManager.score += 10;
         }
@@ -177,6 +173,11 @@ public class CollisionSystem extends IteratingSystem
             FXFactory.makeExplosion(pos_bullet.X(), pos_bullet.y);
         }
 
+
+        if (Mappers.monster.has(enemy))
+        {
+            FXFactory.makeDissapearEnemy(pos_enemy.X(), pos_enemy.y, Mappers.monster.get(enemy), is_killed ? 0.1f : 0.02f);
+        }
 
         if (!Mappers.bullet.get(bullet).indestructible)
             engine.removeEntity(bullet);
