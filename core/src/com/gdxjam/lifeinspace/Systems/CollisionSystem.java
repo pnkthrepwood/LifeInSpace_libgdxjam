@@ -176,7 +176,10 @@ public class CollisionSystem extends IteratingSystem
 
         if (Mappers.monster.has(enemy))
         {
-            FXFactory.makeDissapearEnemy(pos_enemy.X(), pos_enemy.y, Mappers.monster.get(enemy), is_killed ? 0.1f : 0.02f);
+            FXFactory.makeDissapearEnemy(
+                    pos_enemy.X(), pos_enemy.y,
+                    Mappers.monster.get(enemy),
+                    is_killed ? 0.1f : 0.01f);
         }
 
         if (!Mappers.bullet.get(bullet).indestructible)

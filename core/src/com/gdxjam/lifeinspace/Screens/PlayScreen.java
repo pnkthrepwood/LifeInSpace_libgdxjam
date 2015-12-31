@@ -234,6 +234,14 @@ public class PlayScreen implements Screen {
             }
         }
 
+        if (Gdx.input.isButtonPressed(Input.Buttons.LEFT))
+        {
+            WeaponComponent shipWeapon =  Mappers.weapon.get(ship);
+            if (shipWeapon.timer > shipWeapon.coolDown){
+                BulletFactory.shootBullet(shipPos.X(), shipPos.y + 20, 0, shipWeapon);
+                shipWeapon.timer = 0;
+            }
+        }
 
         if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT))
         {
@@ -247,18 +255,19 @@ public class PlayScreen implements Screen {
             if (len > 15.0)
             {
                 dir = dir.nor();
-                shipVel.x = dir.x* Constants.RES_X/8 * PlayerManager.ship_speed;// Math.max(shipVel.minSpeed, len);
-                shipVel.y = dir.y* Constants.RES_Y/8 * PlayerManager.ship_speed;// Math.min(shipVel.maxSpeed, len);
+                shipVel.x = dir.x* Constants.RES_X/8 * PlayerManager.ship_speed;
+                shipVel.y = dir.y* Constants.RES_Y/8 * PlayerManager.ship_speed;
             }
         }
 
-
-        //NEW BULLET
-        if (Gdx.input.isButtonPressed(Input.Buttons.LEFT))
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)
+                && Mappers.weapon_special.has(ship))
         {
-            WeaponComponent shipWeapon =  Mappers.weapon.get(ship);
+            WeaponSpecialComponent shipWeapon =  Mappers.weapon_special.get(ship);
             if (shipWeapon.timer > shipWeapon.coolDown){
-                BulletFactory.shootBullet(shipPos.X(), shipPos.y + 20, 0, shipWeapon);
+                BulletFactory.dropMine(
+                        shipPos.X(),
+                        shipPos.y);
                 shipWeapon.timer = 0;
             }
         }
