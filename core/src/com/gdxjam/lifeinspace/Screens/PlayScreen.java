@@ -346,13 +346,14 @@ public class PlayScreen implements Screen {
 
         if (PlayerManager.is_game_over)
         {
-            if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER))
+            if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)
+                    || (controller != null && controller.getButton(XBox360Pad.BUTTON_START)))
             {
                 game.setScreen(new PlayScreen(game));
                 return;
             }
         }
-        else
+        else if (!PlayerManager.player_level_event)
         {
             updateEnemySpawner(delta);
             updateInput();

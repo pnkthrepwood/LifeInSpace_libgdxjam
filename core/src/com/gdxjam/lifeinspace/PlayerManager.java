@@ -72,7 +72,7 @@ public class PlayerManager
             case -1:
                 return 0;
             case 0:
-                return 1;
+                return 55;
             case 1:
                 return 150;
             case 2:
