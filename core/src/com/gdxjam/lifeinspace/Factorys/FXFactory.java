@@ -126,7 +126,7 @@ public class FXFactory {
         }
 
         enemy.add(new PositionComponent(x, y));
-        enemy.add(new RenderEffectComponent(duration, 1, 1.0f, 1, 0));
+        enemy.add(new RenderEffectComponent(duration, 1.0f, 1.5f, 1, 0));
         Gaem.engine.addEntity(enemy);
 
     }
