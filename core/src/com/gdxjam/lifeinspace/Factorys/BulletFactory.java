@@ -48,7 +48,7 @@ public class BulletFactory
         angle += MathUtils.random(-weapon.accuracy/2, weapon.accuracy/2);
 
         Texture tex = TextureManager.getTexture("bullets.png");
-        RenderComponent rc = new RenderComponent(new Sprite(new TextureRegion(tex, 2+((weapon.friendly) ?0:16), 0, 14, 16)));
+        RenderComponent rc = new RenderComponent(new Sprite(new TextureRegion(tex, ((weapon.friendly) ?0:16), 0, 16, 16)));
         rc.rotation = angle;
         bullet.add(rc);
 
