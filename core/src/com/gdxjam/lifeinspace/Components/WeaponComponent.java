@@ -15,7 +15,9 @@ public class WeaponComponent implements Component
     public enum WeaponType
     {
         PLAYER_WEAPON,
-        ENEMY_WEAPON
+        ENEMY_WEAPON,
+
+        PLAYER_DOUBLE_WEAPON
     }
 
     public float coolDown = 0.5f;
@@ -23,6 +25,7 @@ public class WeaponComponent implements Component
     public float bulletLifetime = 0.2f;
     public boolean friendly = true;
     public float bulletSpeed = 700;
+    public WeaponType type;
 
     public WeaponComponent(WeaponType type)
     {
@@ -31,6 +34,8 @@ public class WeaponComponent implements Component
 
     private void setStats(WeaponType type)
     {
+        this.type = type;
+
         switch (type)
         {
             case PLAYER_WEAPON:

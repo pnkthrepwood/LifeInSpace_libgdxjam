@@ -1,6 +1,8 @@
 package com.gdxjam.lifeinspace;
 
+import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.MathUtils;
+import com.gdxjam.lifeinspace.Components.WeaponComponent;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -162,6 +164,48 @@ public class PlayerManager
                 return "BONUS";
         }
 
+    }
+
+    public static void applySkillChoice(LevelUpgrade upgrade, Entity ship)
+    {
+        switch (upgrade)
+        {
+            case FIRE_DIST:
+            {
+                WeaponComponent wc = Mappers.weapon.get(ship);
+                wc.bulletLifetime += 0.05f;
+            } break;
+            case FIRE_RATE:
+            {
+                WeaponComponent wc = Mappers.weapon.get(ship);
+                wc.coolDown -= 0.20f;
+                if (wc.coolDown < 0.15f) wc.coolDown = 0.15f;
+            } break;
+            case LATERAL_SHOOT:
+            {
+               //Todo
+                PlayerManager.ship_speed += 0.25f;
+            } break;
+            case SPEED:
+            {
+                PlayerManager.ship_speed += 0.25f;
+            } break;
+            case LUCKY:
+            {
+                //Todo
+                PlayerManager.ship_speed += 0.25f;
+            } break;
+            case DOBLE_ATK:
+            {
+                //Todo
+                PlayerManager.ship_speed += 0.25f;
+            } break;
+            case CONVERT_ORBS:
+            {
+                //Todo
+                PlayerManager.ship_speed += 0.25f;
+            } break;
+    }
     }
 
 }

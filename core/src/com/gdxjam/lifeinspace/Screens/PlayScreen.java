@@ -387,15 +387,19 @@ public class PlayScreen implements Screen {
         else if (PlayerManager.player_level_event)
         {
             if (   Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)
-                || Gdx.input.isKeyJustPressed(Input.Keys.NUM_2) )
+                    ||
+                    ( controller != null && (controller.getButton(XBox360Pad.BUTTON_X) ) )
+                )
             {
+                PlayerManager.applySkillChoice(PlayerManager.player_level_event_choice_1, ship);
                 PlayerManager.player_level_event = false;
             }
-
-            if ( controller != null &&
-                    (controller.getButton(XBox360Pad.BUTTON_X)
-                    || controller.getButton(XBox360Pad.BUTTON_B)) )
+            if (   Gdx.input.isKeyJustPressed(Input.Keys.NUM_2)
+                    ||
+                    ( controller != null && (controller.getButton(XBox360Pad.BUTTON_B) ) )
+                    )
             {
+                PlayerManager.applySkillChoice(PlayerManager.player_level_event_choice_2, ship);
                 PlayerManager.player_level_event = false;
             }
 

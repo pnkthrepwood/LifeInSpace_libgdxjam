@@ -40,7 +40,6 @@ public class BulletFactory
         shootBullet(x,y,angle,weapon);
     }
 
-
     public static void shootBullet(float x, float y, float angle, WeaponComponent weapon)
     {
         Entity bullet = new Entity();
