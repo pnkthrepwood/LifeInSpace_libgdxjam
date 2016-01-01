@@ -72,6 +72,8 @@ public class PlayScreen implements Screen {
 
     Sprite level_bar_spr;
 
+    Sprite sprite;
+
     public PlayScreen(Gaem game)
     {
         this.game = game;
@@ -160,6 +162,8 @@ public class PlayScreen implements Screen {
 
         level_bar_spr = new Sprite(TextureManager.getTexture("hud_levelbar.png"));
         level_bar_spr.setSize(128, 32);
+
+        sprite = new Sprite();
     }
 
     private void generateBackgroundScene()
@@ -396,21 +400,33 @@ public class PlayScreen implements Screen {
             }
 
 
-            font.draw(Gaem.batch,
-                    "SKILL 1",
-                    -(Constants.RES_X / 2) + Constants.RES_X * 0.3f,
-                    (Constants.RES_Y / 2) - Constants.RES_Y * 0.95f);
-
             font_big.draw(Gaem.batch,
                     "LEVEL UP!",
-                    -(Constants.RES_X / 2) + Constants.RES_X * 0.4f,
-                    (Constants.RES_Y / 2) - Constants.RES_Y * 0.90f);
+                    -(Constants.RES_X / 2) + Constants.RES_X * 0.40f,
+                    (Constants.RES_Y / 2) - Constants.RES_Y * 0.3f);
 
-            font.draw(Gaem.batch,
-                    "SKILL 2",
-                    -(Constants.RES_X / 2) + Constants.RES_X * 0.6f,
-                    (Constants.RES_Y / 2) - Constants.RES_Y * 0.95f);
 
+            font_big.draw(Gaem.batch,
+                    PlayerManager.stringForSkill(PlayerManager.player_level_event_choice_1),
+                    -(Constants.RES_X / 2) + Constants.RES_X * 0.25f - 64,
+                    (Constants.RES_Y / 2) - Constants.RES_Y * 0.55f);
+            TextureManager.setSpriteHudPowerup(sprite, PlayerManager.player_level_event_choice_1);
+            sprite.setSize(128, 128);
+            sprite.setOrigin(16, 16);
+            sprite.setCenterX(-(Constants.RES_X / 2) + Constants.RES_X * 0.25f);
+            sprite.setCenterY((Constants.RES_Y / 2) - Constants.RES_Y * 0.7f);
+            sprite.draw(Gaem.batch);
+
+
+            font_big.draw(Gaem.batch,
+                    PlayerManager.stringForSkill(PlayerManager.player_level_event_choice_2),
+                    -(Constants.RES_X / 2) + Constants.RES_X * 0.7f - 64,
+                    (Constants.RES_Y / 2) - Constants.RES_Y * 0.55f);
+            TextureManager.setSpriteHudPowerup(sprite, PlayerManager.player_level_event_choice_2);
+            sprite.setSize(128, 128);
+            sprite.setCenterX(-(Constants.RES_X / 2) + Constants.RES_X * 0.7f);
+            sprite.setCenterY((Constants.RES_Y / 2) - Constants.RES_Y * 0.7f);
+            sprite.draw(Gaem.batch);
         }
         Gaem.batch.end();
 

@@ -70,7 +70,7 @@ public class PlayerManager
             case -1:
                 return 0;
             case 0:
-                return 55;
+                return 1;
             case 1:
                 return 150;
             case 2:
@@ -118,7 +118,7 @@ public class PlayerManager
         }
     }
 
-    static LevelUpgrade player_level_event_choice_1, player_level_event_choice_2;
+    public static LevelUpgrade player_level_event_choice_1, player_level_event_choice_2;
     public static void levelUp()
     {
         player_level++;
@@ -137,6 +137,31 @@ public class PlayerManager
         {
             player_level_event_choice_2 = LevelUpgrade.roll();
         } while (player_level_event_choice_2 == player_level_event_choice_1);
+    }
+
+    public static String stringForSkill(LevelUpgrade upgrade)
+    {
+
+        switch (upgrade)
+        {
+            case FIRE_DIST:
+                return "LONG SHOOT";
+            case CONVERT_ORBS:
+                return "ORBS";
+            case DOBLE_ATK:
+                return "DOUBLE FIRE";
+            case LATERAL_SHOOT:
+                return "LATERAL SHOOT";
+            case FIRE_RATE:
+                return "FIRE RATE";
+            case LUCKY:
+                return "LUCK";
+            case SPEED:
+                return "SPEED";
+            default:
+                return "BONUS";
+        }
+
     }
 
 }
