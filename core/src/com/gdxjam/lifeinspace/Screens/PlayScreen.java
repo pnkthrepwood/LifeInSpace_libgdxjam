@@ -55,7 +55,6 @@ public class PlayScreen implements Screen {
 
     Gaem game;
 
-    //Sprite cursor;
     Entity ship;
     Sprite planet_spr;
     Sprite ship_spr;
@@ -81,8 +80,6 @@ public class PlayScreen implements Screen {
 
         if (game.engine != null) game.engine = null;
         game.engine = new Engine();
-
-        //cursor = new Sprite(TextureManager.getTexture("cursor.png"));
 
         //CAREFUL: ORDER MATTERS!
         game.engine.addSystem(new MovementSystem(game.engine));
@@ -118,8 +115,7 @@ public class PlayScreen implements Screen {
         ship.add(new WeaponComponent(WeaponComponent.WeaponType.PLAYER_WEAPON));
         ship.add(new WeaponSpecialComponent());
 
-        ship.add(new CollisionComponent(20, 20));
-        //ship.add(new FlashingComponent());
+        ship.add(new CollisionComponent(24, 24));
         game.engine.addEntity(ship);
 
         /*
@@ -208,16 +204,6 @@ public class PlayScreen implements Screen {
 
             if (Math.abs(controller.getAxis(XBox360Pad.AXIS_LEFT_Y)) > 0.2)
                 shipVel.y = -controller.getAxis(XBox360Pad.AXIS_LEFT_Y)* Constants.RES_Y/8 * PlayerManager.ship_speed;
-
-
-            if (Math.abs(controller.getAxis(XBox360Pad.AXIS_RIGHT_X)) > 0.2)
-            {
-                //cursor.setX( cursor.getX() + controller.getAxis(XBox360Pad.AXIS_RIGHT_X)*0.1f);
-            }
-            if (Math.abs(controller.getAxis(XBox360Pad.AXIS_RIGHT_Y)) > 0.2)
-            {
-                //cursor.setY( cursor.getY() - controller.getAxis(XBox360Pad.AXIS_RIGHT_Y)*0.1f);
-            }
 
             //NEW BULLET
             if (controller.getAxis(XBox360Pad.AXIS_RIGHT_TRIGGER) < -0.75f)
@@ -344,7 +330,6 @@ public class PlayScreen implements Screen {
     public void render(float delta)
     {
 
-
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -353,7 +338,6 @@ public class PlayScreen implements Screen {
         background_spr.setCenterY(0);
         background_spr.draw(Gaem.batch);
         Gaem.batch.end();
-
 
 
         if (PlayerManager.is_game_over)
@@ -368,18 +352,94 @@ public class PlayScreen implements Screen {
         {
             updateEnemySpawner(delta);
             updateInput();
-
         }
-        game.engine.update(delta);
 
-        /*
-        Vector2 inputPos = Utils.inputMouseWorldPos(game.cam);
-        cursor.setCenterX(inputPos.x);
-        cursor.setCenterY(inputPos.y);
-        cursor.draw(game.batch);
-        */
+
+
+        if (PlayerManager.player_level_event || PlayerManager.is_game_over)
+        {
+            game.engine.update(0);
+        }
+        else
+        {
+            game.engine.update(delta);
+        }
+
 
         Gaem.batch.begin();
+        renderGame();
+        if (PlayerManager.is_game_over)
+        {
+            font_big.draw(Gaem.batch,
+                    "SCORE\n" + Utils.textScoreNice(PlayerManager.score),
+                    -(Constants.RES_X / 2) + Constants.RES_X * 0.35f,
+                    (Constants.RES_Y / 2) - Constants.RES_Y * 0.45f);
+
+            font_big.draw(Gaem.batch,
+                    "PRESS THE [ORANGE]INTRO[]",
+                    -(Constants.RES_X / 2) + Constants.RES_X * 0.35f,
+                    (Constants.RES_Y / 2) - Constants.RES_Y * 0.6f);
+        }
+        else if (PlayerManager.player_level_event)
+        {
+            if (   Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)
+                || Gdx.input.isKeyJustPressed(Input.Keys.NUM_2) )
+            {
+                PlayerManager.player_level_event = false;
+            }
+
+            if ( controller != null &&
+                    (controller.getButton(XBox360Pad.BUTTON_X)
+                    || controller.getButton(XBox360Pad.BUTTON_B)) )
+            {
+                PlayerManager.player_level_event = false;
+            }
+
+
+            font.draw(Gaem.batch,
+                    "SKILL 1",
+                    -(Constants.RES_X / 2) + Constants.RES_X * 0.3f,
+                    (Constants.RES_Y / 2) - Constants.RES_Y * 0.95f);
+
+            font_big.draw(Gaem.batch,
+                    "LEVEL UP!",
+                    -(Constants.RES_X / 2) + Constants.RES_X * 0.4f,
+                    (Constants.RES_Y / 2) - Constants.RES_Y * 0.90f);
+
+            font.draw(Gaem.batch,
+                    "SKILL 2",
+                    -(Constants.RES_X / 2) + Constants.RES_X * 0.6f,
+                    (Constants.RES_Y / 2) - Constants.RES_Y * 0.95f);
+
+        }
+        Gaem.batch.end();
+
+        Gdx.graphics.setTitle("LifeInSpace | FPS: " + Gdx.graphics.getFramesPerSecond());
+
+        /* DRAW DEBUG
+        Family debug_family = Family.all(CollisionComponent.class, PositionComponent.class, RenderComponent.class).get();
+        ImmutableArray<Entity> debug_entities = game.engine.getEntitiesFor(debug_family);
+        for (Entity e : debug_entities)
+        {
+            PositionComponent pos = Mappers.position.get(e);
+            CollisionComponent col = Mappers.collision.get(e);
+
+            game.shapeRenderer.setProjectionMatrix(game.cam.combined);
+            game.shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+            game.shapeRenderer.rect(pos.X() - col.sizeX*0.5f,
+                    pos.y - col.sizeY*0.5f,
+                    col.sizeX,
+                    col.sizeY);
+            game.shapeRenderer.end();
+        }
+        /**/
+
+
+    }
+
+
+    void renderGame()
+    {
         font.draw(Gaem.batch,
                 "SCORE\n" + Utils.textScoreNice(PlayerManager.score),
                 -(Constants.RES_X / 2) + Constants.RES_X * 0.02f,
@@ -462,45 +522,6 @@ public class PlayScreen implements Screen {
                         (PlayerManager.exp_next() - PlayerManager.exp_before())),
                 32);
         level_bar_spr.draw(Gaem.batch);
-
-
-
-        if (PlayerManager.is_game_over)
-        {
-            font_big.draw(Gaem.batch,
-                    "SCORE\n" + Utils.textScoreNice(PlayerManager.score),
-                    -(Constants.RES_X / 2) + Constants.RES_X * 0.35f,
-                    (Constants.RES_Y / 2) - Constants.RES_Y * 0.45f);
-
-            font_big.draw(Gaem.batch,
-                    "PRESS THE [ORANGE]INTRO[]",
-                    -(Constants.RES_X / 2) + Constants.RES_X * 0.35f,
-                    (Constants.RES_Y / 2) - Constants.RES_Y * 0.6f);
-        }
-
-
-        Gaem.batch.end();
-
-
-        /* DRAW DEBUG
-        Family debug_family = Family.all(CollisionComponent.class, PositionComponent.class, RenderComponent.class).get();
-        ImmutableArray<Entity> debug_entities = game.engine.getEntitiesFor(debug_family);
-        for (Entity e : debug_entities)
-        {
-            PositionComponent pos = Mappers.position.get(e);
-            CollisionComponent col = Mappers.collision.get(e);
-
-            game.shapeRenderer.setProjectionMatrix(game.cam.combined);
-            game.shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-            game.shapeRenderer.rect(pos.X() - col.sizeX*0.5f,
-                    pos.y - col.sizeY*0.5f,
-                    col.sizeX,
-                    col.sizeY);
-            game.shapeRenderer.end();
-        }
-        /**/
-
-        Gdx.graphics.setTitle("LifeInSpace | FPS: " + Gdx.graphics.getFramesPerSecond());
     }
 
     @Override

@@ -86,7 +86,7 @@ public class EnemyFactory
 
         enemy.add(new SinusBehaviourComponent(MathUtils.random(5,15), MathUtils.random(1,3)));
         enemy.add(new CollisionComponent(32, 32));
-        enemy.add(new LifeComponent(MathUtils.random(7,9)));
+        enemy.add(new LifeComponent(MathUtils.random(5,7)));
         enemy.add(new ShooterBehaviourComponent(2));
         enemy.add(new SquadComponent(squad));
         enemy.add(new WeaponComponent(WeaponComponent.WeaponType.ENEMY_WEAPON));

@@ -8,9 +8,11 @@ import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.math.Rectangle;
 import com.gdxjam.lifeinspace.Components.CollisionComponent;
 import com.gdxjam.lifeinspace.Components.LifeComponent;
+import com.gdxjam.lifeinspace.Components.MonsterComponent;
 import com.gdxjam.lifeinspace.Components.TypeComponent;
 import com.gdxjam.lifeinspace.Components.PositionComponent;
 import com.gdxjam.lifeinspace.Components.WeaponComponent;
+import com.gdxjam.lifeinspace.Factorys.BulletFactory;
 import com.gdxjam.lifeinspace.Factorys.FXFactory;
 import com.gdxjam.lifeinspace.Factorys.PowerupFactory;
 import com.gdxjam.lifeinspace.Gaem;
@@ -114,15 +116,12 @@ public class CollisionSystem extends IteratingSystem
                     engine.removeEntity(other);
                 }
 
-                // PLAYER -> ENEMY //
+                //// PLAYER -> ENEMY ////
                 if (type_me == TypeComponent.TypeEntity.SHIP
                     && type_other == TypeComponent.TypeEntity.ENEMY )
                 {
                     doShipGetHurt(entity);
-
                 }
-
-
 
             }
         }
@@ -176,10 +175,23 @@ public class CollisionSystem extends IteratingSystem
 
         if (Mappers.monster.has(enemy))
         {
+            MonsterComponent mc = Mappers.monster.get(enemy);
+
             FXFactory.makeDissapearEnemy(
                     pos_enemy.X(), pos_enemy.y,
-                    Mappers.monster.get(enemy),
+                    mc,
                     is_killed ? 0.1f : 0.02f);
+
+            if (mc.type == MonsterComponent.MonsterType.INVADER)
+            {
+                WeaponComponent w = Mappers.weapon.get(enemy);
+
+                BulletFactory.shootBullet(pos_enemy.X(), pos_enemy.y, 45, w);
+                BulletFactory.shootBullet(pos_enemy.X(), pos_enemy.y, 45+90, w);
+                BulletFactory.shootBullet(pos_enemy.X(), pos_enemy.y, 45+90+90, w);
+                BulletFactory.shootBullet(pos_enemy.X(), pos_enemy.y, 45+90+90+90, w);
+            }
+
         }
 
         if (!Mappers.bullet.get(bullet).indestructible)

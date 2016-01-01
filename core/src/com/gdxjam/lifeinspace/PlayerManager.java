@@ -1,5 +1,11 @@
 package com.gdxjam.lifeinspace;
 
+import com.badlogic.gdx.math.MathUtils;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * Created by threpwood on 24/12/2015.
  */
@@ -23,6 +29,7 @@ public class PlayerManager
     public static int stage = 0;
 
     public static int player_level = 0;
+    public static boolean player_level_event = false;
 
     public static void reset()
     {
@@ -63,22 +70,22 @@ public class PlayerManager
             case -1:
                 return 0;
             case 0:
-                return 35;
+                return 55;
             case 1:
-                return 100;
+                return 150;
             case 2:
-                return 250;
+                return 320;
             case 3:
-                return 575;
+                return 775;
             case 4:
-                return 1425;
+                return 1925;
             case 5:
-                return 3115;
+                return 3815;
             case 6:
-                return 7137;
+                return 7937;
             case 7:
             default:
-                return 15500 * (player_level-6);
+                return 15555 * (player_level-6);
         }
     }
 
@@ -87,11 +94,49 @@ public class PlayerManager
         score += plus;
         if (score > exp_next())
         {
-            player_level++;
-
-            //Todo: Level up stuff
-            System.out.println("LEVEL UP!");
+            levelUp();
         }
+    }
+
+
+    enum LevelUpgrade
+    {
+        FIRE_RATE,
+        FIRE_DIST,
+        SPEED,
+        DOBLE_ATK,
+        LATERAL_SHOOT,
+        CONVERT_ORBS,
+        LUCKY;
+
+        private static final List<LevelUpgrade> VALUES =
+                Collections.unmodifiableList(Arrays.asList(values()));
+        private static final int SIZE = VALUES.size();
+
+        public static LevelUpgrade roll()  {
+            return VALUES.get( MathUtils.random(SIZE-1) );
+        }
+    }
+
+    static LevelUpgrade player_level_event_choice_1, player_level_event_choice_2;
+    public static void levelUp()
+    {
+        player_level++;
+
+        player_level_event = true;
+
+        rollLevelUpgrade();
+
+        System.out.println("LEVEL UP!");
+    }
+
+    public static void rollLevelUpgrade()
+    {
+        player_level_event_choice_1 = LevelUpgrade.roll();
+        do
+        {
+            player_level_event_choice_2 = LevelUpgrade.roll();
+        } while (player_level_event_choice_2 == player_level_event_choice_1);
     }
 
 }

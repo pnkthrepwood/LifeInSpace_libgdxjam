@@ -61,10 +61,11 @@ public class MovementSystem extends IteratingSystem
 
             if (Mappers.type.get(entity).type == TypeComponent.TypeEntity.SHIP)
             {
-                pos.y = Math.max(pos.y, -Constants.RES_Y/2);
-                pos.y = Math.min(pos.y, Constants.RES_Y/2);
-                pos.y = pos.y;
-                //if (pos.y > Constants.RES_Y) engine.removeEntity(entity);
+                pos.y = Math.max(pos.y, -Constants.RES_Y / 2 + 16);
+                pos.y = Math.min(pos.y, Constants.RES_Y / 2 - 16);
+
+                pos.x_real = Math.max(pos.x_real, -Constants.RES_X/2 + 16);
+                pos.x_real = Math.min(pos.x_real, Constants.RES_X/2 - 16);
             }
 
         }
