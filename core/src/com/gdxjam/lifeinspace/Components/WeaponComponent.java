@@ -51,7 +51,7 @@ public class WeaponComponent implements Component
                 accuracy = 30.0f;
                 friendly = false;
 
-                coolDown = MathUtils.random(2.0f, 6.0f);
+                coolDown = MathUtils.random(2.5f, 4.0f);
                 bulletLifetime = 30.0f;
                 bulletSpeed = MathUtils.random(150, 300);
                 break;
