@@ -95,7 +95,7 @@ public class MenuScreen implements Screen
         if (tips == null)
         {
             tips = new String[tips_count];
-            tips[0] = "TIP: YOU LOSE YOUR [WHITE]SCORE[] WHEN YOU [RED]DIE[]";
+            tips[0] = "TIP: YOU LOSE YOUR [YELLOW]SCORE[] WHEN YOU [RED]DIE[]";
             tips[1] = "TIP: IF IT [YELLOW]FLASHES[] IT [RED]DIES[]";
             tips[2] = "TIP: KEEP [BLUE]SHOOTING[] AS LONG AS YOU CAN";
             tips[3] = "TIP: [GREEN]ORBS[] ARE NICE";
