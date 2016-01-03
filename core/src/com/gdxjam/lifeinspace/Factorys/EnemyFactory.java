@@ -18,7 +18,9 @@ import com.gdxjam.lifeinspace.Components.PositionComponent;
 import com.gdxjam.lifeinspace.Components.RenderComponent;
 import com.gdxjam.lifeinspace.Components.VelocityComponent;
 import com.gdxjam.lifeinspace.Components.WeaponComponent;
+import com.gdxjam.lifeinspace.Constants;
 import com.gdxjam.lifeinspace.Gaem;
+import com.gdxjam.lifeinspace.PlayerManager;
 import com.gdxjam.lifeinspace.SquadManager;
 import com.gdxjam.lifeinspace.TextureManager;
 
@@ -28,6 +30,15 @@ import com.gdxjam.lifeinspace.TextureManager;
 public class EnemyFactory
 {
     public static Gaem gaem;
+
+    public static void spawnSnakeEnemy(int squad_size) {
+
+       spawnSnakeEnemy(
+               MathUtils.random(-Constants.RES_X * 0.45f, Constants.RES_X * 0.45f),
+               Constants.RES_Y / 2,
+               squad_size);
+
+    }
 
     public static void spawnSnakeEnemy(float x, float y, int squad_size)
     {
@@ -65,6 +76,13 @@ public class EnemyFactory
         }
     }
 
+    public static void spawnShooterEnemy()
+    {
+        spawnShooterEnemy(
+                MathUtils.random(-Constants.RES_X*0.45f, Constants.RES_X*0.45f),
+                Constants.RES_Y / 2);
+    }
+
     public static void spawnShooterEnemy(float x, float y)
     {
         int squad = SquadManager.registerNewSquad(1);
@@ -86,7 +104,7 @@ public class EnemyFactory
 
         enemy.add(new SinusBehaviourComponent(MathUtils.random(5,15), MathUtils.random(1,3)));
         enemy.add(new CollisionComponent(32, 32));
-        enemy.add(new LifeComponent(MathUtils.random(5,7)));
+        enemy.add(new LifeComponent(MathUtils.random(3,5)));
         enemy.add(new ShooterBehaviourComponent(2));
         enemy.add(new SquadComponent(squad));
         enemy.add(new WeaponComponent(WeaponComponent.WeaponType.ENEMY_WEAPON));

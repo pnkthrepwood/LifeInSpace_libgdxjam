@@ -107,6 +107,8 @@ public class CollisionSystem extends IteratingSystem
 
                     FXFactory.makeCatchpowerup(pos_other.X(), pos_other.y, type);
 
+                    PlayerManager.addScore(3);
+
                     engine.removeEntity(other);
                 }
 
@@ -159,7 +161,8 @@ public class CollisionSystem extends IteratingSystem
 
             //*
 
-            PlayerManager.addScore(2);
+
+
         }
         else
         {
@@ -176,6 +179,7 @@ public class CollisionSystem extends IteratingSystem
                     mc,
                     is_killed ? 0.1f : 0.02f);
 
+            /*
             if (mc.type == MonsterComponent.MonsterType.INVADER)
             {
                 WeaponComponent w = Mappers.weapon.get(enemy);
@@ -184,8 +188,11 @@ public class CollisionSystem extends IteratingSystem
                 BulletFactory.shootBullet(pos_enemy.X(), pos_enemy.y, 45+90, w);
                 BulletFactory.shootBullet(pos_enemy.X(), pos_enemy.y, 45+90+90, w);
                 BulletFactory.shootBullet(pos_enemy.X(), pos_enemy.y, 45+90+90+90, w);
-            }
 
+            }
+            */
+
+            if (is_killed) PlayerManager.addExp(mc);
         }
 
         if (!Mappers.bullet.get(bullet).indestructible)

@@ -2,7 +2,9 @@ package com.gdxjam.lifeinspace;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.MathUtils;
+import com.gdxjam.lifeinspace.Components.MonsterComponent;
 import com.gdxjam.lifeinspace.Components.WeaponComponent;
+import com.gdxjam.lifeinspace.Factorys.EnemyFactory;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -55,6 +57,70 @@ public class PlayerManager
         player_level = 0;
     }
 
+
+    ////////////SPAWNER//////////////
+    public static float timeToNextStage(int stage_next)
+    {
+        switch (stage_next)
+        {
+            case 1: return 10.0f;
+            case 2: return 10.0f;
+            case 3: return 10.0f;
+            case 4: return 25.0f;
+            case 5: return 10.0f;
+            case 6: return 30.0f;
+        }
+        return 50.0f;
+    }
+
+    public static void spawnInStage(int stage)
+    {
+        switch (stage)
+        {
+            case 0:
+            {
+                EnemyFactory.spawnSnakeEnemy(3);
+            } break;
+            case 1:
+            {
+                EnemyFactory.spawnSnakeEnemy(4);
+                EnemyFactory.spawnSnakeEnemy(4);
+            } break;
+            case 2:
+            {
+               int n = MathUtils.random(1,3);
+                for (int i = 0; i < n; i++)
+                    EnemyFactory.spawnSnakeEnemy(MathUtils.random(3,5));
+            } break;
+            case 3:
+            {
+                EnemyFactory.spawnShooterEnemy();
+            } break;
+            case 4:
+            {
+                int snakes = MathUtils.random(1,3);
+                for (int i = 0; i < snakes; i++)
+                    EnemyFactory.spawnSnakeEnemy(MathUtils.random(4,6));
+                int monsters = MathUtils.random(0,1);
+                for (int i = 0; i < monsters; i++)
+                    EnemyFactory.spawnShooterEnemy();
+            } break;
+            default:
+            {
+                int snakes = MathUtils.random(1,3+stage-4);
+                for (int i = 0; i < snakes; i++)
+                    EnemyFactory.spawnSnakeEnemy(MathUtils.random(4+stage-4,6+stage-4));
+                int monsters = MathUtils.random(0,1+stage-4);
+                for (int i = 0; i < monsters; i++)
+                    EnemyFactory.spawnShooterEnemy();
+            } break;
+        }
+    }
+
+
+
+    ////////EXP/////////////
+
     public static int exp_before()
     {
         return exp(player_level-1);
@@ -99,6 +165,21 @@ public class PlayerManager
             levelUp();
         }
     }
+
+    public static void addExp(MonsterComponent mc)
+    {
+        if (mc.type == MonsterComponent.MonsterType.INVADER)
+        {
+            addScore(9);
+        }
+        if (mc.type == MonsterComponent.MonsterType.SNAKE)
+        {
+            addScore(1);
+        }
+    }
+
+
+    ///////////////LEVELUP////////////////////////////
 
 
     enum LevelUpgrade

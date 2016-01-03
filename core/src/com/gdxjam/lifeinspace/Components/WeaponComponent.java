@@ -48,12 +48,12 @@ public class WeaponComponent implements Component
                 break;
 
             case ENEMY_WEAPON:
-                accuracy = 30.0f;
+                accuracy = 35.0f;
                 friendly = false;
 
                 coolDown = MathUtils.random(2.5f, 4.0f);
                 bulletLifetime = 30.0f;
-                bulletSpeed = MathUtils.random(150, 300);
+                bulletSpeed = MathUtils.random(219, 399);
                 break;
         }
     }

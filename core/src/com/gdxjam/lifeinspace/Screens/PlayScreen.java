@@ -282,6 +282,27 @@ public class PlayScreen implements Screen {
     void updateEnemySpawner(float delta)
     {
         timer_total += delta;
+        timer_stage += delta;
+        time_since_last_enemy += delta;
+
+        if (timer_stage > PlayerManager.timeToNextStage(PlayerManager.stage+1))
+        {
+            PlayerManager.stage++;
+            timer_stage = 0;
+            time_since_last_enemy = 0.0f;
+        }
+
+        if (time_since_last_enemy > 5.0f)
+        {
+            PlayerManager.spawnInStage(PlayerManager.stage);
+            time_since_last_enemy = 0.0f;
+        }
+
+    }
+
+    void updateEnemySpawner2(float delta)
+    {
+        timer_total += delta;
 
         timer_stage += delta;
 
@@ -362,41 +383,66 @@ public class PlayScreen implements Screen {
                                     MathUtils.floor(PlayerManager.enemy_snake_long_min),
                                     MathUtils.floor(PlayerManager.enemy_snake_long)));
 
-                    EnemyFactory.spawnSnakeEnemy(
-                            MathUtils.random(-Constants.RES_X*0.45f, Constants.RES_X*0.45f),
-                            Constants.RES_Y / 2,
-                            MathUtils.random(
-                                    MathUtils.floor(PlayerManager.enemy_snake_long_min),
-                                    MathUtils.floor(PlayerManager.enemy_snake_long)));
+                    if (MathUtils.random(0.0f, 1.0f) < PlayerManager.chance_snake_enemy)
+                    {
+                        EnemyFactory.spawnSnakeEnemy(
+                                MathUtils.random(-Constants.RES_X*0.45f, Constants.RES_X*0.45f),
+                                Constants.RES_Y / 2,
+                                MathUtils.random(
+                                        MathUtils.floor(PlayerManager.enemy_snake_long_min),
+                                        MathUtils.floor(PlayerManager.enemy_snake_long)));
 
+                        if (PlayerManager.stage >= 5)
+                        {
+                            if (MathUtils.random(0.0f, 1.0f) < PlayerManager.chance_snake_enemy)
+                            {
+                                EnemyFactory.spawnSnakeEnemy(
+                                        MathUtils.random(-Constants.RES_X*0.45f, Constants.RES_X*0.45f),
+                                        Constants.RES_Y / 2,
+                                        MathUtils.random(
+                                                MathUtils.floor(PlayerManager.enemy_snake_long_min),
+                                                MathUtils.floor(PlayerManager.enemy_snake_long)));
+
+                            }
+                        }
+                    }
+
+/*
                     PlayerManager.chance_snake_enemy += 0.01f;
                     PlayerManager.chance_snake_enemy = Math.min(
                             PlayerManager.chance_snake_enemy,
                             PlayerManager.chance_snake_enemy_max);
-
+*/
                     PlayerManager.enemy_snake_long += 0.25f;
                     PlayerManager.enemy_snake_long = Math.min(
                             PlayerManager.enemy_snake_long,
                             PlayerManager.enemy_snake_long_max);
                 }
 
-                if (MathUtils.random(0.0f, 1.0f) < PlayerManager.chance_shooter_enemy) {
+                if (MathUtils.random(0.0f, 1.0f) < PlayerManager.chance_shooter_enemy)
+                {
                     EnemyFactory.spawnShooterEnemy(
                             MathUtils.random(-Constants.RES_X * 0.45f, Constants.RES_X * 0.45f),
                             Constants.RES_Y / 2);
 
-                    PlayerManager.chance_shooter_enemy += 0.005f;
-                }
-
-                if (PlayerManager.stage >= 6) {
-                    if (MathUtils.random(0.0f, 1.0f) < PlayerManager.chance_shooter_enemy) {
+                    if (MathUtils.random(0.0f, 1.0f) < PlayerManager.chance_shooter_enemy)
+                    {
                         EnemyFactory.spawnShooterEnemy(
                                 MathUtils.random(-Constants.RES_X * 0.45f, Constants.RES_X * 0.45f),
                                 Constants.RES_Y / 2);
 
-                        PlayerManager.chance_shooter_enemy += 0.005f;
+                        if (PlayerManager.stage >= 6) {
+                            if (MathUtils.random(0.0f, 1.0f) < PlayerManager.chance_shooter_enemy) {
+                                EnemyFactory.spawnShooterEnemy(
+                                        MathUtils.random(-Constants.RES_X * 0.45f, Constants.RES_X * 0.45f),
+                                        Constants.RES_Y / 2);
+
+                                PlayerManager.chance_shooter_enemy += 0.005f;
+                            }
+                        }
                     }
                 }
+
 
                 if (PlayerManager.stage >= 8) {
                     if (MathUtils.random(0.0f, 1.0f) < PlayerManager.chance_shooter_enemy) {
