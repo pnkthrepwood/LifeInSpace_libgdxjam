@@ -80,7 +80,8 @@ public class EnemyFactory
     {
         spawnShooterEnemy(
                 MathUtils.random(-Constants.RES_X*0.45f, Constants.RES_X*0.45f),
-                Constants.RES_Y / 2);
+                Constants.RES_Y / 2
+        );
     }
 
     public static void spawnShooterEnemy(float x, float y)

@@ -5,17 +5,14 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.gdxjam.lifeinspace.Components.CollisionComponent;
-import com.gdxjam.lifeinspace.Components.LifeComponent;
 import com.gdxjam.lifeinspace.Components.PositionComponent;
 import com.gdxjam.lifeinspace.Components.PowerUpComponent;
 import com.gdxjam.lifeinspace.Components.RenderComponent;
 import com.gdxjam.lifeinspace.Components.RenderEffectComponent;
-import com.gdxjam.lifeinspace.Components.ShooterBehaviourComponent;
 import com.gdxjam.lifeinspace.Components.SinusBehaviourComponent;
 import com.gdxjam.lifeinspace.Components.TypeComponent;
 import com.gdxjam.lifeinspace.Components.VelocityComponent;
 import com.gdxjam.lifeinspace.Gaem;
-import com.gdxjam.lifeinspace.PlayerManager;
 import com.gdxjam.lifeinspace.TextureManager;
 
 /**
@@ -26,12 +23,28 @@ public class PowerupFactory
 
     public enum PowerUpType
     {
-        FIRE_RANGE,
-        FIRE_SPEED,
-        FLY_SPEED
+        RED,
+        GREEN,
+        BLUE,
+        MINE,
+        SHIELD
     }
 
     public static Gaem gaem;
+
+    public static void spawnSpecial(float x, float y)
+    {
+
+        if (MathUtils.random(0.f,1.f) < 0.5f)
+        {
+            spawnPowerup(x, y, PowerUpType.SHIELD);
+        }
+        else
+        {
+            spawnPowerup(x, y, PowerUpType.MINE);
+        }
+
+    }
 
     public static void spawnPowerup(float x, float y, PowerUpType type)
     {
@@ -55,23 +68,35 @@ public class PowerupFactory
     {
         switch (type)
         {
-            case FIRE_RANGE:
+            case RED:
             {
                 return new TextureRegion(
                         TextureManager.getTexture("powerup.png"),
                         0, 0, 16, 16);
             }
-            case FIRE_SPEED:
+            case GREEN:
             {
                 return new TextureRegion(
                         TextureManager.getTexture("powerup.png"),
                         16, 0, 16, 16);
             }
-            case FLY_SPEED:
+            case BLUE:
             {
                 return new TextureRegion(
                         TextureManager.getTexture("powerup.png"),
                         32, 0, 16, 16);
+            }
+            case MINE:
+            {
+                return new TextureRegion(
+                        TextureManager.getTexture("powerup.png"),
+                        0, 32, 16, 16);
+            }
+            case SHIELD:
+            {
+                return new TextureRegion(
+                        TextureManager.getTexture("powerup.png"),
+                        16, 32, 16, 16);
             }
         }
 

@@ -11,8 +11,7 @@ import com.gdxjam.lifeinspace.Components.LifeComponent;
 import com.gdxjam.lifeinspace.Components.MonsterComponent;
 import com.gdxjam.lifeinspace.Components.TypeComponent;
 import com.gdxjam.lifeinspace.Components.PositionComponent;
-import com.gdxjam.lifeinspace.Components.WeaponComponent;
-import com.gdxjam.lifeinspace.Factorys.BulletFactory;
+import com.gdxjam.lifeinspace.Components.WeaponSpecialComponent;
 import com.gdxjam.lifeinspace.Factorys.FXFactory;
 import com.gdxjam.lifeinspace.Factorys.PowerupFactory;
 import com.gdxjam.lifeinspace.Gaem;
@@ -91,17 +90,25 @@ public class CollisionSystem extends IteratingSystem
                     PowerupFactory.PowerUpType type = Mappers.powerup.get(other).type;
                     switch (type)
                     {
-                        case FIRE_RANGE:
+                        case RED:
                         {
                             PlayerManager.red_orbs++;
                         } break;
-                        case FIRE_SPEED:
+                        case GREEN:
                         {
                             PlayerManager.green_orbs++;
                         } break;
-                        case FLY_SPEED:
+                        case BLUE:
                         {
                             PlayerManager.blue_orbs++;
+                        } break;
+                        case MINE:
+                        {
+                            entity.add(new WeaponSpecialComponent());
+                        } break;
+                        case SHIELD:
+                        {
+                            entity.add(new WeaponSpecialComponent());
                         } break;
                     }
 

@@ -28,19 +28,23 @@ public class SquadManager
         {
             PlayerManager.addScore(5);
 
-            float r  = MathUtils.random(0.0f, 3.0f);
+            float r  = MathUtils.random(0.0f, 4.0f);
 
             if (r < 1.0f)
             {
-                PowerupFactory.spawnPowerup(x, y, PowerupFactory.PowerUpType.FIRE_RANGE);
+                PowerupFactory.spawnPowerup(x, y, PowerupFactory.PowerUpType.RED);
             }
             else if (r < 2.0f)
             {
-                PowerupFactory.spawnPowerup(x, y, PowerupFactory.PowerUpType.FIRE_SPEED);
+                PowerupFactory.spawnPowerup(x, y, PowerupFactory.PowerUpType.GREEN);
+            }
+            else if (r < 3.0f)
+            {
+                PowerupFactory.spawnPowerup(x, y, PowerupFactory.PowerUpType.BLUE);
             }
             else
             {
-                PowerupFactory.spawnPowerup(x, y, PowerupFactory.PowerUpType.FLY_SPEED);
+                PowerupFactory.spawnSpecial(x, y);
             }
 
             squadCounter.remove(ct);

@@ -88,8 +88,8 @@ public class PlayerManager
             } break;
             case 2:
             {
-               int n = MathUtils.random(1,3);
-                for (int i = 0; i < n; i++)
+               int snakes = MathUtils.random(1,3);
+                for (int i = 0; i < snakes; i++)
                     EnemyFactory.spawnSnakeEnemy(MathUtils.random(3,5));
             } break;
             case 3:

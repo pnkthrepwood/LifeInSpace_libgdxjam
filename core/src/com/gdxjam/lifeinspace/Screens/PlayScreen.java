@@ -115,7 +115,7 @@ public class PlayScreen implements Screen {
         ship.add(new RenderComponent(ship_spr));
 
         ship.add(new WeaponComponent(WeaponComponent.WeaponType.PLAYER_WEAPON));
-        ship.add(new WeaponSpecialComponent());
+        //ship.add(new WeaponSpecialComponent());
 
         ship.add(new CollisionComponent(24, 24));
         game.engine.addEntity(ship);
