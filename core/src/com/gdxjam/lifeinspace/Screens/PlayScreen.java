@@ -140,6 +140,7 @@ public class PlayScreen implements Screen {
         parameter.borderWidth = 2;
         parameter.borderColor = Color.BLACK;
         font = generator.generateFont(parameter);
+        font.getData().markupEnabled = true;
 
         font_big = new BitmapFont();
         generator = new FreeTypeFontGenerator(Gdx.files.internal("bitDarling.ttf"));
@@ -614,15 +615,23 @@ public class PlayScreen implements Screen {
                 -(Constants.RES_X / 2) + Constants.RES_X * 0.02f,
                 (Constants.RES_Y / 2) - Constants.RES_Y * 0.02f);
 
-
-        if (Mappers.weapon_special.has(ship))
+        boolean has_weapon_special = Mappers.weapon_special.has(ship);
+        boolean has_red_orbs = false, has_green_orbs = false, has_blue_orbs = false;
+        if (has_weapon_special)
         {
+
+            WeaponSpecialComponent ws = Mappers.weapon_special.get(ship);
+
+            has_red_orbs = ws.red_cost>0;
+            has_green_orbs = ws.green_cost>0;
+            has_blue_orbs = ws.blue_cost>0;
 
             weapon_special_item_spr.setTexture(TextureManager.getTexture("powerup.png"));
 
-            if (Mappers.weapon_special.get(ship).type == WeaponSpecialComponent.WeaponSpecialType.MINE)
+            if (ws.type == WeaponSpecialComponent.WeaponSpecialType.MINE)
             {
                 weapon_special_item_spr.setRegion(0, 32, 16, 16);
+
             }
             else
             {
@@ -654,7 +663,7 @@ public class PlayScreen implements Screen {
         gui_orbs_spr.setCenterY((Constants.RES_Y / 2) - Constants.RES_Y * 0.2f);
         gui_orbs_spr.draw(Gaem.batch);
         font.draw(Gaem.batch,
-                "x" + PlayerManager.red_orbs,
+                (has_red_orbs?"[YELLOW]":"")+"x" + PlayerManager.red_orbs+(has_red_orbs?"[]":""),
                 -(Constants.RES_X / 2) + Constants.RES_X * 0.05f,
                 (Constants.RES_Y / 2) - Constants.RES_Y * 0.2f);
 
@@ -666,7 +675,7 @@ public class PlayScreen implements Screen {
         gui_orbs_spr.setCenterY((Constants.RES_Y / 2) - Constants.RES_Y * 0.25f);
         gui_orbs_spr.draw(Gaem.batch);
         font.draw(Gaem.batch,
-                "x" + PlayerManager.green_orbs,
+                (has_green_orbs?"[YELLOW]":"")+"x" + PlayerManager.green_orbs+(has_green_orbs?"[]":""),
                 -(Constants.RES_X / 2) + Constants.RES_X * 0.05f,
                 (Constants.RES_Y / 2) - Constants.RES_Y * 0.25f);
 
@@ -678,7 +687,7 @@ public class PlayScreen implements Screen {
         gui_orbs_spr.setCenterY((Constants.RES_Y / 2) - Constants.RES_Y * 0.3f);
         gui_orbs_spr.draw(Gaem.batch);
         font.draw(Gaem.batch,
-                "x" + PlayerManager.blue_orbs,
+                (has_blue_orbs?"[YELLOW]":"")+"x" + PlayerManager.blue_orbs+(has_blue_orbs?"[]":""),
                 -(Constants.RES_X / 2) + Constants.RES_X * 0.05f,
                 (Constants.RES_Y / 2) - Constants.RES_Y * 0.3f);
 
