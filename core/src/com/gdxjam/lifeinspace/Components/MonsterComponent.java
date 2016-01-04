@@ -10,7 +10,8 @@ public class MonsterComponent implements Component {
     public enum MonsterType
     {
         SNAKE,
-        INVADER
+        INVADER,
+        ULTRA
     }
 
     public MonsterType type;

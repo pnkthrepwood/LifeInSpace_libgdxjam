@@ -59,18 +59,34 @@ public class PlayerManager
 
 
     ////////////SPAWNER//////////////
-    public static float timeToNextStage(int stage_next)
+    public static float timeToSpawnInStage(int stage)
     {
-        switch (stage_next)
+        switch (stage)
         {
-            case 1: return 10.0f;
-            case 2: return 10.0f;
-            case 3: return 10.0f;
-            case 4: return 25.0f;
-            case 5: return 10.0f;
-            case 6: return 30.0f;
+            case 0: return 6.0f;
+            case 1: return 6.0f;
+            case 2: return 6.0f;
+            case 3: return 6.0f;
+            case 4: return 11.0f;
+            case 5: return 11.0f;
+            case 6: return 6.0f;
         }
-        return 50.0f;
+        return 11.0f;
+    }
+
+    public static float timeToNextStage(int stage)
+    {
+        switch (stage)
+        {
+            case 0: return 11.0f;
+            case 1: return 11.0f;
+            case 2: return 15.0f;
+            case 3: return 15.0f;
+            case 4: return 35.0f;
+            case 5: return 11.0f;
+            case 6: return 35.0f;
+        }
+        return 60.0f;
     }
 
     public static void spawnInStage(int stage)
@@ -105,14 +121,27 @@ public class PlayerManager
                 for (int i = 0; i < monsters; i++)
                     EnemyFactory.spawnShooterEnemy();
             } break;
+            case 5:
+            {
+
+            } break;
+            case 6:
+            {
+                int monsters = MathUtils.random(1,2);
+                for (int i = 0; i < monsters; i++)
+                    EnemyFactory.spawnUltraShooterEnemy();
+            } break;
             default:
             {
-                int snakes = MathUtils.random(1,3+stage-4);
+                int snakes = MathUtils.random(1,3+stage-6);
                 for (int i = 0; i < snakes; i++)
                     EnemyFactory.spawnSnakeEnemy(MathUtils.random(4+stage-4,6+stage-4));
-                int monsters = MathUtils.random(0,1+stage-4);
+                int monsters = MathUtils.random(0,1+stage-6);
                 for (int i = 0; i < monsters; i++)
                     EnemyFactory.spawnShooterEnemy();
+                int ultra = MathUtils.random(0,1);
+                for (int i = 0; i < ultra; i++)
+                    EnemyFactory.spawnUltraShooterEnemy();
             } break;
         }
     }

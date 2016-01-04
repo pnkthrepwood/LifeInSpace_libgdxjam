@@ -119,6 +119,19 @@ public class FXFactory {
             anim.setPlayMode(Animation.PlayMode.NORMAL);
             enemy.add(new AnimationComponent(anim));
         }
+        else if (monster.type == ULTRA)
+        {
+            enemy.add(new RenderComponent(new Sprite(TextureManager.getTexture("enemy_disk.png"))));
+            Texture tex = TextureManager.getTexture("monster.png");
+            Animation anim = new Animation(duration,
+                    new TextureRegion(tex, 64+0, 32, 32 ,32),
+                    new TextureRegion(tex, 64+32, 32, 32 ,32),
+                    new TextureRegion(tex, 64+0, 32, 32 ,32),
+                    new TextureRegion(tex, 64+32, 32, 32 ,32)
+            );
+            anim.setPlayMode(Animation.PlayMode.NORMAL);
+            enemy.add(new AnimationComponent(anim));
+        }
         else
         {
             enemy = null;

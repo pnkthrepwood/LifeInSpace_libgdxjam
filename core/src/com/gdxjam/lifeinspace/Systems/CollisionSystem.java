@@ -11,7 +11,9 @@ import com.gdxjam.lifeinspace.Components.LifeComponent;
 import com.gdxjam.lifeinspace.Components.MonsterComponent;
 import com.gdxjam.lifeinspace.Components.TypeComponent;
 import com.gdxjam.lifeinspace.Components.PositionComponent;
+import com.gdxjam.lifeinspace.Components.WeaponComponent;
 import com.gdxjam.lifeinspace.Components.WeaponSpecialComponent;
+import com.gdxjam.lifeinspace.Factorys.BulletFactory;
 import com.gdxjam.lifeinspace.Factorys.FXFactory;
 import com.gdxjam.lifeinspace.Factorys.PowerupFactory;
 import com.gdxjam.lifeinspace.Gaem;
@@ -196,8 +198,8 @@ public class CollisionSystem extends IteratingSystem
                     mc,
                     is_killed ? 0.1f : 0.02f);
 
-            /*
-            if (mc.type == MonsterComponent.MonsterType.INVADER)
+
+            if (mc.type == MonsterComponent.MonsterType.ULTRA)
             {
                 WeaponComponent w = Mappers.weapon.get(enemy);
 
@@ -207,7 +209,7 @@ public class CollisionSystem extends IteratingSystem
                 BulletFactory.shootBullet(pos_enemy.X(), pos_enemy.y, 45+90+90+90, w);
 
             }
-            */
+
 
             if (is_killed) PlayerManager.addExp(mc);
         }

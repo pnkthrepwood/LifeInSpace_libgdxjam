@@ -295,14 +295,14 @@ public class PlayScreen implements Screen {
         timer_stage += delta;
         time_since_last_enemy += delta;
 
-        if (timer_stage > PlayerManager.timeToNextStage(PlayerManager.stage+1))
+        if (timer_stage > PlayerManager.timeToNextStage(PlayerManager.stage))
         {
             PlayerManager.stage++;
             timer_stage = 0;
             time_since_last_enemy = 0.0f;
         }
 
-        if (time_since_last_enemy > 5.0f)
+        if (time_since_last_enemy > PlayerManager.timeToSpawnInStage(PlayerManager.stage))
         {
             PlayerManager.spawnInStage(PlayerManager.stage);
             time_since_last_enemy = 0.0f;

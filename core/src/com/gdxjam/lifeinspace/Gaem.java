@@ -32,7 +32,6 @@ import com.gdxjam.lifeinspace.Systems.MovementSystem;
 import com.gdxjam.lifeinspace.Systems.RenderSystem;
 import com.gdxjam.lifeinspace.Systems.WeaponSystem;
 
-import javax.swing.text.Position;
 
 public class Gaem extends Game
 {
