@@ -228,10 +228,20 @@ public class PlayScreen implements Screen {
                 && Mappers.weapon_special.has(ship))
             {
                 WeaponSpecialComponent shipWeapon =  Mappers.weapon_special.get(ship);
-                if (shipWeapon.timer > shipWeapon.coolDown){
+                if (shipWeapon.timer > shipWeapon.coolDown
+                        && (PlayerManager.red_orbs >= shipWeapon.red_cost)
+                        && (PlayerManager.blue_orbs >= shipWeapon.blue_cost)
+                        && (PlayerManager.green_orbs >= shipWeapon.green_cost)
+                    )
+                {
+                    PlayerManager.red_orbs -= shipWeapon.red_cost;
+                    PlayerManager.blue_orbs -= shipWeapon.blue_cost;
+                    PlayerManager.green_orbs -= shipWeapon.green_cost;
+
                     BulletFactory.dropMine(
                             shipPos.X(),
                             shipPos.y);
+
                     shipWeapon.timer = 0;
                 }
             }
@@ -608,9 +618,20 @@ public class PlayScreen implements Screen {
         if (Mappers.weapon_special.has(ship))
         {
 
-            weapon_special_item_spr.setRegion(16, 0, 16, 16);
+            weapon_special_item_spr.setTexture(TextureManager.getTexture("powerup.png"));
+
+            if (Mappers.weapon_special.get(ship).type == WeaponSpecialComponent.WeaponSpecialType.MINE)
+            {
+                weapon_special_item_spr.setRegion(0, 32, 16, 16);
+            }
+            else
+            {
+                weapon_special_item_spr.setRegion(16, 32, 16, 16);
+            }
+
+
             weapon_special_item_spr.setSize(16, 16);
-            weapon_special_item_spr.setTexture(TextureManager.getTexture("mine.png"));
+
             weapon_special_slot_spr.setOrigin(32, 32);
             weapon_special_item_spr.setScale(2, 2);
             weapon_special_item_spr.setCenterX(-(Constants.RES_X / 2) + Constants.RES_X * 0.03f + 16+8);

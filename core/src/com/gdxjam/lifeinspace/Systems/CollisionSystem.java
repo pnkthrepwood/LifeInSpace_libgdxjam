@@ -19,6 +19,8 @@ import com.gdxjam.lifeinspace.Mappers;
 import com.gdxjam.lifeinspace.PlayerManager;
 import com.gdxjam.lifeinspace.SquadManager;
 
+import java.util.Map;
+
 /**
  * Created by threpwood on 20/12/2015.
  */
@@ -104,11 +106,19 @@ public class CollisionSystem extends IteratingSystem
                         } break;
                         case MINE:
                         {
-                            entity.add(new WeaponSpecialComponent());
+                            if (Mappers.weapon_special.has(entity))
+                            {
+                                entity.remove(WeaponSpecialComponent.class);
+                            }
+                            entity.add(new WeaponSpecialComponent(WeaponSpecialComponent.WeaponSpecialType.MINE));
                         } break;
                         case SHIELD:
                         {
-                            entity.add(new WeaponSpecialComponent());
+                            if (Mappers.weapon_special.has(entity))
+                            {
+                                entity.remove(WeaponSpecialComponent.class);
+                            }
+                            entity.add(new WeaponSpecialComponent(WeaponSpecialComponent.WeaponSpecialType.SHIELD));
                         } break;
                     }
 

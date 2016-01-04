@@ -194,7 +194,7 @@ public class PlayerManager
 
         private static final List<LevelUpgrade> VALUES =
                 Collections.unmodifiableList(Arrays.asList(values()));
-        private static final int SIZE = VALUES.size();
+        private static final int SIZE = 3;//VALUES.size();
 
         public static LevelUpgrade roll()  {
             return VALUES.get( MathUtils.random(SIZE-1) );
