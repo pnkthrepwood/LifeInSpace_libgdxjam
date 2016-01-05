@@ -37,18 +37,15 @@ public class BulletFactory
             shootBullet(x,y,angle+40,weapon);
             shootBullet(x,y,angle+80,weapon);
         }
-
-        if (weapon.type == WeaponComponent.WeaponType.PLAYER_DOUBLE_WEAPON)
+        else if (weapon.type == WeaponComponent.WeaponType.PLAYER_DOUBLE_WEAPON)
         {
             shootBullet(x+10,y,angle-5,weapon);
             shootBullet(x-10,y,angle+5,weapon);
         }
-
-        if (weapon.type == WeaponComponent.WeaponType.PLAYER_TRIPLE_WEAPON)
+        else if (weapon.type == WeaponComponent.WeaponType.PLAYER_TRIPLE_WEAPON)
         {
             shootTripleBullet(x, y, angle, weapon);
         }
-
         else
         {
             shootBullet(x,y,angle,weapon);

@@ -134,6 +134,7 @@ public class RenderSystem extends EntitySystem
                 spr.setTexture(TextureManager.getTexture("shield.png"));
                 spr.setRegion(0, 0, 32, 32);
                 spr.setSize(32, 32);
+                spr.setOrigin(16, 16);
                 spr.setCenterX(pos.X());
                 spr.setCenterY(pos.y);
                 spr.setScale(1.5f, 1.5f);

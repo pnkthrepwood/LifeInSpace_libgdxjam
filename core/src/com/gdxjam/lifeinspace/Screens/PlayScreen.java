@@ -286,6 +286,8 @@ public class PlayScreen implements Screen {
         {
             PlayerManager.useSpecial(ship);
         }
+
+   
     }
 
     float time_since_last_enemy = 0;
