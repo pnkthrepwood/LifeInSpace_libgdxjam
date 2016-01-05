@@ -208,9 +208,6 @@ public class CollisionSystem extends IteratingSystem
         {
             MonsterComponent mc = Mappers.monster.get(enemy);
 
-
-
-
             FXFactory.makeDissapearEnemy(
                     pos_enemy.X(), pos_enemy.y,
                     mc,
@@ -240,7 +237,7 @@ public class CollisionSystem extends IteratingSystem
             if (is_killed) PlayerManager.addExp(mc);
         }
 
-        
+
         if (!Mappers.bullet.get(bullet).indestructible)
             engine.removeEntity(bullet);
 
