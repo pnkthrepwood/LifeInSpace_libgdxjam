@@ -5,6 +5,7 @@ import com.gdxjam.lifeinspace.Components.AnimationComponent;
 import com.gdxjam.lifeinspace.Components.BulletComponent;
 import com.gdxjam.lifeinspace.Components.CollisionComponent;
 import com.gdxjam.lifeinspace.Components.CircleShapeComponent;
+import com.gdxjam.lifeinspace.Components.DashComponent;
 import com.gdxjam.lifeinspace.Components.LifeComponent;
 import com.gdxjam.lifeinspace.Components.MineComponent;
 import com.gdxjam.lifeinspace.Components.MonsterComponent;
@@ -32,6 +33,8 @@ public class Mappers
 
     public static ComponentMapper<CircleShapeComponent> shape = ComponentMapper.getFor(CircleShapeComponent.class);
     public static ComponentMapper<CollisionComponent> collision = ComponentMapper.getFor(CollisionComponent.class);
+
+    public static ComponentMapper<DashComponent> dash = ComponentMapper.getFor(DashComponent.class);
 
     public static ComponentMapper<LifeComponent> lifes = ComponentMapper.getFor(LifeComponent.class);
 

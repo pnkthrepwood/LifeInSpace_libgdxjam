@@ -27,21 +27,26 @@ public class PowerupFactory
         GREEN,
         BLUE,
         MINE,
-        SHIELD
+        SHIELD,
+        DASH
     }
 
     public static Gaem gaem;
 
     public static void spawnSpecial(float x, float y)
     {
-
-        if (MathUtils.random(0.f,1.f) < 0.5f)
+        float r = MathUtils.random(0.f, 1.f);
+        if (r < 0.35f)
         {
             spawnPowerup(x, y, PowerUpType.SHIELD);
         }
-        else
+        else if (r < 0.65f)
         {
             spawnPowerup(x, y, PowerUpType.MINE);
+        }
+        else
+        {
+            spawnPowerup(x, y, PowerUpType.DASH);
         }
 
     }
@@ -97,6 +102,12 @@ public class PowerupFactory
                 return new TextureRegion(
                         TextureManager.getTexture("powerup.png"),
                         16, 32, 16, 16);
+            }
+            case DASH:
+            {
+                return new TextureRegion(
+                        TextureManager.getTexture("powerup.png"),
+                        32, 32, 16, 16);
             }
         }
 

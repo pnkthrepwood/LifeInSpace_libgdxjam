@@ -2,12 +2,14 @@ package com.gdxjam.lifeinspace;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.MathUtils;
+import com.gdxjam.lifeinspace.Components.DashComponent;
 import com.gdxjam.lifeinspace.Components.MonsterComponent;
 import com.gdxjam.lifeinspace.Components.ShieldComponent;
 import com.gdxjam.lifeinspace.Components.WeaponComponent;
 import com.gdxjam.lifeinspace.Components.WeaponSpecialComponent;
 import com.gdxjam.lifeinspace.Factorys.BulletFactory;
 import com.gdxjam.lifeinspace.Factorys.EnemyFactory;
+import com.gdxjam.lifeinspace.Factorys.FXFactory;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -416,6 +418,25 @@ public class PlayerManager
                         PlayerManager.red_orbs -= shipWeapon.red_cost;
                         PlayerManager.blue_orbs -= shipWeapon.blue_cost;
                         PlayerManager.green_orbs -= shipWeapon.green_cost;
+                    }
+
+                } break;
+                case DASH:
+                {
+
+                    if (!Mappers.dash.has(ship))
+                    {
+                        ship.add(new DashComponent());
+
+                        PlayerManager.red_orbs -= shipWeapon.red_cost;
+                        PlayerManager.blue_orbs -= shipWeapon.blue_cost;
+                        PlayerManager.green_orbs -= shipWeapon.green_cost;
+
+                        FXFactory.makeDashDisplay(
+                                Mappers.position.get(ship).X(),
+                                Mappers.position.get(ship).y,
+                                0.25f);
+
                     }
 
                 } break;

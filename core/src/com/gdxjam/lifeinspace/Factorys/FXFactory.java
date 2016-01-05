@@ -179,6 +179,40 @@ public class FXFactory {
 
     }
 
+
+    public static void makeDashDisplay(float x, float y, float duration)
+    {
+        Entity enemy = Gaem.engine.createEntity();
+
+        enemy.add(new RenderComponent(new Sprite(TextureManager.getTexture("ship.png"))));
+        enemy.add(new PositionComponent(x, y));
+        enemy.add(new RenderEffectComponent(duration, 1.0f, 3.0f, 0.5f, 0.0f, true));
+        Gaem.engine.addEntity(enemy);
+
+        //Arandela
+        Texture tex = TextureManager.getTexture("explosions.png");
+        Animation anim = new Animation(duration/7,
+                new TextureRegion(tex, 92, 152, 31 ,31),
+                new TextureRegion(tex, 92+33*1, 152, 31 ,31),
+                new TextureRegion(tex, 92+33*2, 152, 31 ,31),
+                new TextureRegion(tex, 92+33*3, 152, 31 ,31),
+                new TextureRegion(tex, 92+33*4, 152, 31 ,31),
+                new TextureRegion(tex, 92+33*5, 152, 31 ,31),
+                new TextureRegion(tex, 92+33*6, 152, 31 ,31)
+        );
+        anim.setPlayMode(Animation.PlayMode.NORMAL);
+
+        Entity entity = Gaem.engine.createEntity();;
+        entity.add(new PositionComponent(x, y));
+        entity.add(new AnimationComponent(anim));
+        entity.add(new RenderComponent(new Sprite(new TextureRegion(tex, 545, 10, 30 ,30))));
+        entity.add(new RenderEffectComponent(duration, 1, 1, 0.9f, 0.1f, true));
+        Gaem.engine.addEntity(entity);
+
+
+
+    }
+
     public static void makeDissapearEnemy(float x, float y, MonsterComponent monster, float duration)
     {
         Entity enemy = Gaem.engine.createEntity();

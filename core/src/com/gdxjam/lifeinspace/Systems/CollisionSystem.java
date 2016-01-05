@@ -121,6 +121,14 @@ public class CollisionSystem extends IteratingSystem
                             {
                                 entity.remove(WeaponSpecialComponent.class);
                             }
+                            entity.add(new WeaponSpecialComponent(WeaponSpecialComponent.WeaponSpecialType.DASH));
+                        } break;
+                        case DASH:
+                        {
+                            if (Mappers.weapon_special.has(entity))
+                            {
+                                entity.remove(WeaponSpecialComponent.class);
+                            }
                             entity.add(new WeaponSpecialComponent(WeaponSpecialComponent.WeaponSpecialType.SHIELD));
                         } break;
                     }

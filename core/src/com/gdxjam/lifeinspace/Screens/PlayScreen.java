@@ -20,6 +20,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.gdxjam.lifeinspace.Components.DashComponent;
 import com.gdxjam.lifeinspace.Components.RenderEffectComponent;
 import com.gdxjam.lifeinspace.Components.ShieldComponent;
 import com.gdxjam.lifeinspace.Components.WeaponSpecialComponent;
@@ -281,6 +282,12 @@ public class PlayScreen implements Screen {
             }
         }
 
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE))
+        {
+            ship.add(new WeaponSpecialComponent(WeaponSpecialComponent.WeaponSpecialType.DASH));
+            PlayerManager.useSpecial(ship);
+        }
+
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)
                 && Mappers.weapon_special.has(ship))
         {
@@ -487,9 +494,13 @@ public class PlayScreen implements Screen {
                 weapon_special_item_spr.setRegion(0, 32, 16, 16);
 
             }
-            else
+            else if (ws.type == WeaponSpecialComponent.WeaponSpecialType.SHIELD)
             {
                 weapon_special_item_spr.setRegion(16, 32, 16, 16);
+            }
+            else if (ws.type == WeaponSpecialComponent.WeaponSpecialType.DASH)
+            {
+                weapon_special_item_spr.setRegion(32, 32, 16, 16);
             }
 
 

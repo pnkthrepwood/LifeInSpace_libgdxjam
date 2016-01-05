@@ -44,8 +44,15 @@ public class MovementSystem extends IteratingSystem
             pos.x_offset = MathUtils.cos((float) (pos.y * 2.0f * Math.PI / (sc.freq)))*sc.amp;
         }
 
+
         pos.x_real += vel.x*deltaTime;
         pos.y += vel.y*deltaTime;
+
+        if (Mappers.dash.has(entity)) //Dash: 2x
+        {
+            pos.x_real += vel.x*deltaTime;
+            pos.y += vel.y*deltaTime;
+        }
 
 
         if (Mappers.type.has(entity))

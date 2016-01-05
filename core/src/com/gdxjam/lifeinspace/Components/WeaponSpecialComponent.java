@@ -11,7 +11,8 @@ public class WeaponSpecialComponent implements Component
     public enum WeaponSpecialType
     {
         MINE,
-        SHIELD
+        SHIELD,
+        DASH
     }
     public WeaponSpecialType type;
 
@@ -39,6 +40,12 @@ public class WeaponSpecialComponent implements Component
                 red_cost = 0;
                 blue_cost = 1;
                 green_cost = 0;
+            } break;
+            case DASH:
+            {
+                red_cost = 0;
+                blue_cost = 0;
+                green_cost = 1;
             } break;
         }
 
