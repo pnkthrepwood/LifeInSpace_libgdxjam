@@ -297,14 +297,15 @@ public class PlayerManager
         {
             case FIRE_DIST:
                 return "LONG SHOOT";
-            case CONVERT_ORBS:
-                return "ORBS";
             case DOBLE_ATK:
                 return "FIRE 2X";
             case LATERAL_SHOOT:
                 return "LATERAL SHOOT";
             case FIRE_RATE:
                 return "FIRE RATE";
+
+            case CONVERT_ORBS:
+                return "ORBS";
             case LUCKY:
                 return "LUCK";
             case SPEED:
