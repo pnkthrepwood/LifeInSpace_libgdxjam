@@ -226,7 +226,7 @@ public class PlayScreen implements Screen {
             }
 
 
-            if (controller.getAxis(XBox360Pad.AXIS_LEFT_TRIGGER) > 0.25f
+            if (controller.getButton(XBox360Pad.BUTTON_LB)
                 && Mappers.weapon_special.has(ship))
             {
 

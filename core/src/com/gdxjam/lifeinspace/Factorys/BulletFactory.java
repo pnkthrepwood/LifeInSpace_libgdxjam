@@ -55,8 +55,8 @@ public class BulletFactory
     public static void shootTripleBullet(float x, float y, float angle, WeaponComponent weapon)
     {
         shootBullet(x, y, angle, weapon);
-        shootBullet(x, y, angle+45, weapon);
-        shootBullet(x, y, angle-45, weapon);
+        shootBullet(x, y, angle+10, weapon);
+        shootBullet(x, y, angle-10, weapon);
     }
 
     public static void shootBullet(float x, float y, float angle, WeaponComponent weapon)

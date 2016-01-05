@@ -35,7 +35,7 @@ public class EnemyFactory
 
        spawnSnakeEnemy(
                MathUtils.random(-Constants.RES_X * 0.45f, Constants.RES_X * 0.45f),
-               Constants.RES_Y / 2,
+               Constants.RES_Y / 2 + MathUtils.random(0, Constants.RES_Y*0.25f),
                squad_size);
 
     }
@@ -79,7 +79,7 @@ public class EnemyFactory
     {
         spawnShooterEnemy(
                 MathUtils.random(-Constants.RES_X * 0.45f, Constants.RES_X * 0.45f),
-                Constants.RES_Y / 2
+                Constants.RES_Y / 2 + MathUtils.random(0, Constants.RES_Y*0.25f)
         );
     }
 
@@ -117,7 +117,7 @@ public class EnemyFactory
 {
     spawnUltraShooterEnemy(
             MathUtils.random(-Constants.RES_X * 0.45f, Constants.RES_X * 0.45f),
-            Constants.RES_Y / 2
+            Constants.RES_Y / 2 + MathUtils.random(0, Constants.RES_Y*0.25f)
     );
 }
 
@@ -155,7 +155,7 @@ public class EnemyFactory
     {
         spawnOctopusEnemy(
                 MathUtils.random(-Constants.RES_X * 0.45f, Constants.RES_X * 0.45f),
-                Constants.RES_Y / 2
+                Constants.RES_Y / 2 + MathUtils.random(0, Constants.RES_Y*0.25f)
         );
     }
 

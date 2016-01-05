@@ -180,6 +180,16 @@ public class FXFactory {
     }
 
 
+    public static void makeShieldAppear(float x, float y, float duration)
+    {
+        Entity enemy = Gaem.engine.createEntity();
+
+        enemy.add(new RenderComponent(new Sprite(TextureManager.getTexture("shield.png"))));
+        enemy.add(new PositionComponent(x, y));
+        enemy.add(new RenderEffectComponent(duration, 0.0f, 1.0f, 0.0f, 1.0f, true));
+        Gaem.engine.addEntity(enemy);
+    }
+
     public static void makeDashDisplay(float x, float y, float duration)
     {
         Entity enemy = Gaem.engine.createEntity();
@@ -208,9 +218,6 @@ public class FXFactory {
         entity.add(new RenderComponent(new Sprite(new TextureRegion(tex, 92, 152, 31 ,31))));
         entity.add(new RenderEffectComponent(duration, 1.5f, 2.5f, 0.9f, 0.2f, true));
         Gaem.engine.addEntity(entity);
-
-
-
     }
 
     public static void makeDissapearEnemy(float x, float y, MonsterComponent monster, float duration)

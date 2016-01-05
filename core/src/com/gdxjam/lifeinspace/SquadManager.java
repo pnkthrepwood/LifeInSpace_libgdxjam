@@ -26,8 +26,6 @@ public class SquadManager
         ct--;
         if (ct == 0)
         {
-            PlayerManager.addScore(5);
-
             float r  = MathUtils.random(0.0f, 4.0f);
 
             if (r < 1.0f)

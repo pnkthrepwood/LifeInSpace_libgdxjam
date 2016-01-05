@@ -140,8 +140,6 @@ public class CollisionSystem extends IteratingSystem
 
                     FXFactory.makeCatchpowerup(pos_other.X(), pos_other.y, type);
 
-                    PlayerManager.addScore(3);
-
                     engine.removeEntity(other);
                 }
 
@@ -175,7 +173,7 @@ public class CollisionSystem extends IteratingSystem
 
             lc.lifes -= Mappers.bullet.get(bullet).damage;
 
-            if (lc.lifes <= 0)
+            if (lc.lifes == 0)
             {
                 is_killed = true;
             }

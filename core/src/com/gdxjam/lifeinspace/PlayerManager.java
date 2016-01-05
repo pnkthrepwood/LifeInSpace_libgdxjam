@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.MathUtils;
 import com.gdxjam.lifeinspace.Components.DashComponent;
 import com.gdxjam.lifeinspace.Components.MonsterComponent;
+import com.gdxjam.lifeinspace.Components.RenderEffectComponent;
 import com.gdxjam.lifeinspace.Components.ShieldComponent;
 import com.gdxjam.lifeinspace.Components.WeaponComponent;
 import com.gdxjam.lifeinspace.Components.WeaponSpecialComponent;
@@ -203,11 +204,11 @@ public class PlayerManager
             case -1:
                 return 0;
             case 0:
-                return 55;
+                return 45;
             case 1:
-                return 150;
+                return 145;
             case 2:
-                return 320;
+                return 315;
             case 3:
                 return 775;
             case 4:
@@ -237,12 +238,15 @@ public class PlayerManager
     {
         if (mc.type == MonsterComponent.MonsterType.OCTOPUS)
         {
-            addScore(17);
+            addScore(19);
         }
-
+        if (mc.type == MonsterComponent.MonsterType.ULTRA)
+        {
+            addScore(14);
+        }
         if (mc.type == MonsterComponent.MonsterType.INVADER)
         {
-            addScore(9);
+            addScore(11);
         }
         if (mc.type == MonsterComponent.MonsterType.SNAKE)
         {
@@ -252,8 +256,6 @@ public class PlayerManager
 
 
     ///////////////LEVELUP////////////////////////////
-
-
     enum LevelUpgrade
     {
         FIRE_RATE,
@@ -414,7 +416,10 @@ public class PlayerManager
                     if (!Mappers.shield.has(ship))
                     {
                         ship.add(new ShieldComponent());
-
+                        FXFactory.makeShieldAppear(
+                                Mappers.position.get(ship).X(),
+                                Mappers.position.get(ship).y,
+                                0.25f);
                         PlayerManager.red_orbs -= shipWeapon.red_cost;
                         PlayerManager.blue_orbs -= shipWeapon.blue_cost;
                         PlayerManager.green_orbs -= shipWeapon.green_cost;
