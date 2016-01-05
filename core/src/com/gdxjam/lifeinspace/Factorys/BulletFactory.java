@@ -48,8 +48,8 @@ public class BulletFactory
 
         if (weapon.type == WeaponComponent.WeaponType.PLAYER_DOUBLE_WEAPON)
         {
-            shootBullet(x+10,y,angle,weapon);
-            shootBullet(x-10,y,angle,weapon);
+            shootBullet(x+10,y,angle-5,weapon);
+            shootBullet(x-10,y,angle+5,weapon);
         }
 
         else
