@@ -10,6 +10,7 @@ import com.gdxjam.lifeinspace.Components.MineComponent;
 import com.gdxjam.lifeinspace.Components.MonsterComponent;
 import com.gdxjam.lifeinspace.Components.PowerUpComponent;
 import com.gdxjam.lifeinspace.Components.RenderEffectComponent;
+import com.gdxjam.lifeinspace.Components.ShieldComponent;
 import com.gdxjam.lifeinspace.Components.ShooterBehaviourComponent;
 import com.gdxjam.lifeinspace.Components.SinusBehaviourComponent;
 import com.gdxjam.lifeinspace.Components.SquadComponent;
@@ -43,6 +44,7 @@ public class Mappers
     public static ComponentMapper<RenderComponent> render = ComponentMapper.getFor(RenderComponent.class);
     public static ComponentMapper<RenderEffectComponent> render_effect = ComponentMapper.getFor(RenderEffectComponent.class);
 
+    public static ComponentMapper<ShieldComponent> shield = ComponentMapper.getFor(ShieldComponent.class);
     public static ComponentMapper<ShooterBehaviourComponent> shoot_behaviour = ComponentMapper.getFor(ShooterBehaviourComponent.class);
     public static ComponentMapper<SinusBehaviourComponent> sinus_behaviour = ComponentMapper.getFor(SinusBehaviourComponent.class);
     public static ComponentMapper<SquadComponent> squad = ComponentMapper.getFor(SquadComponent.class);

@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.gdxjam.lifeinspace.Components.CollisionComponent;
 import com.gdxjam.lifeinspace.Components.LifeComponent;
 import com.gdxjam.lifeinspace.Components.MonsterComponent;
+import com.gdxjam.lifeinspace.Components.ShieldComponent;
 import com.gdxjam.lifeinspace.Components.TypeComponent;
 import com.gdxjam.lifeinspace.Components.PositionComponent;
 import com.gdxjam.lifeinspace.Components.WeaponComponent;
@@ -221,6 +222,12 @@ public class CollisionSystem extends IteratingSystem
 
     public void doShipGetHurt(Entity ship)
     {
+        if (Mappers.shield.has(ship))
+        {
+            ship.remove(ShieldComponent.class);
+            return;
+        }
+
         PositionComponent pos = Mappers.position.get(ship);
         FXFactory.makeExplosion(pos.X(), pos.y);
         Gaem.engine.removeEntity(ship);

@@ -3,7 +3,10 @@ package com.gdxjam.lifeinspace;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.MathUtils;
 import com.gdxjam.lifeinspace.Components.MonsterComponent;
+import com.gdxjam.lifeinspace.Components.ShieldComponent;
 import com.gdxjam.lifeinspace.Components.WeaponComponent;
+import com.gdxjam.lifeinspace.Components.WeaponSpecialComponent;
+import com.gdxjam.lifeinspace.Factorys.BulletFactory;
 import com.gdxjam.lifeinspace.Factorys.EnemyFactory;
 
 import java.util.Arrays;
@@ -316,6 +319,51 @@ public class PlayerManager
                 PlayerManager.ship_speed += 0.25f;
             } break;
     }
+    }
+
+    /////////////////////////////////////
+
+    public static void useSpecial(Entity ship)
+    {
+        WeaponSpecialComponent shipWeapon =  Mappers.weapon_special.get(ship);
+        if (shipWeapon.timer > shipWeapon.coolDown
+                && (PlayerManager.red_orbs >= shipWeapon.red_cost)
+                && (PlayerManager.blue_orbs >= shipWeapon.blue_cost)
+                && (PlayerManager.green_orbs >= shipWeapon.green_cost)
+                )
+        {
+
+            switch (shipWeapon.type)
+            {
+                case MINE:
+                {
+                    BulletFactory.dropMine(
+                            Mappers.position.get(ship).X(),
+                            Mappers.position.get(ship).y
+                    );
+                    PlayerManager.red_orbs -= shipWeapon.red_cost;
+                    PlayerManager.blue_orbs -= shipWeapon.blue_cost;
+                    PlayerManager.green_orbs -= shipWeapon.green_cost;
+
+                } break;
+                case SHIELD:
+                {
+
+                    if (!Mappers.shield.has(ship))
+                    {
+                        ship.add(new ShieldComponent());
+
+                        PlayerManager.red_orbs -= shipWeapon.red_cost;
+                        PlayerManager.blue_orbs -= shipWeapon.blue_cost;
+                        PlayerManager.green_orbs -= shipWeapon.green_cost;
+                    }
+
+                } break;
+                default:break;
+            }
+
+            shipWeapon.timer = 0;
+        }
     }
 
 }

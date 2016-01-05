@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
@@ -25,6 +26,7 @@ import com.gdxjam.lifeinspace.Components.RenderEffectComponent;
 import com.gdxjam.lifeinspace.Constants;
 import com.gdxjam.lifeinspace.Gaem;
 import com.gdxjam.lifeinspace.Mappers;
+import com.gdxjam.lifeinspace.TextureManager;
 
 import java.util.Map;
 
@@ -37,11 +39,13 @@ public class RenderSystem extends EntitySystem
     private ImmutableArray<Entity> flashing_entities;
     SpriteBatch batch;
     Camera cam;
+    Sprite spr;
 
     public RenderSystem(SpriteBatch batch, Camera cam)
     {
         this.batch = batch;
         this.cam = cam;
+        this.spr = new Sprite();
     }
 
     @Override
@@ -96,6 +100,7 @@ public class RenderSystem extends EntitySystem
                 if (anim.animation.getPlayMode() == Animation.PlayMode.NORMAL
                     && anim.timer > anim.animation.getAnimationDuration())
                 {
+                    //Todo:Make a TimeOutSystem and TimeOutComponent and get rid of this shit
                     Gaem.engine.removeEntity(e);
                 }
             }
@@ -126,9 +131,20 @@ public class RenderSystem extends EntitySystem
                     e.remove(RenderEffectComponent.class);
                 }
             }
-
-
             rc.spr.draw(batch);
+
+
+            if (Mappers.shield.has(e))
+            {
+
+                spr.setTexture(TextureManager.getTexture("shield.png"));
+                spr.setRegion(0, 0, 32, 32);
+                spr.setSize(32, 32);
+                spr.setCenterX(pos.X());
+                spr.setCenterY(pos.y);
+                spr.draw(batch);
+            }
+
         }
         batch.end();
 

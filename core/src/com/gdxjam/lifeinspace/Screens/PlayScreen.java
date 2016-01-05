@@ -21,6 +21,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.gdxjam.lifeinspace.Components.RenderEffectComponent;
+import com.gdxjam.lifeinspace.Components.ShieldComponent;
 import com.gdxjam.lifeinspace.Components.WeaponSpecialComponent;
 import com.gdxjam.lifeinspace.Factorys.BulletFactory;
 import com.gdxjam.lifeinspace.Components.CollisionComponent;
@@ -228,6 +229,10 @@ public class PlayScreen implements Screen {
             if (controller.getAxis(XBox360Pad.AXIS_LEFT_TRIGGER) > 0.25f
                 && Mappers.weapon_special.has(ship))
             {
+
+                PlayerManager.useSpecial(ship);
+
+                /*
                 WeaponSpecialComponent shipWeapon =  Mappers.weapon_special.get(ship);
                 if (shipWeapon.timer > shipWeapon.coolDown
                         && (PlayerManager.red_orbs >= shipWeapon.red_cost)
@@ -235,6 +240,9 @@ public class PlayScreen implements Screen {
                         && (PlayerManager.green_orbs >= shipWeapon.green_cost)
                     )
                 {
+
+
+
                     PlayerManager.red_orbs -= shipWeapon.red_cost;
                     PlayerManager.blue_orbs -= shipWeapon.blue_cost;
                     PlayerManager.green_orbs -= shipWeapon.green_cost;
@@ -244,7 +252,7 @@ public class PlayScreen implements Screen {
                             shipPos.y);
 
                     shipWeapon.timer = 0;
-                }
+                }*/
             }
         }
 
@@ -277,13 +285,7 @@ public class PlayScreen implements Screen {
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)
                 && Mappers.weapon_special.has(ship))
         {
-            WeaponSpecialComponent shipWeapon =  Mappers.weapon_special.get(ship);
-            if (shipWeapon.timer > shipWeapon.coolDown){
-                BulletFactory.dropMine(
-                        shipPos.X(),
-                        shipPos.y);
-                shipWeapon.timer = 0;
-            }
+            PlayerManager.useSpecial(ship);
         }
     }
 
