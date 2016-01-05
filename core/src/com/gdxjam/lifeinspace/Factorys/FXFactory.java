@@ -44,7 +44,7 @@ public class FXFactory {
         );
         anim.setPlayMode(Animation.PlayMode.NORMAL);
 
-        Entity entity = Gaem.engine.createEntity();;
+        Entity entity = Gaem.engine.createEntity();
         entity.add(new PositionComponent(x, y));
         entity.add(new AnimationComponent(anim));
         entity.add(new RenderComponent(new Sprite(new TextureRegion(tex, 640, 58, 16 ,16))));
@@ -186,7 +186,7 @@ public class FXFactory {
 
         enemy.add(new RenderComponent(new Sprite(TextureManager.getTexture("ship.png"))));
         enemy.add(new PositionComponent(x, y));
-        enemy.add(new RenderEffectComponent(duration, 1.0f, 3.0f, 0.5f, 0.0f, true));
+        enemy.add(new RenderEffectComponent(duration, 1.0f, 2.0f, 0.5f, 0.0f, true));
         Gaem.engine.addEntity(enemy);
 
         //Arandela
@@ -202,11 +202,11 @@ public class FXFactory {
         );
         anim.setPlayMode(Animation.PlayMode.NORMAL);
 
-        Entity entity = Gaem.engine.createEntity();;
+        Entity entity = Gaem.engine.createEntity();
         entity.add(new PositionComponent(x, y));
         entity.add(new AnimationComponent(anim));
-        entity.add(new RenderComponent(new Sprite(new TextureRegion(tex, 545, 10, 30 ,30))));
-        entity.add(new RenderEffectComponent(duration, 1, 1, 0.9f, 0.1f, true));
+        entity.add(new RenderComponent(new Sprite(new TextureRegion(tex, 92, 152, 31 ,31))));
+        entity.add(new RenderEffectComponent(duration, 1.5f, 2.5f, 0.9f, 0.2f, true));
         Gaem.engine.addEntity(entity);
 
 
