@@ -7,6 +7,7 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.gdxjam.lifeinspace.Components.DashComponent;
 import com.gdxjam.lifeinspace.Components.PositionComponent;
 import com.gdxjam.lifeinspace.Components.RenderComponent;
 import com.gdxjam.lifeinspace.Components.SinusBehaviourComponent;
@@ -50,8 +51,16 @@ public class MovementSystem extends IteratingSystem
 
         if (Mappers.dash.has(entity)) //Dash: 2x
         {
+            DashComponent dash = Mappers.dash.get(entity);
+
             pos.x_real += vel.x*deltaTime;
             pos.y += vel.y*deltaTime;
+
+            dash.timer += deltaTime;
+            if (dash.timer > dash.dashTime)
+            {
+                entity.remove(DashComponent.class);
+            }
         }
 
 

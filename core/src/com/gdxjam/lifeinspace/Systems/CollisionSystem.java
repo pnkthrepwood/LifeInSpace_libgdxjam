@@ -121,7 +121,7 @@ public class CollisionSystem extends IteratingSystem
                             {
                                 entity.remove(WeaponSpecialComponent.class);
                             }
-                            entity.add(new WeaponSpecialComponent(WeaponSpecialComponent.WeaponSpecialType.DASH));
+                            entity.add(new WeaponSpecialComponent(WeaponSpecialComponent.WeaponSpecialType.SHIELD));
                         } break;
                         case DASH:
                         {
@@ -129,7 +129,7 @@ public class CollisionSystem extends IteratingSystem
                             {
                                 entity.remove(WeaponSpecialComponent.class);
                             }
-                            entity.add(new WeaponSpecialComponent(WeaponSpecialComponent.WeaponSpecialType.SHIELD));
+                            entity.add(new WeaponSpecialComponent(WeaponSpecialComponent.WeaponSpecialType.DASH));
                         } break;
                     }
 

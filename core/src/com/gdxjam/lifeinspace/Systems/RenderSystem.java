@@ -99,6 +99,9 @@ public class RenderSystem extends EntitySystem
 
             rc.spr.setRotation(rc.rotation);
 
+
+
+
             if (Mappers.render_effect.has(e))
             {
                 RenderEffectComponent effect = Mappers.render_effect.get(e);
@@ -125,6 +128,12 @@ public class RenderSystem extends EntitySystem
 
                 }
             }
+
+            if (Mappers.dash.has(e))
+            {
+                rc.spr.setAlpha(0.5f);
+            }
+
             rc.spr.draw(batch);
 
 
