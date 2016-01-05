@@ -216,20 +216,20 @@ public class PlayerManager
             case 0:
                 return 45;
             case 1:
-                return 145;
+                return 95;
             case 2:
-                return 315;
+                return 155;
             case 3:
-                return 775;
+                return 455;
             case 4:
-                return 1925;
+                return 925;
             case 5:
-                return 3815;
+                return 1615;
             case 6:
-                return 7937;
+                return 1937;
             case 7:
             default:
-                return 15555 * (player_level-6);
+                return 2497 * (player_level-6);
         }
     }
 
