@@ -302,7 +302,7 @@ public class PlayerManager
             }
             if (player_level_event_choice_2 == LevelUpgrade.DOBLE_ATK)
             {
-                player_level_event_choice_1 = LevelUpgrade.TRIPLE_ATK;
+                player_level_event_choice_2 = LevelUpgrade.TRIPLE_ATK;
             }
         }
 
