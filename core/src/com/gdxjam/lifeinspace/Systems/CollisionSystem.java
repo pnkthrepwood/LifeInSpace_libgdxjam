@@ -208,7 +208,15 @@ public class CollisionSystem extends IteratingSystem
                 BulletFactory.shootBullet(pos_enemy.X(), pos_enemy.y, 45+90, w);
                 BulletFactory.shootBullet(pos_enemy.X(), pos_enemy.y, 45+90+90, w);
                 BulletFactory.shootBullet(pos_enemy.X(), pos_enemy.y, 45+90+90+90, w);
+            }
+            if (mc.type == MonsterComponent.MonsterType.OCTOPUS)
+            {
+                WeaponComponent w = Mappers.weapon.get(enemy);
 
+                BulletFactory.shootBullet(pos_enemy.X(), pos_enemy.y, 45, w);
+                BulletFactory.shootBullet(pos_enemy.X(), pos_enemy.y, 45+90, w);
+                BulletFactory.shootBullet(pos_enemy.X(), pos_enemy.y, 45+90+90, w);
+                BulletFactory.shootBullet(pos_enemy.X(), pos_enemy.y, 45+90+90+90, w);
             }
 
 

@@ -11,7 +11,8 @@ public class MonsterComponent implements Component {
     {
         SNAKE,
         INVADER,
-        ULTRA
+        ULTRA,
+        OCTOPUS
     }
 
     public MonsterType type;

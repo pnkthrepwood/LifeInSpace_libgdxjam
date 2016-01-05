@@ -73,8 +73,11 @@ public class PlayerManager
             case 4: return 11.0f;
             case 5: return 11.0f;
             case 6: return 6.0f;
+            case 7: return 12.0f;
+            case 8: return 11.0f;
+            case 9: return 10.0f;
         }
-        return 11.0f;
+        return 14.0f;
     }
 
     public static float timeToNextStage(int stage)
@@ -88,8 +91,11 @@ public class PlayerManager
             case 4: return 35.0f;
             case 5: return 11.0f;
             case 6: return 35.0f;
+            case 7: return 50.0f;
+            case 8: return 10.0f;
+            case 9: return 35.0f;
         }
-        return 60.0f;
+        return 75.0f;
     }
 
     public static void spawnInStage(int stage)
@@ -130,11 +136,11 @@ public class PlayerManager
             } break;
             case 6:
             {
-                int monsters = MathUtils.random(1,2);
+                int monsters = MathUtils.random(0,1);
                 for (int i = 0; i < monsters; i++)
                     EnemyFactory.spawnUltraShooterEnemy();
             } break;
-            default:
+            case 7:
             {
                 int snakes = MathUtils.random(1,3+stage-6);
                 for (int i = 0; i < snakes; i++)
@@ -145,6 +151,31 @@ public class PlayerManager
                 int ultra = MathUtils.random(0,1);
                 for (int i = 0; i < ultra; i++)
                     EnemyFactory.spawnUltraShooterEnemy();
+            } break;
+            case 8:
+            {
+
+            } break;
+            case 9:
+            {
+                int octopus = MathUtils.random(0,1);
+                for (int i = 0; i < octopus; i++)
+                    EnemyFactory.spawnOctopusEnemy();
+            } break;
+            default:
+            {
+                int snakes = MathUtils.random(1,3+stage-6);
+                for (int i = 0; i < snakes; i++)
+                    EnemyFactory.spawnSnakeEnemy(MathUtils.random(4+stage-4,6+stage-4));
+                int monsters = MathUtils.random(0,1+stage-6);
+                for (int i = 0; i < monsters; i++)
+                    EnemyFactory.spawnShooterEnemy();
+                int ultra = MathUtils.random(0,1+stage-8);
+                for (int i = 0; i < ultra; i++)
+                    EnemyFactory.spawnUltraShooterEnemy();
+                int octopus = MathUtils.random(0,1+stage-8);
+                for (int i = 0; i < octopus; i++)
+                    EnemyFactory.spawnOctopusEnemy();
             } break;
         }
     }
@@ -200,6 +231,11 @@ public class PlayerManager
 
     public static void addExp(MonsterComponent mc)
     {
+        if (mc.type == MonsterComponent.MonsterType.OCTOPUS)
+        {
+            addScore(17);
+        }
+
         if (mc.type == MonsterComponent.MonsterType.INVADER)
         {
             addScore(9);

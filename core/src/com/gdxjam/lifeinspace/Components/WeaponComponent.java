@@ -17,6 +17,7 @@ public class WeaponComponent implements Component
         PLAYER_WEAPON,
         ENEMY_WEAPON,
 
+        ENEMY_OCTOPUS,
         PLAYER_DOUBLE_WEAPON
     }
 
@@ -51,9 +52,18 @@ public class WeaponComponent implements Component
                 accuracy = 35.0f;
                 friendly = false;
 
-                coolDown = MathUtils.random(2.5f, 4.0f);
+                coolDown = MathUtils.random(2.0f, 4.0f);
                 bulletLifetime = 30.0f;
-                bulletSpeed = MathUtils.random(219, 399);
+                bulletSpeed = MathUtils.random(250, 399);
+                break;
+
+            case ENEMY_OCTOPUS:
+                accuracy = 30.0f;
+                friendly = false;
+
+                coolDown = MathUtils.random(3.0f, 4.0f);
+                bulletLifetime = 30.0f;
+                bulletSpeed = MathUtils.random(300, 399);
                 break;
         }
     }

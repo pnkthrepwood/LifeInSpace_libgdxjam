@@ -115,12 +115,12 @@ public class EnemyFactory
     }
 
     public static void spawnUltraShooterEnemy()
-    {
-        spawnUltraShooterEnemy(
-                MathUtils.random(-Constants.RES_X * 0.45f, Constants.RES_X * 0.45f),
-                Constants.RES_Y / 2
-        );
-    }
+{
+    spawnUltraShooterEnemy(
+            MathUtils.random(-Constants.RES_X * 0.45f, Constants.RES_X * 0.45f),
+            Constants.RES_Y / 2
+    );
+}
 
     public static void spawnUltraShooterEnemy(float x, float y)
     {
@@ -148,6 +148,44 @@ public class EnemyFactory
         enemy.add(new SquadComponent(squad));
         enemy.add(new WeaponComponent(WeaponComponent.WeaponType.ENEMY_WEAPON));
         enemy.add(new MonsterComponent(MonsterComponent.MonsterType.ULTRA));
+        gaem.engine.addEntity(enemy);
+
+    }
+
+    public static void spawnOctopusEnemy()
+    {
+        spawnOctopusEnemy(
+                MathUtils.random(-Constants.RES_X * 0.45f, Constants.RES_X * 0.45f),
+                Constants.RES_Y / 2
+        );
+    }
+
+    public static void spawnOctopusEnemy(float x, float y)
+    {
+        int squad = SquadManager.registerNewSquad(1);
+
+        Entity enemy = new Entity();
+        enemy.add(new TypeComponent(TypeComponent.TypeEntity.ENEMY));
+        enemy.add(new PositionComponent(x, y));
+        enemy.add(new VelocityComponent(0, -30));
+
+        Texture tex = TextureManager.getTexture("monster.png");
+        enemy.add(new RenderComponent(new Sprite(new TextureRegion(tex, 0, 0, 32, 32))));
+
+        Animation anim = new Animation(0.7f/2,
+                new TextureRegion(tex, 0, 64, 32 ,32),
+                new TextureRegion(tex, 32, 64, 32 ,32)
+        );
+        anim.setPlayMode(Animation.PlayMode.LOOP);
+        enemy.add(new AnimationComponent(anim));
+
+        enemy.add(new SinusBehaviourComponent(MathUtils.random(5,15), MathUtils.random(1,3)));
+        enemy.add(new CollisionComponent(32, 32));
+        enemy.add(new LifeComponent(MathUtils.random(4,9)));
+        enemy.add(new ShooterBehaviourComponent(3));
+        enemy.add(new SquadComponent(squad));
+        enemy.add(new WeaponComponent(WeaponComponent.WeaponType.ENEMY_OCTOPUS));
+        enemy.add(new MonsterComponent(MonsterComponent.MonsterType.OCTOPUS));
         gaem.engine.addEntity(enemy);
 
     }

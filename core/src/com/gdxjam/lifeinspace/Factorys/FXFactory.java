@@ -92,6 +92,70 @@ public class FXFactory {
 
     }
 
+    public static void makeActionEnemy(float x, float y, MonsterComponent monster, float duration)
+    {
+        Entity enemy = new Entity();
+        if (monster.type == SNAKE)
+        {
+            enemy.add(new RenderComponent(new Sprite(TextureManager.getTexture("enemy2.png"))));
+            Texture tex = TextureManager.getTexture("enemy_disk.png");
+            Animation anim = new Animation(duration,
+                    new TextureRegion(tex, 0, 0, 16 ,16),
+                    new TextureRegion(tex, 16, 0, 16 ,16)
+            );
+            anim.setPlayMode(Animation.PlayMode.NORMAL);
+            enemy.add(new AnimationComponent(anim));
+        }
+        else if (monster.type == INVADER)
+        {
+            enemy.add(new RenderComponent(new Sprite(TextureManager.getTexture("enemy_disk.png"))));
+            Texture tex = TextureManager.getTexture("monster.png");
+            Animation anim = new Animation(duration,
+                    new TextureRegion(tex, 0, 0, 32 ,32),
+                    new TextureRegion(tex, 32, 0, 32 ,32),
+                    new TextureRegion(tex, 0, 0, 32 ,32),
+                    new TextureRegion(tex, 32, 0, 32 ,32)
+            );
+            anim.setPlayMode(Animation.PlayMode.NORMAL);
+            enemy.add(new AnimationComponent(anim));
+        }
+        else if (monster.type == ULTRA)
+        {
+            enemy.add(new RenderComponent(new Sprite(TextureManager.getTexture("enemy_disk.png"))));
+            Texture tex = TextureManager.getTexture("monster.png");
+            Animation anim = new Animation(duration,
+                    new TextureRegion(tex, 64+0, 0, 32 ,32),
+                    new TextureRegion(tex, 64+32, 0, 32 ,32),
+                    new TextureRegion(tex, 64+0, 0, 32 ,32),
+                    new TextureRegion(tex, 64+32, 0, 32 ,32)
+            );
+            anim.setPlayMode(Animation.PlayMode.NORMAL);
+            enemy.add(new AnimationComponent(anim));
+        }
+        else if (monster.type == OCTOPUS)
+        {
+            enemy.add(new RenderComponent(new Sprite(TextureManager.getTexture("enemy_disk.png"))));
+            Texture tex = TextureManager.getTexture("monster.png");
+            Animation anim = new Animation(duration,
+                    new TextureRegion(tex, 0, 64, 32 ,32),
+                    new TextureRegion(tex, 32, 64, 32 ,32),
+                    new TextureRegion(tex, 0, 64, 32 ,32),
+                    new TextureRegion(tex, 32, 64, 32 ,32)
+            );
+            anim.setPlayMode(Animation.PlayMode.NORMAL);
+            enemy.add(new AnimationComponent(anim));
+        }
+        else
+        {
+            enemy = null;
+            return;
+        }
+
+        enemy.add(new PositionComponent(x, y));
+        enemy.add(new RenderEffectComponent(duration*1.5f, 1.0f, 3.0f, 1, 0));
+        Gaem.engine.addEntity(enemy);
+    }
+
     public static void makeDissapearEnemy(float x, float y, MonsterComponent monster, float duration)
     {
         Entity enemy = new Entity();
@@ -128,6 +192,19 @@ public class FXFactory {
                     new TextureRegion(tex, 64+32, 32, 32 ,32),
                     new TextureRegion(tex, 64+0, 32, 32 ,32),
                     new TextureRegion(tex, 64+32, 32, 32 ,32)
+            );
+            anim.setPlayMode(Animation.PlayMode.NORMAL);
+            enemy.add(new AnimationComponent(anim));
+        }
+        else if (monster.type == OCTOPUS)
+        {
+            enemy.add(new RenderComponent(new Sprite(TextureManager.getTexture("enemy_disk.png"))));
+            Texture tex = TextureManager.getTexture("monster.png");
+            Animation anim = new Animation(duration,
+                    new TextureRegion(tex, 0, 64+32, 32 ,32),
+                    new TextureRegion(tex, 32, 64+32, 32 ,32),
+                    new TextureRegion(tex, 0, 64+32, 32 ,32),
+                    new TextureRegion(tex, 32, 64+32, 32 ,32)
             );
             anim.setPlayMode(Animation.PlayMode.NORMAL);
             enemy.add(new AnimationComponent(anim));

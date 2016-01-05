@@ -37,7 +37,19 @@ public class BulletFactory
 
     public static void fireWeapon(float x, float y, float angle, WeaponComponent weapon)
     {
-        shootBullet(x,y,angle,weapon);
+        if (weapon.type == WeaponComponent.WeaponType.ENEMY_OCTOPUS)
+        {
+            shootBullet(x,y,angle-40,weapon);
+            shootBullet(x,y,angle-80,weapon);
+            shootBullet(x,y,angle,weapon);
+            shootBullet(x,y,angle+40,weapon);
+            shootBullet(x,y,angle+80,weapon);
+        }
+
+        else
+        {
+            shootBullet(x,y,angle,weapon);
+        }
     }
 
     public static void shootBullet(float x, float y, float angle, WeaponComponent weapon)

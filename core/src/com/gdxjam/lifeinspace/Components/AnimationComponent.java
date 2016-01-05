@@ -9,11 +9,12 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 public class AnimationComponent implements Component{
 
     public Animation animation;
-    public float timer = 0;
+    public float timer = 0.0f;
 
     public AnimationComponent(Animation animation)
     {
         this.animation = animation;
+        this.timer = 0.0f;
     }
 
 }

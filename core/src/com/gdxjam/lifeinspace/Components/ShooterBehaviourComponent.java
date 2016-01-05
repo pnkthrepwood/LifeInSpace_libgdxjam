@@ -10,6 +10,8 @@ public class ShooterBehaviourComponent implements Component
     public float timer = 0.0f;
     public float shoot_time = 0.0f;
 
+
+
     public ShooterBehaviourComponent(float shoot_time)
     {
         this.shoot_time = shoot_time;

@@ -36,7 +36,6 @@ import java.util.Map;
 public class RenderSystem extends EntitySystem
 {
     private ImmutableArray<Entity> entities;
-    private ImmutableArray<Entity> flashing_entities;
     SpriteBatch batch;
     Camera cam;
     Sprite spr;
@@ -57,11 +56,6 @@ public class RenderSystem extends EntitySystem
                 FlashingComponent.class
         ).get());
 
-        flashing_entities = engine.getEntitiesFor(Family.all(
-                PositionComponent.class,
-                RenderComponent.class,
-                FlashingComponent.class
-        ).get());
     }
 
     @Override
@@ -70,12 +64,6 @@ public class RenderSystem extends EntitySystem
                 PositionComponent.class,
                 RenderComponent.class
         ).exclude(
-                FlashingComponent.class
-        ).get());
-
-        flashing_entities = engine.getEntitiesFor(Family.all(
-                PositionComponent.class,
-                RenderComponent.class,
                 FlashingComponent.class
         ).get());
     }
