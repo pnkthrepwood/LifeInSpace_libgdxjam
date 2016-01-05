@@ -136,6 +136,7 @@ public class RenderSystem extends EntitySystem
                 spr.setSize(32, 32);
                 spr.setCenterX(pos.X());
                 spr.setCenterY(pos.y);
+                spr.setScale(1.5f, 1.5f);
                 spr.draw(batch);
             }
 
