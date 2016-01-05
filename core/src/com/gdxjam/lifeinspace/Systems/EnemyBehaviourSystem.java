@@ -35,7 +35,7 @@ public class EnemyBehaviourSystem extends IteratingSystem
         {
             if (Mappers.monster.has(entity))
             {
-                FXFactory.makeActionEnemy(pos.X(), pos.y, Mappers.monster.get(entity), 0.2f);
+                FXFactory.makeActionEnemy(pos.X(), pos.y, Mappers.monster.get(entity), 0.35f);
             }
         }
 
