@@ -92,11 +92,11 @@ public class BulletFactory
         Entity mine = Gaem.engine.createEntity();
 
         Texture tex = TextureManager.getTexture("mine.png");
-        RenderComponent rc = new RenderComponent(
-                new Sprite(
-                        new TextureRegion(tex,0,0,16,16)
-                )
+        Sprite spr = new Sprite(
+                new TextureRegion(tex,0,0,16,16)
         );
+        spr.setScale(2.0f, 2.0f);
+        RenderComponent rc = new RenderComponent(spr);
         mine.add(rc);
 
         Animation anim = new Animation(3.0f/5,

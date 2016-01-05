@@ -426,10 +426,12 @@ public class PlayerManager
                     if (!Mappers.shield.has(ship))
                     {
                         ship.add(new ShieldComponent());
+                        /*
                         FXFactory.makeShieldAppear(
                                 Mappers.position.get(ship).X(),
                                 Mappers.position.get(ship).y,
                                 0.25f);
+                         */
                         PlayerManager.red_orbs -= shipWeapon.red_cost;
                         PlayerManager.blue_orbs -= shipWeapon.blue_cost;
                         PlayerManager.green_orbs -= shipWeapon.green_cost;
