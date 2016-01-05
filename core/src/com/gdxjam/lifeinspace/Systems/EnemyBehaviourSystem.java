@@ -31,7 +31,7 @@ public class EnemyBehaviourSystem extends IteratingSystem
         PositionComponent pos = Mappers.position.get(entity);
         WeaponComponent weapon = Mappers.weapon.get(entity);
 
-        if (behaviour.timer > 0.2f && behaviour.timer-deltaTime < 0.2f)
+        if (behaviour.timer > 0.35f && behaviour.timer-deltaTime < 0.35f)
         {
             if (Mappers.monster.has(entity))
             {
