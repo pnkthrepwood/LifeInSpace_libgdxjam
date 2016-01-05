@@ -89,6 +89,7 @@ public class RenderSystem extends EntitySystem
                     && anim.timer > anim.animation.getAnimationDuration())
                 {
                     //Todo:Make a TimeOutSystem and TimeOutComponent and get rid of this shit
+                    e.remove(AnimationComponent.class);
                     Gaem.engine.removeEntity(e);
                 }
             }
@@ -103,12 +104,12 @@ public class RenderSystem extends EntitySystem
                 RenderEffectComponent effect = Mappers.render_effect.get(e);
                 effect.timer += deltaTime;
 
-                float sc = Interpolation.pow2In.apply(
+                float sc = Interpolation.linear.apply(
                         effect.scale_start, effect.scale_end,
                         effect.timer / effect.timer_total);
                 rc.spr.setScale(sc, sc);
 
-                float a = Interpolation.pow2In.apply(
+                float a = Interpolation.linear.apply(
                         effect.alpha_start, effect.alpha_end,
                         effect.timer / effect.timer_total
                 );
@@ -117,6 +118,11 @@ public class RenderSystem extends EntitySystem
                 if (effect.timer > effect.timer_total)
                 {
                     e.remove(RenderEffectComponent.class);
+                    if (effect.single_use)
+                    {
+                        Gaem.engine.removeEntity(e);
+                    }
+
                 }
             }
             rc.spr.draw(batch);
@@ -135,41 +141,5 @@ public class RenderSystem extends EntitySystem
 
         }
         batch.end();
-
-/*
-        ShaderProgram.pedantic = false;
-        ShaderProgram defaultShader = batch.createDefaultShader();
-        ShaderProgram shaderWhite = new ShaderProgram(
-                Gdx.files.internal("white.vs").readString(),
-                Gdx.files.internal("white.fs").readString());
-        batch.setShader(shaderWhite);
-        batch.begin();
-        for (int i = 0; i < flashing_entities.size(); ++i) {
-            Entity e = flashing_entities.get(i);
-
-            RenderComponent rc = Mappers.render.get(e);
-            PositionComponent pos = Mappers.position.get(e);
-
-            if (Mappers.animation.has(e))
-            {
-                AnimationComponent anim = Mappers.animation.get(e);
-                anim.timer += deltaTime;
-                rc.spr.setRegion(anim.animation.getKeyFrame(anim.timer));
-                if (anim.timer > anim.animation.getAnimationDuration())
-                {
-                    Gaem.engine.removeEntity(e);
-                }
-            }
-
-            rc.spr.setCenterX(pos.X());
-            rc.spr.setCenterY(pos.y);
-
-            rc.spr.setRotation(rc.rotation);
-
-            rc.spr.draw(batch);
-        }
-        batch.end();
-        batch.setShader(defaultShader);
-*/
     }
 }

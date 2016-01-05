@@ -44,7 +44,7 @@ public class FXFactory {
         );
         anim.setPlayMode(Animation.PlayMode.NORMAL);
 
-        Entity entity = new Entity();
+        Entity entity = Gaem.engine.createEntity();;
         entity.add(new PositionComponent(x, y));
         entity.add(new AnimationComponent(anim));
         entity.add(new RenderComponent(new Sprite(new TextureRegion(tex, 640, 58, 16 ,16))));
@@ -67,12 +67,13 @@ public class FXFactory {
         );
         anim.setPlayMode(Animation.PlayMode.NORMAL);
 
-        Entity entity = new Entity();
+        Entity entity = Gaem.engine.createEntity();;
         entity.add(new PositionComponent(x, y));
         entity.add(new AnimationComponent(anim));
         entity.add(new RenderComponent(new Sprite(new TextureRegion(tex, 375, 10, 30 ,30))));
-        entity.add(new RenderEffectComponent(0.8f, 4, 4, 1, 0.0f));
+        entity.add(new RenderEffectComponent(0.8f, 4, 4, 1, 0.0f, true));
         Gaem.engine.addEntity(entity);
+
 
     }
 
@@ -83,18 +84,18 @@ public class FXFactory {
         Animation anim = new Animation(0.3f, PowerupFactory.getPowerTexture(type));
         anim.setPlayMode(Animation.PlayMode.NORMAL);
 
-        Entity entity = new Entity();
+        Entity entity = Gaem.engine.createEntity();
         entity.add(new PositionComponent(x, y));
         entity.add(new AnimationComponent(anim));
         entity.add(new RenderComponent(new Sprite(texreg)));
-        entity.add(new RenderEffectComponent(0.3f, 1.25f, 4.0f, 1, 0));
+        entity.add(new RenderEffectComponent(0.3f, 1.25f, 4.0f, 1, 0, true));
         Gaem.engine.addEntity(entity);
 
     }
 
     public static void makeActionEnemy(float x, float y, MonsterComponent monster, float duration)
     {
-        Entity enemy = new Entity();
+        Entity enemy = Gaem.engine.createEntity();
         if (monster.type == SNAKE)
         {
             enemy.add(new RenderComponent(new Sprite(TextureManager.getTexture("enemy2.png"))));
@@ -152,18 +153,42 @@ public class FXFactory {
         }
 
         enemy.add(new PositionComponent(x, y));
-        enemy.add(new RenderEffectComponent(duration*1.5f, 1.0f, 3.0f, 1, 0));
+        enemy.add(new RenderEffectComponent(duration*1.5f, 1.0f, 3.0f, 1, 0, true));
         Gaem.engine.addEntity(enemy);
+
+
+
+
+
+        //Arandela
+        Texture tex = TextureManager.getTexture("explosions.png");
+        Animation anim = new Animation(duration/2,
+                new TextureRegion(tex, 545, 10, 30 ,30),
+                new TextureRegion(tex, 579, 10, 30 ,30)
+        );
+        anim.setPlayMode(Animation.PlayMode.NORMAL);
+
+        Entity entity = Gaem.engine.createEntity();;
+        entity.add(new PositionComponent(x, y));
+        entity.add(new AnimationComponent(anim));
+        entity.add(new RenderComponent(new Sprite(new TextureRegion(tex, 545, 10, 30 ,30))));
+        entity.add(new RenderEffectComponent(duration, 2, 2, 1, 0.5f, true));
+        Gaem.engine.addEntity(entity);
+
+
+
     }
 
     public static void makeDissapearEnemy(float x, float y, MonsterComponent monster, float duration)
     {
-        Entity enemy = new Entity();
+        Entity enemy = Gaem.engine.createEntity();
         if (monster.type == SNAKE)
         {
             enemy.add(new RenderComponent(new Sprite(TextureManager.getTexture("enemy2.png"))));
             Texture tex = TextureManager.getTexture("enemy_disk.png");
-            Animation anim = new Animation(duration,
+            Animation anim = new Animation(duration/4,
+                    new TextureRegion(tex, 0, 16, 16 ,16),
+                    new TextureRegion(tex, 16, 16, 16 ,16),
                     new TextureRegion(tex, 0, 16, 16 ,16),
                     new TextureRegion(tex, 16, 16, 16 ,16)
             );
@@ -174,7 +199,7 @@ public class FXFactory {
         {
             enemy.add(new RenderComponent(new Sprite(TextureManager.getTexture("enemy_disk.png"))));
             Texture tex = TextureManager.getTexture("monster.png");
-            Animation anim = new Animation(duration,
+            Animation anim = new Animation(duration/4,
                     new TextureRegion(tex, 0, 32, 32 ,32),
                     new TextureRegion(tex, 32, 32, 32 ,32),
                     new TextureRegion(tex, 0, 32, 32 ,32),
@@ -187,7 +212,7 @@ public class FXFactory {
         {
             enemy.add(new RenderComponent(new Sprite(TextureManager.getTexture("enemy_disk.png"))));
             Texture tex = TextureManager.getTexture("monster.png");
-            Animation anim = new Animation(duration,
+            Animation anim = new Animation(duration/4,
                     new TextureRegion(tex, 64+0, 32, 32 ,32),
                     new TextureRegion(tex, 64+32, 32, 32 ,32),
                     new TextureRegion(tex, 64+0, 32, 32 ,32),
@@ -200,7 +225,7 @@ public class FXFactory {
         {
             enemy.add(new RenderComponent(new Sprite(TextureManager.getTexture("enemy_disk.png"))));
             Texture tex = TextureManager.getTexture("monster.png");
-            Animation anim = new Animation(duration,
+            Animation anim = new Animation(duration/4,
                     new TextureRegion(tex, 0, 64+32, 32 ,32),
                     new TextureRegion(tex, 32, 64+32, 32 ,32),
                     new TextureRegion(tex, 0, 64+32, 32 ,32),
@@ -216,7 +241,7 @@ public class FXFactory {
         }
 
         enemy.add(new PositionComponent(x, y));
-        enemy.add(new RenderEffectComponent(duration, 1.0f, 1.5f, 1, 0));
+        enemy.add(new RenderEffectComponent(duration, 1.0f, 3.0f, 1, 0.5f, true));
         Gaem.engine.addEntity(enemy);
 
     }

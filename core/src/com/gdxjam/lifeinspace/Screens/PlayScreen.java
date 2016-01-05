@@ -83,8 +83,8 @@ public class PlayScreen implements Screen {
 
         PlayerManager.reset();
 
-        if (game.engine != null) game.engine = null;
-        game.engine = new Engine();
+        game.engine.removeAllEntities();
+        game.engine.clearPools();
 
         //CAREFUL: ORDER MATTERS!
         game.engine.addSystem(new MovementSystem(game.engine));
@@ -100,16 +100,16 @@ public class PlayScreen implements Screen {
         PowerupFactory.gaem = this.game;
 
 
-        Entity planet_bg = new Entity();
+        Entity planet_bg = Gaem.engine.createEntity();
         planet_bg.add(new PositionComponent(0, -Constants.RES_Y / 2 + TextureManager.getTexture("planet_bg.png").getHeight() / 2));
         planet_bg.add(new VelocityComponent(0, -1.5f));
         planet_spr = new Sprite(TextureManager.getTexture("planet_bg.png"));
         //planet_spr.setScale(5, 5);
         planet_bg.add(new RenderComponent(planet_spr));
-        planet_bg.add(new RenderEffectComponent(120, 5, 0.5f, 1, 1));
+        planet_bg.add(new RenderEffectComponent(140, 5, 0.25f, 1, 1, true));
         game.engine.addEntity(planet_bg);
 
-        ship = new Entity();
+        ship = Gaem.engine.createEntity();
         ship.add(new TypeComponent(TypeEntity.SHIP));
         ship.add(new PositionComponent());
         ship.add(new VelocityComponent(0, 0));

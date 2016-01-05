@@ -14,11 +14,15 @@ public class RenderEffectComponent implements Component {
     public float scale_end = 1;
     public float alpha_start = 1;
     public float alpha_end = 1;
+    public boolean single_use = false;
+
 
     public RenderEffectComponent(float t,
                                  float sc0, float sc1,
-                                 float a0, float a1)
+                                 float a0, float a1, boolean single_use)
     {
+        this.single_use = single_use;
+
         scale_start = sc0;
         scale_end = sc1;
 
@@ -26,6 +30,7 @@ public class RenderEffectComponent implements Component {
         alpha_end = a1;
 
         timer_total = t;
+        timer = 0.0f;
     }
 
 }

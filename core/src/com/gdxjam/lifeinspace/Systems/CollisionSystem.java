@@ -197,7 +197,7 @@ public class CollisionSystem extends IteratingSystem
             FXFactory.makeDissapearEnemy(
                     pos_enemy.X(), pos_enemy.y,
                     mc,
-                    is_killed ? 0.1f : 0.02f);
+                    is_killed ? 0.18f : 0.05f);
 
 
             if (mc.type == MonsterComponent.MonsterType.ULTRA)

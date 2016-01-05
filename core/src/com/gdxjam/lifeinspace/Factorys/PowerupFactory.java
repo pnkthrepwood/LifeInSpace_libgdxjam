@@ -48,7 +48,7 @@ public class PowerupFactory
 
     public static void spawnPowerup(float x, float y, PowerUpType type)
     {
-        Entity powerup = new Entity();
+        Entity powerup = Gaem.engine.createEntity();
         powerup.add(new TypeComponent(TypeComponent.TypeEntity.POWERUP));
         powerup.add(new PositionComponent(x, y));
         powerup.add(new VelocityComponent(0, 15));
@@ -56,8 +56,8 @@ public class PowerupFactory
         powerup.add(new CollisionComponent(16, 16));
 
         Sprite spr = new Sprite(getPowerTexture(type));
+        spr.setScale(1.5f, 1.5f);
         powerup.add(new RenderComponent(spr));
-        powerup.add(new RenderEffectComponent(999, 1.25f, 1.25f, 1, 1));
         powerup.add(new PowerUpComponent(type));
 
         gaem.engine.addEntity(powerup);

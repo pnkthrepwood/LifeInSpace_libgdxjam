@@ -50,10 +50,9 @@ public class EnemyFactory
 
         float anim_time = MathUtils.random(0.35f, 0.7f);
 
-
         for (int i = 0; i < squad_size; ++i)
         {
-            Entity enemy = new Entity();
+            Entity enemy = Gaem.engine.createEntity();
             enemy.add(new TypeComponent(TypeComponent.TypeEntity.ENEMY));
             enemy.add(new PositionComponent(x, y + 20.f*i*(A*0.5f)));
             enemy.add(new VelocityComponent(0, -V));
@@ -88,7 +87,7 @@ public class EnemyFactory
     {
         int squad = SquadManager.registerNewSquad(1);
 
-        Entity enemy = new Entity();
+        Entity enemy = Gaem.engine.createEntity();
         enemy.add(new TypeComponent(TypeComponent.TypeEntity.ENEMY));
         enemy.add(new PositionComponent(x, y));
         enemy.add(new VelocityComponent(0, -30));
@@ -126,7 +125,7 @@ public class EnemyFactory
     {
         int squad = SquadManager.registerNewSquad(1);
 
-        Entity enemy = new Entity();
+        Entity enemy = Gaem.engine.createEntity();
         enemy.add(new TypeComponent(TypeComponent.TypeEntity.ENEMY));
         enemy.add(new PositionComponent(x, y));
         enemy.add(new VelocityComponent(0, -30));
@@ -164,7 +163,7 @@ public class EnemyFactory
     {
         int squad = SquadManager.registerNewSquad(1);
 
-        Entity enemy = new Entity();
+        Entity enemy = Gaem.engine.createEntity();
         enemy.add(new TypeComponent(TypeComponent.TypeEntity.ENEMY));
         enemy.add(new PositionComponent(x, y));
         enemy.add(new VelocityComponent(0, -30));

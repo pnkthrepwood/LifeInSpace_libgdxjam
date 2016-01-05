@@ -4,6 +4,7 @@ package com.gdxjam.lifeinspace;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 
+import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -39,7 +40,7 @@ public class Gaem extends Game
 	public static ShapeRenderer shapeRenderer;
 	public OrthographicCamera cam;
 	public Viewport viewport;
-	public static Engine engine;
+	public static PooledEngine engine;
 
 
 	@Override
@@ -52,7 +53,8 @@ public class Gaem extends Game
 		shapeRenderer = new ShapeRenderer();
 		shapeRenderer.setAutoShapeType(true);
 
-		engine = new Engine();
+		engine = new PooledEngine(4096,   4096*2,
+								  1024,   4096*2);
 
 		Gdx.graphics.setContinuousRendering(true);
 		setScreen(new MenuScreen(this));

@@ -54,7 +54,7 @@ public class BulletFactory
 
     public static void shootBullet(float x, float y, float angle, WeaponComponent weapon)
     {
-        Entity bullet = new Entity();
+        Entity bullet = Gaem.engine.createEntity();
 
         angle += MathUtils.random(-weapon.accuracy/2, weapon.accuracy/2);
 
@@ -82,7 +82,7 @@ public class BulletFactory
 
     public static void dropMine(float x, float y)
     {
-        Entity mine = new Entity();
+        Entity mine = Gaem.engine.createEntity();
 
         Texture tex = TextureManager.getTexture("mine.png");
         RenderComponent rc = new RenderComponent(
@@ -111,7 +111,7 @@ public class BulletFactory
 
     public static void shootExplosion(float x, float y)
     {
-        Entity bullet = new Entity();
+        Entity bullet = Gaem.engine.createEntity();
         bullet.add(new PositionComponent(x, y));
         bullet.add(new CollisionComponent(128, 128));
         bullet.add(new TypeComponent(TypeComponent.TypeEntity.BULLET));
