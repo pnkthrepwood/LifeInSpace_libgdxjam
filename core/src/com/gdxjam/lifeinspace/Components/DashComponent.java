@@ -13,7 +13,7 @@ public class DashComponent implements Component {
     public DashComponent()
     {
         timer = 0.0f;
-        dashTime = 0.5f;
+        dashTime = 1.0f;
     }
 
 }

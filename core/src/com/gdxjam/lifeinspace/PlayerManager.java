@@ -71,13 +71,18 @@ public class PlayerManager
         {
             case 0: return 6.0f;
             case 1: return 6.0f;
-            case 2: return 6.0f;
+            case 2: return 4.0f;
+
             case 3: return 6.0f;
-            case 4: return 11.0f;
-            case 5: return 11.0f;
-            case 6: return 6.0f;
-            case 7: return 11.0f;
-            case 8: return 11.0f;
+            case 4: return 8.0f;
+
+            case 5: return 99.0f;
+
+            case 6: return 5.0f;
+            case 7: return 7.0f;
+
+            case 8: return 99.0f;
+
             case 9: return 10.0f;
         }
         return 14.0f;
@@ -90,12 +95,17 @@ public class PlayerManager
             case 0: return 11.0f;
             case 1: return 11.0f;
             case 2: return 15.0f;
+
             case 3: return 15.0f;
             case 4: return 35.0f;
-            case 5: return 11.0f;
+
+            case 5: return 5.0f;
+
             case 6: return 35.0f;
             case 7: return 50.0f;
-            case 8: return 10.0f;
+
+            case 8: return 5.0f;
+
             case 9: return 35.0f;
         }
         return 75.0f;

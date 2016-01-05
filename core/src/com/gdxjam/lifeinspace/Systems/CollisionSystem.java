@@ -173,9 +173,10 @@ public class CollisionSystem extends IteratingSystem
 
             lc.lifes -= Mappers.bullet.get(bullet).damage;
 
-            if (lc.lifes == 0)
+            if (lc.lifes <= 0)
             {
                 is_killed = true;
+                enemy.remove(LifeComponent.class);
             }
 
         }
@@ -196,9 +197,6 @@ public class CollisionSystem extends IteratingSystem
             FXFactory.makeExplosion(pos_enemy.X(), pos_enemy.y);
 
             //*
-
-
-
         }
         else
         {
@@ -209,6 +207,9 @@ public class CollisionSystem extends IteratingSystem
         if (Mappers.monster.has(enemy))
         {
             MonsterComponent mc = Mappers.monster.get(enemy);
+
+
+
 
             FXFactory.makeDissapearEnemy(
                     pos_enemy.X(), pos_enemy.y,
