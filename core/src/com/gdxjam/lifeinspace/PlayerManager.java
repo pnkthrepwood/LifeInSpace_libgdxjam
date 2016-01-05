@@ -136,7 +136,7 @@ public class PlayerManager
             } break;
             case 6:
             {
-                int monsters = MathUtils.random(0,1);
+                int monsters = MathUtils.random(1,2);
                 for (int i = 0; i < monsters; i++)
                     EnemyFactory.spawnUltraShooterEnemy();
             } break;
@@ -158,7 +158,7 @@ public class PlayerManager
             } break;
             case 9:
             {
-                int octopus = MathUtils.random(0,1);
+                int octopus = MathUtils.random(1,2);
                 for (int i = 0; i < octopus; i++)
                     EnemyFactory.spawnOctopusEnemy();
             } break;
