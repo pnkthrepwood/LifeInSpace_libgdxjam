@@ -118,16 +118,21 @@ public class BulletFactory
 
     public static void shootExplosion(float x, float y)
     {
-        Entity bullet = Gaem.engine.createEntity();
-        bullet.add(new PositionComponent(x, y));
-        bullet.add(new CollisionComponent(128, 128));
-        bullet.add(new TypeComponent(TypeComponent.TypeEntity.BULLET));
-        BulletComponent bc = new BulletComponent();
-        bc.lifeTime = 0.6f;
-        bc.friendly = true;
-        bc.damage = 10;
-        bc.indestructible = true;
-        bullet.add(bc);
-        gaem.engine.addEntity(bullet);
+        for (int i = 0; i < 10; i++)
+        {
+
+            Entity bullet = Gaem.engine.createEntity();
+            bullet.add(new PositionComponent(x, y));
+            bullet.add(new CollisionComponent(128, 128));
+            bullet.add(new TypeComponent(TypeComponent.TypeEntity.BULLET));
+            BulletComponent bc = new BulletComponent();
+            bc.lifeTime = 0.6f;
+            bc.friendly = true;
+            bc.damage = 10;
+            bc.indestructible = false;
+            bullet.add(bc);
+            gaem.engine.addEntity(bullet);
+        }
+
     }
 }
