@@ -80,6 +80,8 @@ public class RenderSystem extends EntitySystem
             RenderComponent rc = Mappers.render.get(e);
             PositionComponent pos = Mappers.position.get(e);
 
+            rc.spr.setAlpha(1.0f);
+
             if (Mappers.animation.has(e))
             {
                 AnimationComponent anim = Mappers.animation.get(e);

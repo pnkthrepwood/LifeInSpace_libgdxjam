@@ -82,10 +82,15 @@ public class CollisionSystem extends IteratingSystem
                         && type_other == TypeComponent.TypeEntity.SHIP
                         && !Mappers.bullet.get(entity).friendly )
                 {
-                    engine.removeEntity(entity);
-                    FXFactory.makeExplosion(pos_other.X(), pos_other.y);
 
-                    doShipGetHurt(other);
+                    if (!Mappers.dash.has(other))
+                    {
+                        engine.removeEntity(entity);
+                        FXFactory.makeExplosion(pos_other.X(), pos_other.y);
+
+                        doShipGetHurt(other);
+                    }
+
                 }
 
                 //// PLAYER -> POWERUP ////
@@ -144,7 +149,12 @@ public class CollisionSystem extends IteratingSystem
                 if (type_me == TypeComponent.TypeEntity.SHIP
                     && type_other == TypeComponent.TypeEntity.ENEMY )
                 {
-                    doShipGetHurt(entity);
+                    if (!Mappers.dash.has(entity))
+                    {
+                        doShipGetHurt(entity);
+                    }
+
+
                 }
 
             }
