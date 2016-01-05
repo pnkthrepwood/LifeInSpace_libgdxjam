@@ -240,10 +240,10 @@ public class CollisionSystem extends IteratingSystem
             if (is_killed) PlayerManager.addExp(mc);
         }
 
-        /*
+        
         if (!Mappers.bullet.get(bullet).indestructible)
             engine.removeEntity(bullet);
-          */
+
     }
 
 
