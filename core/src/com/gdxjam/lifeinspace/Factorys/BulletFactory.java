@@ -27,14 +27,6 @@ public class BulletFactory
 {
     public static Gaem gaem;
 
-
-    public static void shootTripleBullet(float x, float y, float angle, WeaponComponent weapon)
-    {
-        shootBullet(x, y, angle, weapon);
-        shootBullet(x, y, angle+45, weapon);
-        shootBullet(x, y, angle-45, weapon);
-    }
-
     public static void fireWeapon(float x, float y, float angle, WeaponComponent weapon)
     {
         if (weapon.type == WeaponComponent.WeaponType.ENEMY_OCTOPUS)
@@ -52,10 +44,22 @@ public class BulletFactory
             shootBullet(x-10,y,angle+5,weapon);
         }
 
+        if (weapon.type == WeaponComponent.WeaponType.PLAYER_TRIPLE_WEAPON)
+        {
+            shootTripleBullet(x, y, angle, weapon);
+        }
+
         else
         {
             shootBullet(x,y,angle,weapon);
         }
+    }
+
+    public static void shootTripleBullet(float x, float y, float angle, WeaponComponent weapon)
+    {
+        shootBullet(x, y, angle, weapon);
+        shootBullet(x, y, angle+45, weapon);
+        shootBullet(x, y, angle-45, weapon);
     }
 
     public static void shootBullet(float x, float y, float angle, WeaponComponent weapon)

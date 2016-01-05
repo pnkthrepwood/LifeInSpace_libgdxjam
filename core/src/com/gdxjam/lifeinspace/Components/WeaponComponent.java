@@ -16,6 +16,7 @@ public class WeaponComponent implements Component
     {
         PLAYER_WEAPON,
         PLAYER_DOUBLE_WEAPON,
+        PLAYER_TRIPLE_WEAPON,
 
         ENEMY_WEAPON,
         ENEMY_OCTOPUS

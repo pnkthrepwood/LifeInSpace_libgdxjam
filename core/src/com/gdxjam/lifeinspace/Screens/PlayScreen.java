@@ -104,7 +104,6 @@ public class PlayScreen implements Screen {
         planet_bg.add(new PositionComponent(0, -Constants.RES_Y / 2 + TextureManager.getTexture("planet_bg.png").getHeight() / 2));
         planet_bg.add(new VelocityComponent(0, -1.5f));
         planet_spr = new Sprite(TextureManager.getTexture("planet_bg.png"));
-        //planet_spr.setScale(5, 5);
         planet_bg.add(new RenderComponent(planet_spr));
         planet_bg.add(new RenderEffectComponent(140, 5, 0.25f, 1, 1, true));
         game.engine.addEntity(planet_bg);
@@ -114,14 +113,12 @@ public class PlayScreen implements Screen {
         ship.add(new PositionComponent());
         ship.add(new VelocityComponent(0, 0));
         ship_spr = new Sprite(TextureManager.getTexture("ship.png"));
-        //ship_spr.setScale(2,2);
         ship.add(new RenderComponent(ship_spr));
-
         ship.add(new WeaponComponent(WeaponComponent.WeaponType.PLAYER_WEAPON));
-        //ship.add(new WeaponSpecialComponent());
 
         ship.add(new CollisionComponent(24, 24));
         game.engine.addEntity(ship);
+        PlayerManager.ship = ship;
 
         /*
         EnemyFactory.spawnSnakeEnemy(0, Constants.RES_Y / 2, 7);

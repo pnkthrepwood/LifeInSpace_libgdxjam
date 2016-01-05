@@ -42,6 +42,7 @@ public class TextureManager
                 spr.setRegion(0, 32, 32, 32);
                 break;
             case DOBLE_ATK:
+            case TRIPLE_ATK:
                 spr.setRegion(32, 32, 32, 32);
                 break;
 

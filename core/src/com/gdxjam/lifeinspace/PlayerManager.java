@@ -220,12 +220,14 @@ public class PlayerManager
         }
     }
 
+    public static Entity ship;
+
     public static void addScore(int plus)
     {
         score += plus;
         if (score > exp_next())
         {
-            levelUp();
+            levelUp(ship);
         }
     }
 
@@ -256,8 +258,10 @@ public class PlayerManager
         FIRE_DIST,
         SPEED,
         DOBLE_ATK,
+
         LATERAL_SHOOT,
         CONVERT_ORBS,
+        TRIPLE_ATK,
         LUCKY;
 
         private static final List<LevelUpgrade> VALUES =
@@ -270,24 +274,38 @@ public class PlayerManager
     }
 
     public static LevelUpgrade player_level_event_choice_1, player_level_event_choice_2;
-    public static void levelUp()
+    public static void levelUp(Entity ship)
     {
         player_level++;
 
         player_level_event = true;
 
-        rollLevelUpgrade();
+        rollLevelUpgrade(ship);
 
         Gaem.engine.clearPools();
     }
 
-    public static void rollLevelUpgrade()
+    public static void rollLevelUpgrade(Entity ship)
     {
         player_level_event_choice_1 = LevelUpgrade.roll();
         do
         {
             player_level_event_choice_2 = LevelUpgrade.roll();
         } while (player_level_event_choice_2 == player_level_event_choice_1);
+
+
+        if (Mappers.weapon.get(ship).type == WeaponComponent.WeaponType.PLAYER_DOUBLE_WEAPON)
+        {
+            if (player_level_event_choice_1 == LevelUpgrade.DOBLE_ATK)
+            {
+                player_level_event_choice_1 = LevelUpgrade.TRIPLE_ATK;
+            }
+            if (player_level_event_choice_2 == LevelUpgrade.DOBLE_ATK)
+            {
+                player_level_event_choice_1 = LevelUpgrade.TRIPLE_ATK;
+            }
+        }
+
     }
 
     public static String stringForSkill(LevelUpgrade upgrade)
@@ -304,6 +322,8 @@ public class PlayerManager
             case FIRE_RATE:
                 return "FIRE RATE";
 
+            case TRIPLE_ATK:
+                return "FIRE 3X";
             case CONVERT_ORBS:
                 return "ORBS";
             case LUCKY:
@@ -334,6 +354,10 @@ public class PlayerManager
             case DOBLE_ATK:
             {
                 Mappers.weapon.get(ship).type = WeaponComponent.WeaponType.PLAYER_DOUBLE_WEAPON;
+            } break;
+            case TRIPLE_ATK:
+            {
+                Mappers.weapon.get(ship).type = WeaponComponent.WeaponType.PLAYER_TRIPLE_WEAPON;
             } break;
             case LATERAL_SHOOT:
             {
