@@ -246,13 +246,16 @@ public class CollisionSystem extends IteratingSystem
 
     public void doShipGetHurt(Entity ship)
     {
+        PositionComponent pos = Mappers.position.get(ship);
+
         if (Mappers.shield.has(ship))
         {
             ship.remove(ShieldComponent.class);
+            FXFactory.makeShieldHit(pos.X(), pos.y, 0.1f);
             return;
         }
 
-        PositionComponent pos = Mappers.position.get(ship);
+
         FXFactory.makeExplosion(pos.X(), pos.y);
         Gaem.engine.removeEntity(ship);
         PlayerManager.is_game_over = true;

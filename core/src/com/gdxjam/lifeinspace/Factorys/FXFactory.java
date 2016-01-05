@@ -189,6 +189,15 @@ public class FXFactory {
         enemy.add(new RenderEffectComponent(duration, 0.0f, 1.0f, 0.0f, 1.0f, true));
         Gaem.engine.addEntity(enemy);
     }
+    public static void makeShieldHit(float x, float y, float duration)
+    {
+        Entity enemy = Gaem.engine.createEntity();
+
+        enemy.add(new RenderComponent(new Sprite(TextureManager.getTexture("shield.png"))));
+        enemy.add(new PositionComponent(x, y));
+        enemy.add(new RenderEffectComponent(duration, 1.5f, 1.5f*1.5f, 1.0f, 0.0f, true));
+        Gaem.engine.addEntity(enemy);
+    }
 
     public static void makeDashDisplay(float x, float y, float duration)
     {
