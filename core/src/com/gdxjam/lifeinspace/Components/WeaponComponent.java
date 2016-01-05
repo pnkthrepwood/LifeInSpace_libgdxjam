@@ -15,10 +15,10 @@ public class WeaponComponent implements Component
     public enum WeaponType
     {
         PLAYER_WEAPON,
-        ENEMY_WEAPON,
+        PLAYER_DOUBLE_WEAPON,
 
-        ENEMY_OCTOPUS,
-        PLAYER_DOUBLE_WEAPON
+        ENEMY_WEAPON,
+        ENEMY_OCTOPUS
     }
 
     public float coolDown = 0.5f;
@@ -40,11 +40,12 @@ public class WeaponComponent implements Component
         switch (type)
         {
             case PLAYER_WEAPON:
+            case PLAYER_DOUBLE_WEAPON:
                 accuracy = 0.0f;
                 friendly = true;
 
                 coolDown = 0.5f;
-                bulletLifetime = 0.25f;
+                bulletLifetime = 0.35f;
                 bulletSpeed = 500;
                 break;
 

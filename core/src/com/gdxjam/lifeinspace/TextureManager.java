@@ -41,11 +41,11 @@ public class TextureManager
             case SPEED:
                 spr.setRegion(0, 32, 32, 32);
                 break;
-
-
             case DOBLE_ATK:
-                spr.setRegion(64, 0, 32, 32);
+                spr.setRegion(32, 32, 32, 32);
                 break;
+
+
             case LATERAL_SHOOT:
                 spr.setRegion(96, 0, 32, 32);
                 break;

@@ -262,7 +262,7 @@ public class PlayerManager
 
         private static final List<LevelUpgrade> VALUES =
                 Collections.unmodifiableList(Arrays.asList(values()));
-        private static final int SIZE = 3;//VALUES.size();
+        private static final int SIZE = 4;//VALUES.size();
 
         public static LevelUpgrade roll()  {
             return VALUES.get( MathUtils.random(SIZE-1) );
@@ -300,7 +300,7 @@ public class PlayerManager
             case CONVERT_ORBS:
                 return "ORBS";
             case DOBLE_ATK:
-                return "DOUBLE FIRE";
+                return "FIRE 2X";
             case LATERAL_SHOOT:
                 return "LATERAL SHOOT";
             case FIRE_RATE:
@@ -322,13 +322,17 @@ public class PlayerManager
             case FIRE_DIST:
             {
                 WeaponComponent wc = Mappers.weapon.get(ship);
-                wc.bulletLifetime += 0.05f;
+                wc.bulletLifetime += 0.1f;
             } break;
             case FIRE_RATE:
             {
                 WeaponComponent wc = Mappers.weapon.get(ship);
                 wc.coolDown -= 0.20f;
                 if (wc.coolDown < 0.15f) wc.coolDown = 0.15f;
+            } break;
+            case DOBLE_ATK:
+            {
+                Mappers.weapon.get(ship).type = WeaponComponent.WeaponType.PLAYER_DOUBLE_WEAPON;
             } break;
             case LATERAL_SHOOT:
             {
@@ -340,11 +344,6 @@ public class PlayerManager
                 PlayerManager.ship_speed += 0.25f;
             } break;
             case LUCKY:
-            {
-                //Todo
-                PlayerManager.ship_speed += 0.25f;
-            } break;
-            case DOBLE_ATK:
             {
                 //Todo
                 PlayerManager.ship_speed += 0.25f;
