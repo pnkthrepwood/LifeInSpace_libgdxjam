@@ -59,6 +59,20 @@ public class BulletFactory
         shootBullet(x, y, angle-10, weapon);
     }
 
+    public static void fireNova(float x, float y)
+    {
+        float angle = 0;
+        shootBulletNova(x, y, angle);
+        shootBulletNova(x, y, angle + 45);
+        shootBulletNova(x, y, angle + 90);
+        shootBulletNova(x, y, angle + 90 + 45);
+        shootBulletNova(x, y, angle + 90 + 90);
+        shootBulletNova(x, y, angle - 45);
+        shootBulletNova(x, y, angle - 90);
+        shootBulletNova(x, y, angle - 90 - 45);
+
+    }
+
     public static void shootBullet(float x, float y, float angle, WeaponComponent weapon)
     {
         Entity bullet = Gaem.engine.createEntity();
@@ -72,8 +86,8 @@ public class BulletFactory
 
         bullet.add(new PositionComponent(x, y));
         bullet.add(new VelocityComponent(
-                weapon.bulletSpeed* MathUtils.cosDeg(angle + 90),
-                weapon.bulletSpeed* MathUtils.sinDeg(angle + 90))
+                        weapon.bulletSpeed * MathUtils.cosDeg(angle + 90),
+                        weapon.bulletSpeed * MathUtils.sinDeg(angle + 90))
         );
 
         bullet.add(new CollisionComponent(14, 16));
@@ -82,6 +96,33 @@ public class BulletFactory
         BulletComponent bc = new BulletComponent();
         bc.lifeTime = weapon.bulletLifetime;
         bc.friendly = weapon.friendly;
+        bullet.add(bc);
+
+        gaem.engine.addEntity(bullet);
+    }
+
+    public static void shootBulletNova(float x, float y, float angle)
+    {
+        Entity bullet = Gaem.engine.createEntity();
+
+        Texture tex = TextureManager.getTexture("bullets.png");
+        RenderComponent rc = new RenderComponent(new Sprite(new TextureRegion(tex, 0, 16, 16, 16)));
+        rc.rotation = angle;
+        bullet.add(rc);
+
+        bullet.add(new PositionComponent(x, y));
+        bullet.add(new VelocityComponent(
+                        800* MathUtils.cosDeg(angle + 90),
+                        800* MathUtils.sinDeg(angle + 90))
+        );
+
+        bullet.add(new CollisionComponent(14, 16));
+        bullet.add(new TypeComponent(TypeComponent.TypeEntity.BULLET));
+
+        BulletComponent bc = new BulletComponent();
+        bc.lifeTime = 3.0f;
+        bc.friendly = true;
+        bc.indestructible = true;
         bullet.add(bc);
 
         gaem.engine.addEntity(bullet);

@@ -109,6 +109,18 @@ public class PlayScreen implements Screen {
         planet_bg.add(new RenderEffectComponent(140, 5, 0.25f, 1, 1, true));
         game.engine.addEntity(planet_bg);
 
+
+        Entity moon_bg = Gaem.engine.createEntity();
+        moon_bg.add(new PositionComponent(
+                        (Constants.RES_X / 2)+Constants.RES_X/3,
+                        (Constants.RES_Y / 2)+Constants.RES_Y/3)
+        );
+        moon_bg.add(new VelocityComponent(-1.25f, -1.25f));
+        Sprite moon_spr = new Sprite(TextureManager.getTexture("moon.png"));
+        moon_bg.add(new RenderComponent(moon_spr));
+        moon_bg.add(new RenderEffectComponent(280, 0, 3.0f, 1, 1, false));
+        game.engine.addEntity(moon_bg);
+
         ship = Gaem.engine.createEntity();
         ship.add(new TypeComponent(TypeEntity.SHIP));
         ship.add(new PositionComponent());
@@ -232,27 +244,6 @@ public class PlayScreen implements Screen {
 
                 PlayerManager.useSpecial(ship);
 
-                /*
-                WeaponSpecialComponent shipWeapon =  Mappers.weapon_special.get(ship);
-                if (shipWeapon.timer > shipWeapon.coolDown
-                        && (PlayerManager.red_orbs >= shipWeapon.red_cost)
-                        && (PlayerManager.blue_orbs >= shipWeapon.blue_cost)
-                        && (PlayerManager.green_orbs >= shipWeapon.green_cost)
-                    )
-                {
-
-
-
-                    PlayerManager.red_orbs -= shipWeapon.red_cost;
-                    PlayerManager.blue_orbs -= shipWeapon.blue_cost;
-                    PlayerManager.green_orbs -= shipWeapon.green_cost;
-
-                    BulletFactory.dropMine(
-                            shipPos.X(),
-                            shipPos.y);
-
-                    shipWeapon.timer = 0;
-                }*/
             }
         }
 
@@ -375,74 +366,7 @@ public class PlayScreen implements Screen {
 
         Gaem.batch.begin();
         renderGame();
-        if (PlayerManager.is_game_over)
-        {
-            font_big.draw(Gaem.batch,
-                    "SCORE\n" + Utils.textScoreNice(PlayerManager.score),
-                    -(Constants.RES_X / 2) + Constants.RES_X * 0.35f,
-                    (Constants.RES_Y / 2) - Constants.RES_Y * 0.45f);
-
-            font_big.draw(Gaem.batch,
-                    "PRESS THE [ORANGE]INTRO[]",
-                    -(Constants.RES_X / 2) + Constants.RES_X * 0.35f,
-                    (Constants.RES_Y / 2) - Constants.RES_Y * 0.6f);
-        }
-        else if (PlayerManager.player_level_event)
-        {
-            if (   Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)
-                    ||
-                    ( controller != null && (controller.getButton(XBox360Pad.BUTTON_X) ) )
-                )
-            {
-                PlayerManager.applySkillChoice(PlayerManager.player_level_event_choice_1, ship);
-                PlayerManager.player_level_event = false;
-            }
-            if (   Gdx.input.isKeyJustPressed(Input.Keys.NUM_2)
-                    ||
-                    ( controller != null && (controller.getButton(XBox360Pad.BUTTON_B) ) )
-                    )
-            {
-                PlayerManager.applySkillChoice(PlayerManager.player_level_event_choice_2, ship);
-                PlayerManager.player_level_event = false;
-            }
-
-
-            font_big.draw(Gaem.batch,
-                    "LEVEL UP!",
-                    -(Constants.RES_X / 2) + Constants.RES_X * 0.40f,
-                    (Constants.RES_Y / 2) - Constants.RES_Y * 0.3f);
-
-
-            font_big.draw(Gaem.batch,
-                    PlayerManager.stringForSkill(PlayerManager.player_level_event_choice_1),
-                    -(Constants.RES_X / 2) + Constants.RES_X * 0.25f - 64,
-                    (Constants.RES_Y / 2) - Constants.RES_Y * 0.55f);
-            TextureManager.setSpriteHudPowerup(sprite, PlayerManager.player_level_event_choice_1);
-            sprite.setSize(128, 128);
-            sprite.setOrigin(16, 16);
-            sprite.setCenterX(-(Constants.RES_X / 2) + Constants.RES_X * 0.25f);
-            sprite.setCenterY((Constants.RES_Y / 2) - Constants.RES_Y * 0.7f);
-            sprite.draw(Gaem.batch);
-
-
-            font_big.draw(Gaem.batch,
-                    PlayerManager.stringForSkill(PlayerManager.player_level_event_choice_2),
-                    -(Constants.RES_X / 2) + Constants.RES_X * 0.7f - 64,
-                    (Constants.RES_Y / 2) - Constants.RES_Y * 0.55f);
-            TextureManager.setSpriteHudPowerup(sprite, PlayerManager.player_level_event_choice_2);
-            sprite.setSize(128, 128);
-            sprite.setCenterX(-(Constants.RES_X / 2) + Constants.RES_X * 0.7f);
-            sprite.setCenterY((Constants.RES_Y / 2) - Constants.RES_Y * 0.7f);
-            sprite.draw(Gaem.batch);
-        }
-        else if (is_paused)
-        {
-
-            font_big.draw(Gaem.batch,
-                "PAUSE",
-                -(Constants.RES_X / 2) + Constants.RES_X * 0.40f,
-                (Constants.RES_Y / 2) - Constants.RES_Y * 0.3f);
-        }
+        renderHud();
         Gaem.batch.end();
 
         Gdx.graphics.setTitle("LifeInSpace | FPS: " + Gdx.graphics.getFramesPerSecond());
@@ -487,25 +411,8 @@ public class PlayScreen implements Screen {
             has_green_orbs = ws.green_cost>0;
             has_blue_orbs = ws.blue_cost>0;
 
-            weapon_special_item_spr.setTexture(TextureManager.getTexture("powerup.png"));
-
-            if (ws.type == WeaponSpecialComponent.WeaponSpecialType.MINE)
-            {
-                weapon_special_item_spr.setRegion(0, 32, 16, 16);
-
-            }
-            else if (ws.type == WeaponSpecialComponent.WeaponSpecialType.SHIELD)
-            {
-                weapon_special_item_spr.setRegion(16, 32, 16, 16);
-            }
-            else if (ws.type == WeaponSpecialComponent.WeaponSpecialType.DASH)
-            {
-                weapon_special_item_spr.setRegion(32, 32, 16, 16);
-            }
-
-
+            weapon_special_item_spr.setRegion(PowerupFactory.getPowerTexture(ws.type));
             weapon_special_item_spr.setSize(16, 16);
-
             weapon_special_slot_spr.setOrigin(32, 32);
             weapon_special_item_spr.setScale(2, 2);
             weapon_special_item_spr.setCenterX(-(Constants.RES_X / 2) + Constants.RES_X * 0.03f + 16+8);
@@ -576,6 +483,79 @@ public class PlayScreen implements Screen {
                         (PlayerManager.exp_next() - PlayerManager.exp_before())),
                 32);
         level_bar_spr.draw(Gaem.batch);
+    }
+
+    void renderHud()
+    {
+
+        if (PlayerManager.is_game_over)
+        {
+            font_big.draw(Gaem.batch,
+                    "SCORE\n" + Utils.textScoreNice(PlayerManager.score),
+                    -(Constants.RES_X / 2) + Constants.RES_X * 0.35f,
+                    (Constants.RES_Y / 2) - Constants.RES_Y * 0.45f);
+
+            font_big.draw(Gaem.batch,
+                    "PRESS THE [ORANGE]INTRO[]",
+                    -(Constants.RES_X / 2) + Constants.RES_X * 0.35f,
+                    (Constants.RES_Y / 2) - Constants.RES_Y * 0.6f);
+        }
+        else if (PlayerManager.player_level_event)
+        {
+            if (   Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)
+                    ||
+                    ( controller != null && (controller.getButton(XBox360Pad.BUTTON_X) ) )
+                    )
+            {
+                PlayerManager.applySkillChoice(PlayerManager.player_level_event_choice_1, ship);
+                PlayerManager.player_level_event = false;
+            }
+            if (   Gdx.input.isKeyJustPressed(Input.Keys.NUM_2)
+                    ||
+                    ( controller != null && (controller.getButton(XBox360Pad.BUTTON_B) ) )
+                    )
+            {
+                PlayerManager.applySkillChoice(PlayerManager.player_level_event_choice_2, ship);
+                PlayerManager.player_level_event = false;
+            }
+
+
+            font_big.draw(Gaem.batch,
+                    "LEVEL UP!",
+                    -(Constants.RES_X / 2) + Constants.RES_X * 0.40f,
+                    (Constants.RES_Y / 2) - Constants.RES_Y * 0.3f);
+
+
+            font_big.draw(Gaem.batch,
+                    PlayerManager.stringForSkill(PlayerManager.player_level_event_choice_1),
+                    -(Constants.RES_X / 2) + Constants.RES_X * 0.25f - 64,
+                    (Constants.RES_Y / 2) - Constants.RES_Y * 0.55f);
+            TextureManager.setSpriteHudPowerup(sprite, PlayerManager.player_level_event_choice_1);
+            sprite.setSize(128, 128);
+            sprite.setOrigin(16, 16);
+            sprite.setCenterX(-(Constants.RES_X / 2) + Constants.RES_X * 0.25f);
+            sprite.setCenterY((Constants.RES_Y / 2) - Constants.RES_Y * 0.7f);
+            sprite.draw(Gaem.batch);
+
+
+            font_big.draw(Gaem.batch,
+                    PlayerManager.stringForSkill(PlayerManager.player_level_event_choice_2),
+                    -(Constants.RES_X / 2) + Constants.RES_X * 0.7f - 64,
+                    (Constants.RES_Y / 2) - Constants.RES_Y * 0.55f);
+            TextureManager.setSpriteHudPowerup(sprite, PlayerManager.player_level_event_choice_2);
+            sprite.setSize(128, 128);
+            sprite.setCenterX(-(Constants.RES_X / 2) + Constants.RES_X * 0.7f);
+            sprite.setCenterY((Constants.RES_Y / 2) - Constants.RES_Y * 0.7f);
+            sprite.draw(Gaem.batch);
+        }
+        else if (is_paused)
+        {
+
+            font_big.draw(Gaem.batch,
+                    "PAUSE",
+                    -(Constants.RES_X / 2) + Constants.RES_X * 0.40f,
+                    (Constants.RES_Y / 2) - Constants.RES_Y * 0.3f);
+        }
     }
 
     @Override

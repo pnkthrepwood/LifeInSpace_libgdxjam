@@ -44,7 +44,7 @@ public class EnemyFactory
     {
         float A = MathUtils.random(2,4);
         float F = MathUtils.random(4,8);
-        float V = MathUtils.random(40,60);
+        float V = MathUtils.random(35,65);
 
         int squad = SquadManager.registerNewSquad(squad_size);
 
@@ -90,7 +90,8 @@ public class EnemyFactory
         Entity enemy = Gaem.engine.createEntity();
         enemy.add(new TypeComponent(TypeComponent.TypeEntity.ENEMY));
         enemy.add(new PositionComponent(x, y));
-        enemy.add(new VelocityComponent(0, -30));
+        enemy.add(new VelocityComponent(0,
+                MathUtils.random(-35, -25)));
 
         Texture tex = TextureManager.getTexture("monster.png");
         enemy.add(new RenderComponent(new Sprite(new TextureRegion(tex, 0, 0, 32, 32))));
@@ -128,7 +129,8 @@ public class EnemyFactory
         Entity enemy = Gaem.engine.createEntity();
         enemy.add(new TypeComponent(TypeComponent.TypeEntity.ENEMY));
         enemy.add(new PositionComponent(x, y));
-        enemy.add(new VelocityComponent(0, -30));
+        enemy.add(new VelocityComponent(0,
+                MathUtils.random(-35, -25)));
 
         Texture tex = TextureManager.getTexture("monster.png");
         enemy.add(new RenderComponent(new Sprite(new TextureRegion(tex, 0, 0, 32, 32))));
@@ -166,7 +168,8 @@ public class EnemyFactory
         Entity enemy = Gaem.engine.createEntity();
         enemy.add(new TypeComponent(TypeComponent.TypeEntity.ENEMY));
         enemy.add(new PositionComponent(x, y));
-        enemy.add(new VelocityComponent(0, -30));
+        enemy.add(new VelocityComponent(0,
+                MathUtils.random(-40, -25)));
 
         Texture tex = TextureManager.getTexture("monster.png");
         enemy.add(new RenderComponent(new Sprite(new TextureRegion(tex, 0, 0, 32, 32))));

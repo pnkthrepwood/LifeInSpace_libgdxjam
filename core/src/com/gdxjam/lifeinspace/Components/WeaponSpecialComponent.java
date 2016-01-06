@@ -12,7 +12,8 @@ public class WeaponSpecialComponent implements Component
     {
         MINE,
         SHIELD,
-        DASH
+        DASH,
+        NOVA
     }
     public WeaponSpecialType type;
 
@@ -30,6 +31,7 @@ public class WeaponSpecialComponent implements Component
         switch (type)
         {
             case MINE:
+            case NOVA:
             {
                 red_cost = 1;
                 blue_cost = 0;
@@ -47,6 +49,7 @@ public class WeaponSpecialComponent implements Component
                 blue_cost = 0;
                 green_cost = 1;
             } break;
+
         }
 
     }

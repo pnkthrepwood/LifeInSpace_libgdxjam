@@ -136,6 +136,14 @@ public class CollisionSystem extends IteratingSystem
                             }
                             entity.add(new WeaponSpecialComponent(WeaponSpecialComponent.WeaponSpecialType.DASH));
                         } break;
+                        case NOVA:
+                        {
+                            if (Mappers.weapon_special.has(entity))
+                            {
+                                entity.remove(WeaponSpecialComponent.class);
+                            }
+                            entity.add(new WeaponSpecialComponent(WeaponSpecialComponent.WeaponSpecialType.NOVA));
+                        } break;
                     }
 
                     FXFactory.makeCatchpowerup(pos_other.X(), pos_other.y, type);

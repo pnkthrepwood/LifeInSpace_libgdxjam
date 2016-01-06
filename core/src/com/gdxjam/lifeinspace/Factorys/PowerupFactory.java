@@ -12,6 +12,7 @@ import com.gdxjam.lifeinspace.Components.RenderEffectComponent;
 import com.gdxjam.lifeinspace.Components.SinusBehaviourComponent;
 import com.gdxjam.lifeinspace.Components.TypeComponent;
 import com.gdxjam.lifeinspace.Components.VelocityComponent;
+import com.gdxjam.lifeinspace.Components.WeaponSpecialComponent;
 import com.gdxjam.lifeinspace.Gaem;
 import com.gdxjam.lifeinspace.TextureManager;
 
@@ -26,9 +27,11 @@ public class PowerupFactory
         RED,
         GREEN,
         BLUE,
+
         MINE,
         SHIELD,
-        DASH
+        DASH,
+        NOVA
     }
 
     public static Gaem gaem;
@@ -38,7 +41,10 @@ public class PowerupFactory
         float r = MathUtils.random(0.f, 1.f);
         if (r < 0.35f)
         {
-            spawnPowerup(x, y, PowerUpType.SHIELD);
+            if (MathUtils.random(0.f, 1.f) < 0.5f)
+                spawnPowerup(x, y, PowerUpType.SHIELD);
+            else
+                spawnPowerup(x, y, PowerUpType.NOVA);
         }
         else if (r < 0.65f)
         {
@@ -68,6 +74,39 @@ public class PowerupFactory
         gaem.engine.addEntity(powerup);
     }
 
+
+    public static TextureRegion getPowerTexture(WeaponSpecialComponent.WeaponSpecialType type)
+    {
+        switch (type) {
+            case MINE:
+            {
+                return new TextureRegion(
+                        TextureManager.getTexture("powerup.png"),
+                        0, 32, 16, 16);
+            }
+            case SHIELD:
+            {
+                return new TextureRegion(
+                        TextureManager.getTexture("powerup.png"),
+                        16, 32, 16, 16);
+            }
+            case DASH:
+            {
+                return new TextureRegion(
+                        TextureManager.getTexture("powerup.png"),
+                        32, 32, 16, 16);
+            }
+            case NOVA:
+            {
+                return new TextureRegion(
+                        TextureManager.getTexture("powerup.png"),
+                        0, 48, 16, 16);
+            }
+        }
+        //Todo: Error?
+        return new TextureRegion(
+                TextureManager.getTexture("powerup.png"),
+                0, 0, 16, 16);    }
 
     public static TextureRegion getPowerTexture(PowerUpType type)
     {
@@ -109,9 +148,15 @@ public class PowerupFactory
                         TextureManager.getTexture("powerup.png"),
                         32, 32, 16, 16);
             }
+            case NOVA:
+            {
+                return new TextureRegion(
+                        TextureManager.getTexture("powerup.png"),
+                        0, 48, 16, 16);
+            }
         }
 
-        //Todo(Mario): Error?
+        //Todo: Error?
         return new TextureRegion(
                 TextureManager.getTexture("powerup.png"),
                 0, 0, 16, 16);

@@ -457,6 +457,17 @@ public class PlayerManager
                     }
 
                 } break;
+                case NOVA:
+                {
+                    BulletFactory.fireNova(
+                            Mappers.position.get(ship).X(),
+                            Mappers.position.get(ship).y
+                    );
+                    PlayerManager.red_orbs -= shipWeapon.red_cost;
+                    PlayerManager.blue_orbs -= shipWeapon.blue_cost;
+                    PlayerManager.green_orbs -= shipWeapon.green_cost;
+
+                } break;
                 default:break;
             }
 
