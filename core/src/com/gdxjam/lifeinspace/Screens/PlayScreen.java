@@ -272,12 +272,7 @@ public class PlayScreen implements Screen {
                 shipVel.y = dir.y* Constants.RES_Y/8 * PlayerManager.ship_speed;
             }
         }
-
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE))
-        {
-            ship.add(new WeaponSpecialComponent(WeaponSpecialComponent.WeaponSpecialType.DASH));
-            PlayerManager.useSpecial(ship);
-        }
+        
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)
                 && Mappers.weapon_special.has(ship))
