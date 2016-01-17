@@ -71,7 +71,7 @@ public class FXFactory {
         entity.add(new PositionComponent(x, y));
         entity.add(new AnimationComponent(anim));
         entity.add(new RenderComponent(new Sprite(new TextureRegion(tex, 375, 10, 30 ,30))));
-        entity.add(new RenderEffectComponent(0.8f, 4, 4, 1, 0.0f, true));
+        entity.add(new RenderEffectComponent(0.8f, 8, 8, 1, 0.0f, true));
         Gaem.engine.addEntity(entity);
 
 

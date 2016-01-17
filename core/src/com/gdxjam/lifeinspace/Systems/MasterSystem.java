@@ -63,7 +63,8 @@ public class MasterSystem extends EntitySystem
     public void update (float deltaTime)
     {
 
-        for (int i = 0; i < mines.size(); ++i) {
+        for (int i = 0; i < mines.size(); ++i)
+        {
             Entity mine = mines.get(i);
 
             MineComponent mc = Mappers.mines.get(mine);

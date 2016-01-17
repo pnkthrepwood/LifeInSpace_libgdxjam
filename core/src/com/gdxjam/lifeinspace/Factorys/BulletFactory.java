@@ -162,7 +162,7 @@ public class BulletFactory
 
         Entity bullet = Gaem.engine.createEntity();
         bullet.add(new PositionComponent(x, y));
-        bullet.add(new CollisionComponent(128, 128));
+        bullet.add(new CollisionComponent(128*2, 128*2));
         bullet.add(new TypeComponent(TypeComponent.TypeEntity.BULLET));
         BulletComponent bc = new BulletComponent();
         bc.lifeTime = 0.6f;

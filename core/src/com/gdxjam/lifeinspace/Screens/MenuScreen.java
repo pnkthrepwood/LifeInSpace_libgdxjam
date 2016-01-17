@@ -29,12 +29,17 @@ import com.gdxjam.lifeinspace.Utils;
 public class MenuScreen implements Screen
 {
     Gaem game;
+    BitmapFont menu_font_big;
     BitmapFont menu_font;
     BitmapFont tip_font;
 
     Stage stage;
 
     String text_menu_title;
+
+    Label label_title;
+    Label label_title2;
+    Label label_title3;
 
     public MenuScreen(Gaem game)
     {
@@ -54,13 +59,44 @@ public class MenuScreen implements Screen
         menu_font.getData().markupEnabled = true;
 
 
-        Label.LabelStyle style_title = new Label.LabelStyle(menu_font, Color.WHITE);
-        Label label_title = new Label("PRESS THE [ORANGE]INTRO[]", style_title);
-        label_title.setAlignment(Align.left);
-        label_title.setAlignment(Align.left, Align.left);
-        label_title.setX(Constants.RES_X / 3);
-        label_title.setY(Constants.RES_Y / 2);
+
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter_big_title = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter_big_title.size = 90;
+        parameter_big_title.color = Color.WHITE;
+        parameter_big_title.borderWidth = 2;
+        parameter_big_title.borderColor = Color.BLACK;
+        menu_font_big = generator.generateFont(parameter_big_title);
+        menu_font_big.getData().markupEnabled = true;
+        Label.LabelStyle style_title = new Label.LabelStyle(menu_font_big, Color.WHITE);
+        label_title = new Label("SPAEC GAEM", style_title);
+        label_title.setAlignment(Align.center);
+        label_title.setAlignment(Align.center, Align.center);
+        label_title.setX(Constants.RES_X / 3.9f);
+        label_title.setY(Constants.RES_Y*0.75f);
         stage.addActor(label_title);
+
+        label_title2 = new Label("SPAEC GAEM", style_title);
+        label_title2.setAlignment(Align.center);
+        label_title2.setAlignment(Align.center, Align.center);
+        label_title2.setX(Constants.RES_X / 3.9f);
+        label_title2.setY(Constants.RES_Y*0.75f);
+        stage.addActor(label_title2);
+
+        label_title3 = new Label("SPAEC GAEM", style_title);
+        label_title3.setAlignment(Align.center);
+        label_title3.setAlignment(Align.center, Align.center);
+        label_title3.setX(Constants.RES_X / 3.9f);
+        label_title3.setY(Constants.RES_Y*0.75f);
+        stage.addActor(label_title3);
+
+
+        Label.LabelStyle style_intro = new Label.LabelStyle(menu_font, Color.WHITE);
+        Label label_intro = new Label("PRESS THE [ORANGE]INTRO[]", style_intro);
+        label_intro.setAlignment(Align.left);
+        label_intro.setAlignment(Align.left, Align.left);
+        label_intro.setX(Constants.RES_X / 3);
+        label_intro.setY(Constants.RES_Y / 2);
+        stage.addActor(label_intro);
 
 
 
@@ -80,9 +116,18 @@ public class MenuScreen implements Screen
         Label label_tip = new Label(getRandomTip(), style_tip);
         label_tip.setAlignment(Align.left);
         label_tip.setAlignment(Align.left, Align.left);
-        label_tip.setX(Constants.RES_X * 0.20f);
+        label_tip.setX(Constants.RES_X * 0.13f);
         label_tip.setY(Constants.RES_Y * 0.25f);
         stage.addActor(label_tip);
+
+
+        Label.LabelStyle style_instructions = new Label.LabelStyle(tip_font, Color.WHITE);
+        Label label_instructions = new Label("F1 - INSTRUCTIONS", style_instructions);
+        label_instructions.setAlignment(Align.left);
+        label_instructions.setAlignment(Align.left, Align.left);
+        label_instructions.setX(Constants.RES_X * 0.60f);
+        label_instructions.setY(Constants.RES_Y * 0.1f);
+        stage.addActor(label_instructions);
 
     }
 
@@ -112,8 +157,53 @@ public class MenuScreen implements Screen
 
     }
 
+    float timer_flash_color_title = 0.0f;
+    float timer_flash_color_title2 = 0.0f;
+    float timer_flash_color_title3 = 0.0f;
     @Override
     public void render(float delta) {
+
+
+        timer_flash_color_title += delta;
+        if (timer_flash_color_title > 0.01f)
+        {
+            label_title.setColor(
+                    0.33f*MathUtils.random(1,4),
+                    0.33f*MathUtils.random(1,4),
+                    0.33f*MathUtils.random(1,4),
+                    0.33f);
+            label_title.setX(Constants.RES_X * MathUtils.random(0.01f, 0.4f));
+            label_title.setY(Constants.RES_Y * MathUtils.random(0.65f, 0.85f));
+            timer_flash_color_title = 0.0f;
+        }
+
+        timer_flash_color_title2 += delta;
+        if (timer_flash_color_title2 > 0.05f)
+        {
+            label_title2.setColor(
+                    0.33f*MathUtils.random(1,4),
+                    0.33f*MathUtils.random(1,4),
+                    0.33f*MathUtils.random(1,4),
+                    0.44f);
+            label_title2.setX(Constants.RES_X * MathUtils.random(0.1f, 0.3f));
+            label_title2.setY(Constants.RES_Y * MathUtils.random(0.70f, 0.80f));
+            timer_flash_color_title2 = 0.0f;
+        }
+
+        timer_flash_color_title3 += delta;
+        if (timer_flash_color_title3 > 0.15f)
+        {
+            label_title3.setColor(
+                    0.33f*MathUtils.random(1,4),
+                    0.33f*MathUtils.random(2,4),
+                    0.33f*MathUtils.random(1,4),
+                    1);
+            timer_flash_color_title3 = 0.0f;
+        }
+
+
+
+
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER))
         {
